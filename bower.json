@@ -1,0 +1,27 @@
+{
+  "name": "wampigraph",
+  "version": "0.0.1",
+  "authors": [
+    "pchabiland <p.chabiland@croquepixel.net>"
+  ],
+  "main": "web/app/main.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+    "dependencies": {
+        "jquery": "2.1.1",
+        "angular": "1.2.20",
+        "angular-route": "1.2.20",
+        "angular-bootstrap": "0.11.0",
+        "bootstrap": "*",
+        "requirejs": "2.1.14",
+        "requirejs-domready": "~2.0.1",
+        "sass-bootstrap": "~3.0.2"
+    }
+}
