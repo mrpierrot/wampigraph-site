@@ -12,7 +12,9 @@
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-requirejs": "~0.4.1",
     "jshint-stylish": "~0.1.4",
-    "grunt-contrib-compass": "~0.6.0",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-clean": "*",
     "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {

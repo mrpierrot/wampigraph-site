@@ -4,5 +4,5 @@ vendor/*
 
 bower_components
 node_modules
-resources/assets/vendor
-web/assets/vendor
+resources/web/vendor
+web/assets/

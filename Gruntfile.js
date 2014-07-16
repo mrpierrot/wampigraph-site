@@ -7,14 +7,28 @@ module.exports = function (grunt) {
         'js/app/modules/*.js'
     ];
 
+	// main conf
+	var appDir = 'resources/web';
+	var builtDir = 'web/assets';
+
+	// less conf
+	var lessPaths = [
+		'<%= appDir %>/css',
+		'<%= appDir %>/vendor/components-bootstrap/less'
+
+	];
+	var lessFiles = {
+		'<%= appDir %>/css/global.css': '<%= appDir %>/less/global.less'
+	}
+
     // Project configuration
     grunt.initConfig({
         // you can read in JSON files, which are then set as objects. We use this below with banner
         pkg: grunt.file.readJSON('package.json'),
 
         // setup some variables that we'll use below
-        appDir: 'resources/assets',
-        builtDir: 'web/assets',
+        appDir: appDir,
+        builtDir: builtDir,
 
         requirejs: {
             // creates a "main" requirejs sub-task (grunt requirejs:main)
@@ -115,26 +129,39 @@ module.exports = function (grunt) {
             ]
         },
 
-        // use compass to compile everything in the "sass" directory into "css"
-        compass: {
-            // the "production" build subtask (grunt compass:dist)
-            dist: {
-                options: {
-                    sassDir: '<%= builtDir %>/sass',
-                    cssDir: '<%= builtDir %>/css',
-                    environment: 'production',
-                    outputStyle: 'compressed'
-                }
-            },
-            // the "development" build subtask (grunt compass:dev)
+
+        less: {
             dev: {
                 options: {
-                    sassDir: '<%= appDir %>/sass',
-                    cssDir: '<%= appDir %>/css',
-                    outputStyle: 'expanded'
-                }
+                    paths: lessPaths
+                },
+                files: lessFiles
+            },
+            prod: {
+                options: {
+                    paths: ['<%= appDir %>/css'],
+                    cleancss: true,
+                    modifyVars: {
+
+                    }
+                },
+                files: lessFiles
             }
         },
+        copy:{
+    		main:{
+				files: [
+					{expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'},
+					{expand: true, cwd:'<%= appDir %>/', src: ['js/**'], dest: '<%= builtDir %>'},
+					{expand: true, cwd:'<%= appDir %>/', src: ['fonts/**'], dest: '<%= builtDir %>'}
+				]
+			}
+        },
+		clean: {
+			build: {
+				src: ['<%= builtDir %>/**']
+			}
+		},
 
         // run "Grunt watch" and have it automatically update things when files change
         watch: {
@@ -154,14 +181,21 @@ module.exports = function (grunt) {
                     spawn: false
                 }
             },
-            // watch all .scss files and run compass
-            compass: {
-                files: '<%= appDir %>/sass/*.scss',
-                tasks: ['compass:dev'],
+            // watch all .less files and run less
+            less: {
+                files: '<%= appDir %>/less/*.less',
+                tasks: ['less:development'],
                 options: {
                     spawn: false
                 }
-            }
+            },
+			copy:{
+				files: '<%= appDir %>/**.js',
+				tasks: ['copy'],
+				options: {
+
+				}
+			}
         }
 
     });
@@ -170,12 +204,15 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
     // the "default" task (e.g. simply "Grunt") runs tasks for development
-    grunt.registerTask('default', ['jshint', 'compass:dev']);
+    grunt.registerTask('default', ['jshint', 'less:dev']);
+    grunt.registerTask('clean-build', ['clean:build', 'copy','requirejs']);
 
     // register a "production" task that sets everything up before deployment
-    grunt.registerTask('production', ['jshint', 'requirejs', 'uglify', 'compass:dist']);
+    grunt.registerTask('production', ['jshint', 'clean-build', 'uglify', 'less:prod']);
 };

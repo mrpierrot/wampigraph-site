@@ -18,8 +18,8 @@ requirejs.config({
          * AMD, you will likely need a paths entry and also an entry in
          * shim (beyond what you see for the bootstrap shim).
          */
-        jquery: '../vendor/jquery/jquery.min',
-        bootstrap: '../vendor/bootstrap/dist/js/bootstrap.min'
+        jquery: '../vendor/jquery/dist/jquery.min',
+        bootstrap: '../vendor/components-bootstrap/js/bootstrap.min'
     },
     shim: {
         /**
