@@ -7,19 +7,19 @@ module.exports = function (grunt) {
         'js/app/modules/*.js'
     ];
 
-	// main conf
-	var appDir = 'resources/web';
-	var builtDir = 'web/assets';
+    // main conf
+    var appDir = 'resources/web';
+    var builtDir = 'web/assets';
 
-	// less conf
-	var lessPaths = [
-		'<%= appDir %>/css',
-		'<%= appDir %>/vendor/components-bootstrap/less'
+    // less conf
+    var lessPaths = [
+        '<%= appDir %>/css',
+        '<%= appDir %>/vendor/components-bootstrap/less'
 
-	];
-	var lessFiles = {
-		'<%= appDir %>/css/global.css': '<%= appDir %>/less/global.less'
-	}
+    ];
+    var lessFiles = {
+        '<%= appDir %>/css/global.css': '<%= appDir %>/less/global.less'
+    };
 
     // Project configuration
     grunt.initConfig({
@@ -149,19 +149,19 @@ module.exports = function (grunt) {
             }
         },
         copy:{
-    		main:{
-				files: [
-					{expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'},
-					{expand: true, cwd:'<%= appDir %>/', src: ['js/**'], dest: '<%= builtDir %>'},
-					{expand: true, cwd:'<%= appDir %>/', src: ['fonts/**'], dest: '<%= builtDir %>'}
-				]
-			}
+            main:{
+                files: [
+                    {expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'},
+                    {expand: true, cwd:'<%= appDir %>/', src: ['js/**'], dest: '<%= builtDir %>'},
+                    {expand: true, cwd:'<%= appDir %>/', src: ['fonts/**'], dest: '<%= builtDir %>'}
+                ]
+            }
         },
-		clean: {
-			build: {
-				src: ['<%= builtDir %>/**']
-			}
-		},
+        clean: {
+            build: {
+                src: ['<%= builtDir %>/**']
+            }
+        },
 
         // run "Grunt watch" and have it automatically update things when files change
         watch: {
@@ -189,13 +189,13 @@ module.exports = function (grunt) {
                     spawn: false
                 }
             },
-			copy:{
-				files: '<%= appDir %>/**.js',
-				tasks: ['copy'],
-				options: {
+            copy:{
+                files: '<%= appDir %>/**.js',
+                tasks: ['copy'],
+                options: {
 
-				}
-			}
+                }
+            }
         }
 
     });
@@ -207,11 +207,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     // the "default" task (e.g. simply "Grunt") runs tasks for development
-    grunt.registerTask('default', ['jshint', 'less:dev']);
-    grunt.registerTask('clean-build', ['clean:build', 'copy','requirejs']);
+    grunt.registerTask('default', ['jshint', 'less:dev','clean-build']);
+    grunt.registerTask('clean-build', ['clean:build', 'requirejs','copy']);
 
     // register a "production" task that sets everything up before deployment
     grunt.registerTask('production', ['jshint', 'clean-build', 'uglify', 'less:prod']);
