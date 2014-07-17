@@ -5,15 +5,16 @@
 
 define(function (require) {
     'use strict';
-
+console.log('pouet');
     var angular = require('angular');
-    var controllers = require('app/controllers');
+    var route = require('angular-route');
+    var controllers = require('./app/controllers');
 
-/*
+
     var app = angular.module('WampiGraphApp', ['ngRoute','MainControllers']);
 
     app.init = function () {
-        angular.bootstrap(document, ['WampiGraphApp']);
+       // angular.bootstrap(document, ['WampiGraphApp']);
     };
 
     app.config(['$routeProvider',function($routeProvider){
@@ -25,5 +26,5 @@ define(function (require) {
         });
     }]);
 
-    return app;*/
+    return app;
 });
