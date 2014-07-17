@@ -18,8 +18,8 @@ class Front  implements ControllerProviderInterface{
     public  function  connect(Application $app){
 
         $controllers = $app['controllers_factory'];
-        $controllers->match('','CasusLudi\\Controllers\\Front::home','GET')
-            ->bind('home');
+        $controllers->match('','CasusLudi\\Controllers\\Front::app','GET')
+            ->bind('app');
 
         return $controllers;
 

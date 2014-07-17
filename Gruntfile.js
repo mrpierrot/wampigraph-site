@@ -21,6 +21,18 @@ module.exports = function (grunt) {
         '<%= appDir %>/css/global.css': '<%= appDir %>/less/global.less'
     };
 
+    // Load tasks from our external plugins. These are what we're configuring above
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-bower-requirejs');
+    grunt.renameTask('bower','requirejs');
+    grunt.loadNpmTasks('grunt-composer');
+    grunt.loadNpmTasks('grunt-shell');
+
     // Project configuration
     grunt.initConfig({
         // you can read in JSON files, which are then set as objects. We use this below with banner
@@ -29,59 +41,21 @@ module.exports = function (grunt) {
         // setup some variables that we'll use below
         appDir: appDir,
         builtDir: builtDir,
-
         requirejs: {
-            // creates a "main" requirejs sub-task (grunt requirejs:main)
-            // we *could* have other sub-tasks for using requirejs with other
-            // files or configuration
-            main: {
-                options: {
-                    mainConfigFile: '<%= appDir %>/js/common.js',
-                    appDir: '<%= appDir %>',
-                    baseUrl: './js',
-                    dir: '<%= builtDir %>',
-                    // will be taken care of with compass
-                    optimizeCss: "none",
-                    // will be taken care of with an uglify task directly
-                    optimize: "none",
+            all:{
+                rjsConfig: '<%= appDir %>/js/config.js'
+            }
+        },
 
-                    /**
-                     * The list of modules that should have their dependencies packed into them.
-                     *
-                     * For each module listed here, Require.js will read
-                     * that modules dependencies and package them in the
-                     * file. It will additionally add in any modules (and
-                     * their dependencies) specified in the "include" and
-                     * exclude any modules (and their dependencies) specified
-                     * in "exclude".
-                     */
-                    modules: [
-                        // First set up the common build layer.
-                        {
-                            // module names are relative to baseUrl
-                            name: 'common',
-                            // List common dependencies here. Only need to list
-                            // top level dependencies, "include" will find
-                            // nested dependencies inside each of these
-                            include: ['jquery', 'domReady', 'bootstrap']
-                        },
+        shell:{
+          'bower-install':{
+              command: 'bower install'
+          }
+        },
 
-
-                        // Now set up a build layer for each page, but exclude
-                        // the common one. "exclude" will exclude nested
-                        // the nested, built dependencies from "common". Any
-                        // "exclude" that includes built modules should be
-                        // listed before the build layer that wants to exclude it.
-                        // "include" the appropriate "app/main*" module since by default
-                        // it will not get added to the build since it is loaded by a nested
-                        // require in the page*.js files.
-                        {
-                            // module names are relative to baseUrl/paths config
-                            name: 'app/main',
-                            exclude: ['common']
-                        }
-                    ]
-                }
+        composer : {
+            options:{
+              usePhp: false
             }
         },
 
@@ -155,6 +129,11 @@ module.exports = function (grunt) {
                     {expand: true, cwd:'<%= appDir %>/', src: ['js/**'], dest: '<%= builtDir %>'},
                     {expand: true, cwd:'<%= appDir %>/', src: ['fonts/**'], dest: '<%= builtDir %>'}
                 ]
+            },
+            vendor:{
+                files: [
+                    {expand: true, cwd:'<%= appDir %>/', src: ['vendor/**'], dest: '<%= builtDir %>'}
+                ]
             }
         },
         clean: {
@@ -176,22 +155,22 @@ module.exports = function (grunt) {
 
                     return files;
                 })(),
-                tasks: ['jshint'],
+                tasks: ['jshint','copy:main'],
                 options: {
                     spawn: false
                 }
             },
             // watch all .less files and run less
             less: {
-                files: '<%= appDir %>/less/*.less',
-                tasks: ['less:development'],
+                files: '<%= appDir %>/less/**.less',
+                tasks: ['less:dev'],
                 options: {
                     spawn: false
                 }
             },
             copy:{
-                files: '<%= appDir %>/**.js',
-                tasks: ['copy'],
+                files: ['<%= appDir %>/js/**.js','<%= appDir %>/css/**.css'],
+                tasks: ['copy:main'],
                 options: {
 
                 }
@@ -200,19 +179,13 @@ module.exports = function (grunt) {
 
     });
 
-    // Load tasks from our external plugins. These are what we're configuring above
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-clean');
+
 
     // the "default" task (e.g. simply "Grunt") runs tasks for development
     grunt.registerTask('default', ['jshint', 'less:dev','clean-build']);
+    grunt.registerTask('install', ['composer:install', 'shell:bower-install','requirejs','copy']);
     grunt.registerTask('clean-build', ['clean:build', 'requirejs','copy']);
 
     // register a "production" task that sets everything up before deployment
-    grunt.registerTask('production', ['jshint', 'clean-build', 'uglify', 'less:prod']);
+    grunt.registerTask('prod', ['jshint', 'clean-build', 'uglify', 'less:prod']);
 };

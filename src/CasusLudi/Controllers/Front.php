@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Front {
 
-    public function home(Request $request, Application $app){
+    public function app(Request $request, Application $app){
 
-        return $app['twig']->render('/front/home.html.twig',array(
+        return $app['twig']->render('/app.html.twig',array(
 
 
         ));
