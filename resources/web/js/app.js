@@ -2,29 +2,36 @@
  * Created by Pierrot on 15/07/14.
  */
 
-
-define(function (require) {
+define([
+    'angular',
+    'angular-route',
+    './directives/index',
+    './controllers/MainControllers'
+],function (angular,ngRoute,directives) {
     'use strict';
-console.log('pouet');
-    var angular = require('angular');
-    var route = require('angular-route');
-    var controllers = require('./app/controllers');
+
 
 
     var app = angular.module('WampiGraphApp', ['ngRoute','MainControllers']);
 
     app.init = function () {
-       // angular.bootstrap(document, ['WampiGraphApp']);
+       angular.bootstrap(document, ['WampiGraphApp']);
     };
+
+    app.directive(directives);
 
     app.config(['$routeProvider',function($routeProvider){
         $routeProvider.when('/',{
-            templateUrl: 'assets/js/app/views/core.html',
+            templateUrl: 'assets/js/views/core.html',
             controller:'CoreCtrl'
         }).otherwise({
             redirectTo: '/'
         });
     }]);
+
+
+
+
 
     return app;
 });

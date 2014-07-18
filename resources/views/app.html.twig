@@ -6,7 +6,11 @@
 </div>
 {% endblock %}
 
-{% block js %}
+{% block headjs %}
     {{ parent() }}
-    <script data-main="assets/js/config" src="assets/vendor/requirejs/require.js"></script>
+    <!--<script src="assets/vendor/angular/angular.js"></script>
+    <script src="assets/vendor/angular-route/angular-route.js"></script>
+    <script src="assets/js/app/controllers.js"></script>
+    <script src="assets/js/main.js"></script>-->
+   <script data-main="assets/js/config" src="assets/vendor/requirejs/require.js"></script>
 {% endblock %}

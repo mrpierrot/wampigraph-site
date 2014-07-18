@@ -16,7 +16,8 @@ requirejs.config({
         'components-bootstrap': '../vendor/components-bootstrap/js/bootstrap',
         easeljs: '../vendor/easeljs/lib/easeljs-0.7.1.combined',
         requirejs: '../vendor/requirejs/require',
-        'requirejs-domready': '../vendor/requirejs-domready/domReady'
+        'requirejs-domready': '../vendor/requirejs-domready/domReady',
+        app:'./app'
     },
     shim: {
         bootstrap: [
@@ -40,9 +41,9 @@ requirejs.config({
 
 
 
-require(['requirejs-domready'], function (domReady) {
+require(['domReady'], function (domReady) {
     domReady(function () {
-        require(['main'], function (app) {
+        require(['app'], function (app) {
             app.init();
         });
     });

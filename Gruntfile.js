@@ -145,7 +145,7 @@ module.exports = function (grunt) {
         // run "Grunt watch" and have it automatically update things when files change
         watch: {
             // watch all JS files and run jshint
-            scripts: {
+           /* scripts: {
                 // self executing function to reuse jsFilePaths, but prefix each with appDir
                 files: (function() {
                     var files = [];
@@ -159,7 +159,7 @@ module.exports = function (grunt) {
                 options: {
                     spawn: false
                 }
-            },
+            },*/
             // watch all .less files and run less
             less: {
                 files: '<%= appDir %>/less/**.less',
@@ -168,8 +168,8 @@ module.exports = function (grunt) {
                     spawn: false
                 }
             },
-            copy:{
-                files: ['<%= appDir %>/js/**.js','<%= appDir %>/css/**.css'],
+            sync:{
+                files: ['<%= appDir %>/**'],
                 tasks: ['copy:main'],
                 options: {
 
@@ -178,9 +178,18 @@ module.exports = function (grunt) {
         }
 
     });
+/*
+    grunt.event.on('watch', function(action, filepath,target) {
+        console.log(action,filepath,target);
+       // grunt.config('jshint.all.src', filepath);
+        switch (target){
+            case 'sync':
+                grunt.task.run('copy')
 
-
-
+                break;
+        }
+    });
+*/
     // the "default" task (e.g. simply "Grunt") runs tasks for development
     grunt.registerTask('default', ['jshint', 'less:dev','clean-build']);
     grunt.registerTask('install', ['composer:install', 'shell:bower-install','requirejs','copy']);
