@@ -5,25 +5,24 @@
 define([
     'angular',
     'angular-route',
-    './directives/index',
-    './controllers/MainControllers'
-],function (angular,ngRoute,directives) {
+    './controllers/index',
+    './directives/index'
+],function (angular,ngRoute,controllers,directives) {
     'use strict';
 
-
-
-    var app = angular.module('WampiGraphApp', ['ngRoute','MainControllers']);
+    var app = angular.module('WampiGraphApp', ['ngRoute']);
 
     app.init = function () {
        angular.bootstrap(document, ['WampiGraphApp']);
     };
 
+    app.controller(controllers);
     app.directive(directives);
 
     app.config(['$routeProvider',function($routeProvider){
         $routeProvider.when('/',{
-            templateUrl: 'assets/js/views/core.html',
-            controller:'CoreCtrl'
+            templateUrl: 'assets/js/core/views/core.html',
+            controller:'CoreController'
         }).otherwise({
             redirectTo: '/'
         });

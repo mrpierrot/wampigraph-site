@@ -1,0 +1,15 @@
+{
+  "name": "requirejs-index",
+  "version": "0.0.1",
+  "homepage": "",
+  "authors": [
+    "p.chabiland@croquepixel.net"
+  ],
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "requirejs",
+    "index"
+  ],
+  "license": "new BSD, and MIT"
+}

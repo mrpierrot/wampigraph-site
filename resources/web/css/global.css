@@ -6163,6 +6163,10 @@ button.close {
     display: none !important;
   }
 }
-body {
-  color: #000000;
+.container {
+  height: 100vh;
+  background-color: #DCDCDC;
+}
+.container .core {
+  height: 100%;
 }

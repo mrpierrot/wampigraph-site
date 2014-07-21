@@ -7,7 +7,6 @@
 requirejs.config({
     baseUrl: '/assets/js',
     paths: {
-        domReady: '../vendor/requirejs-domready/domReady',
         jquery: '../vendor/jquery/dist/jquery',
         bootstrap: '../vendor/components-bootstrap/js/bootstrap.min',
         angular: '../vendor/angular/angular',
@@ -17,13 +16,19 @@ requirejs.config({
         easeljs: '../vendor/easeljs/lib/easeljs-0.7.1.combined',
         requirejs: '../vendor/requirejs/require',
         'requirejs-domready': '../vendor/requirejs-domready/domReady',
-        app:'./app'
+        'requirejs-index': '../vendor/requirejs-index/index'
     },
     shim: {
+        easel: {
+            exports: 'createjs'
+        },
         bootstrap: [
             'jquery'
         ],
         angular: {
+            deps: [
+                'jquery'
+            ],
             exports: 'angular'
         },
         'angular-route': {
@@ -41,9 +46,9 @@ requirejs.config({
 
 
 
-require(['domReady'], function (domReady) {
+require(['requirejs-domready'], function (domReady) {
     domReady(function () {
-        require(['app'], function (app) {
+        require(['core/app'], function (app) {
             app.init();
         });
     });

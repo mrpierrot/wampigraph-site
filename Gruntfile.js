@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 
     ];
     var lessFiles = {
-        '<%= appDir %>/css/global.css': '<%= appDir %>/less/global.less'
+        '<%= appDir %>/css/global.css': 'resources/less/global.less'
     };
 
     // Load tasks from our external plugins. These are what we're configuring above
@@ -113,7 +113,7 @@ module.exports = function (grunt) {
             },
             prod: {
                 options: {
-                    paths: ['<%= appDir %>/css'],
+                    paths: lessPaths,
                     cleancss: true,
                     modifyVars: {
 
@@ -123,6 +123,11 @@ module.exports = function (grunt) {
             }
         },
         copy:{
+            css:{
+                files: [
+                    {expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'}
+                ]
+            },
             main:{
                 files: [
                     {expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'},
@@ -162,8 +167,8 @@ module.exports = function (grunt) {
             },*/
             // watch all .less files and run less
             less: {
-                files: '<%= appDir %>/less/**.less',
-                tasks: ['less:dev'],
+                files: 'resources/less/**.less',
+                tasks: ['less:dev','copy:css'],
                 options: {
                     spawn: false
                 }

@@ -1,16 +1,12 @@
 {% extends 'layouts/global.html.twig' %}
 
-{% block content %}
-<div ng-view>
 
-</div>
-{% endblock %}
+
+{% block container_attrs %}ng-view{% endblock %}
 
 {% block headjs %}
     {{ parent() }}
-    <!--<script src="assets/vendor/angular/angular.js"></script>
-    <script src="assets/vendor/angular-route/angular-route.js"></script>
-    <script src="assets/js/app/controllers.js"></script>
-    <script src="assets/js/main.js"></script>-->
+
+   <script data-main="assets/js/config" src="assets/vendor/requirejs-index/index.js"></script>
    <script data-main="assets/js/config" src="assets/vendor/requirejs/require.js"></script>
 {% endblock %}
