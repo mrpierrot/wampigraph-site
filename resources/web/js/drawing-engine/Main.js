@@ -29,7 +29,7 @@ define([
     }
 
     var _setApp = function DrawingEngine_setApp(){
-        _engine = new Engine();
+        _engine = new Engine(_stage);
 
         _stage.addChild(_engine.rendering);
     }

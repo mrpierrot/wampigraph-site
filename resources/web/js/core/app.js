@@ -6,11 +6,12 @@ define([
     'angular',
     'angular-route',
     './controllers/index',
-    './directives/index'
+    './directives/index',
+    'angular-bootstrap'
 ],function (angular,ngRoute,controllers,directives) {
     'use strict';
 
-    var app = angular.module('WampiGraphApp', ['ngRoute']);
+    var app = angular.module('WampiGraphApp', ['ngRoute','ui.bootstrap']);
 
     app.init = function () {
        angular.bootstrap(document, ['WampiGraphApp']);

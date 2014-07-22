@@ -3,5 +3,6 @@
  */
 
 requirejs_index([
-    'drawingEngine'
+    'drawingEngine',
+    'toolsBar'
 ]);

@@ -36,6 +36,12 @@ requirejs.config({
                 'angular'
             ],
             exports: 'angular'
+        },
+        'angular-bootstrap': {
+            deps: [
+                'angular'
+            ],
+            exports: 'angular'
         }
     },
     packages: [

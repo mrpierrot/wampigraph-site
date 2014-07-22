@@ -6164,9 +6164,13 @@ button.close {
   }
 }
 .container {
+  width: 100vw!important;
   height: 100vh;
   background-color: #DCDCDC;
 }
 .container .core {
   height: 100%;
+}
+.container .core .tools-bar {
+  vertical-align: top;
 }
