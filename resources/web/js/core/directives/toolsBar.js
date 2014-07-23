@@ -11,6 +11,8 @@ define(function () {
             transclude: true,
             templateUrl: 'assets/js/core/views/directives/tools-bar.html',
             link:function($scope,$element,$attrs){
+
+                $scope.toolModel = 'brush';
                 $scope.$watch('toolModel',function($newValue){
                     if($scope.drawingEngine){
                         $scope.drawingEngine.setTool($newValue);

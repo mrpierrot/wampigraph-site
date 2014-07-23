@@ -4,14 +4,16 @@
 define([
     './Pearl'
     ],function (Pearl) {
-    var clazz = function Engine(stage){
-        this._initialize(stage);
+    var clazz = function Engine(stage,cols,rows){
+        this._initialize(stage,cols,rows);
     };
 
     var p = clazz.prototype;
 
     p.PEARL_WIDTH = 20;
     p.PEARL_HEIGHT = 50;
+
+    p.TOOL_BRUSH = 'brush';
 
     p.rendering = null,
     p._cols,
@@ -24,10 +26,11 @@ define([
     p._pearlsContainer = null,
     p._grid = null,
     p._stage = null;
+    p._tool = null;
 
 
 
-    p._initialize = function Engine__initialize(stage){
+    p._initialize = function Engine__initialize(stage,cols,rows){
         this._stage = clazz.stage = stage;
         this.rendering = new createjs.Container();
 
@@ -37,19 +40,21 @@ define([
         this._grid = new createjs.Shape();
         this.rendering.addChild(this._grid);
 
-        var test = new createjs.Text("lol","10px Arial","#000000");
+        this._rows = rows || 10;
+        this._cols = cols || 10;
+        this._canvasWidth = this._cols*this.PEARL_WIDTH;
+        this._canvasHeight = this._rows*this.PEARL_HEIGHT;
 
-        this.rendering.addChild(test);
-
-        this.setSize(10,10);
         this.reset();
 
         this.rendering.on('pressmove',this._pressMoveHandler,this);
         this.rendering.on('pressup',this._pressUpHandler,this);
+        this.rendering.on('click',this._clickHandler,this);
 
     }
 
     p._pressMoveHandler = function Engine__pressMoveHandler(){
+        if(this._tool !== this.TOOL_BRUSH)return;
         var mouseX = this._stage.mouseX,
             mouseY = this._stage.mouseY;
 
@@ -59,17 +64,9 @@ define([
         if(this._lastCol!==col
             ||this._lastRow!==row
             ){
-            if (col < 0) return;
-            if (col >= this._cols) return;
-            if (row < 0) return;
-            if (row >= this._rows) return;
 
-            var index = col+row*this._cols;
+            this._togglePearl(col,row);
 
-            var pearl = this._pearls[index];
-            if(pearl){
-                pearl.toggle();
-            }
             this._lastCol = col;
             this._lastRow = row;
         }
@@ -77,16 +74,68 @@ define([
     }
 
     p._pressUpHandler = function Engine__pressUpHandler(){
+        if(this._tool !== this.TOOL_BRUSH)return;
         this._lastCol = null;
         this._lastRow = null;
     }
 
-    p._updatePearlsCanvas = function Engine__updatePearlsCanvas(){
+    p._clickHandler = function Engine__clickHandler(){
+        if(this._tool !== this.TOOL_BRUSH)return;
+        if(this._lastCol != null ||this._lastRow != null)return;
+
+
+        var mouseX = this._stage.mouseX,
+            mouseY = this._stage.mouseY;
+
+        var col = ~~(mouseX/this.PEARL_WIDTH);
+        var row = ~~(mouseY/this.PEARL_HEIGHT);
+
+        this._togglePearl(col,row);
 
     }
 
-    p.reset = function Engine_reset(){
+    p._togglePearl = function Engine__togglePearl(col,row){
+        if (col < 0) return;
+        if (col >= this._cols) return;
+        if (row < 0) return;
+        if (row >= this._rows) return;
+
+        var index = col+row*this._cols;
+
+        var pearl = this._pearls[index];
+        if(pearl){
+            pearl.toggle();
+        }
+    }
+
+    p._updateDisplay = function Engine__updateDisplay(){
         this._pearlsContainer.removeAllChildren();
+
+        for(var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearlsContainer.addChild(this._pearls[i].rendering);
+
+        }
+
+        var g = this._grid.graphics.c().ss(1).s("#DCDCDC");
+
+
+        for(var x=0;x<this._cols;x++){
+            g.mt(x*this.PEARL_WIDTH+0.5,0);
+            g.lt(x*this.PEARL_WIDTH+0.5,this._canvasHeight);
+        }
+
+        for(var y=0;y<this._rows;y++){
+            g.mt(0,y*this.PEARL_HEIGHT+0.5);
+            g.lt(this._canvasWidth,y*this.PEARL_HEIGHT+0.5);
+        }
+
+
+        g.es();
+    }
+
+
+    p.reset = function Engine_reset(){
+
         this._pearls = [];
 
 
@@ -95,31 +144,69 @@ define([
                 var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
                 pearl.rendering.x = x*this.PEARL_WIDTH;
                 pearl.rendering.y = y*this.PEARL_HEIGHT;
-                this._pearlsContainer.addChild(pearl.rendering);
-                this._pearls.push(pearl);
+
+                pearl.setDebugIndex(this._pearls.push(pearl)-1);
+
 
             }
         }
 
-        var g = this._grid.graphics.c().ss(1).s("#DCDCDC");
-
-        for(var x=0;x<this._rows;x++){
-            g.mt(x*this.PEARL_WIDTH+0.5,0);
-            g.lt(x*this.PEARL_WIDTH+0.5,this._canvasHeight);
-        }
-
-        for(var y=0;y<this._cols;y++){
-            g.mt(0,y*this.PEARL_HEIGHT+0.5);
-            g.lt(this._canvasWidth,y*this.PEARL_HEIGHT+0.5);
-        }
-        g.es();
+        this._updateDisplay();
     }
 
     p.setSize = function Engine_setSize(rows,cols){
+        var oldRows = this._rows,
+            oldCols = this._cols;
+
         this._rows = rows;
         this._cols = cols;
         this._canvasWidth = this._cols*this.PEARL_WIDTH;
         this._canvasHeight = this._rows*this.PEARL_HEIGHT;
+
+
+        var diffCols = this._cols-oldCols;
+        if(diffCols < 0 ){
+            var gap = 0;
+            for(var y=0;y<this._rows;y++){
+                var start = y*oldCols+this._cols+gap;
+                this._pearls.splice(start,-diffCols);
+                gap += diffCols;
+            }
+        }else if(diffCols > 0){
+            var gap = 0;
+            for(var y=0;y<this._rows;y++){
+                var start = y*oldCols+oldCols+gap;
+                var args = [start,0];
+                for( var i= 0;i<diffCols;i++){
+                    var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
+                    var index = start +i;
+                    pearl.rendering.x = (index%this._cols)*this.PEARL_WIDTH;
+                    pearl.rendering.y = (~~(index/this._cols))*this.PEARL_HEIGHT;
+                    args.push(pearl);
+                }
+                this._pearls.splice.apply(this._pearls,args);
+                gap += diffCols;
+            }
+        }
+
+        var diffRows = this._rows-oldRows;
+
+        if(diffRows < 0){
+            var start = this._rows*this._cols;
+            this._pearls.splice(start,this._pearls.length);
+
+        }else if(diffRows > 0){
+            var start = oldRows*this._cols;
+            for( var i= 0,c=diffRows*this._cols;i<c;i++){
+                var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
+                var index = start +i;
+                pearl.rendering.x = (index%this._cols)*this.PEARL_WIDTH;
+                pearl.rendering.y = (~~(index/this._cols))*this.PEARL_HEIGHT;
+                this._pearls.push(pearl);
+            }
+        }
+
+        this._updateDisplay();
 
     }
 
@@ -127,6 +214,32 @@ define([
 
     p.setTool = function Engine_setTool(name){
         console.log('Tool selected : '+name);
+        switch (name){
+            case this.TOOL_BRUSH:
+                this._tool = name;
+                break;
+            default :
+                this._tool = null;
+        }
+        if(name === 'test'){
+            console.log('test');
+            this.setSize(12,10);
+        }
+    }
+
+    p.getData = function Engine_getRawData(){
+        var raw = "";
+
+        for(var i= 0,c=this._pearls.length;i<c;i++){
+           raw += this._pearls[i].isToggle?"0":"1";
+        }
+
+        return {
+            cols:this._cols,
+            rows:this._rows,
+            raw: raw
+        };
+
     }
 
 

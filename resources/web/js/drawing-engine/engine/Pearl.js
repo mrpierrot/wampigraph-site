@@ -10,8 +10,8 @@ define(function () {
 
     p.rendering = null;
     p._shape = null;
-    p._isToggle = true;
-
+    p.isToggle = true,
+    p._indexLabel;
 
     p._initialize = function Pearl__initialize(width,height){
         this._width = width;
@@ -24,8 +24,16 @@ define(function () {
 
 
     p.toggle = function Pearl_toggle(){
-        this._isToggle = !this._isToggle;
-        this._shape.graphics.c().f(this._isToggle?"#FF00FF":"#FF0000").dr(0,0,this._width,this._height).ef();
+        this.isToggle = !this.isToggle;
+        this._shape.graphics.c().f(this.isToggle?"#FF00FF":"#FF0000").dr(0,0,this._width,this._height).ef();
+    }
+
+    p.setDebugIndex = function Pearl_setDebugIndex(index){
+        if(!this._indexLabel){
+            this._indexLabel = new createjs.Text(index,"10px Arial","#000000");
+            this.rendering.addChild(this._indexLabel);
+        }
+        this._indexLabel.text = index;
     }
 
     return clazz;
