@@ -16,11 +16,13 @@ define(function () {
             link:function($scope,$element,$attrs){
 
                 $scope.toolModel = 'brush';
-                $scope.$watch('toolModel',function($newValue){
-                    if($scope.drawingEngine){
-                        $scope.drawingEngine.setTool($newValue);
-                    }
+                $scope.$watch('drawingEngine',function(drawingEngine){
+                    if(drawingEngine){
+                        $scope.$watch('toolModel',function($newValue){
+                            drawingEngine.setTool($newValue);
 
+                        })
+                    }
                 });
 
             },

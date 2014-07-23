@@ -19,10 +19,15 @@ requirejs.config({
         easeljs: '../vendor/easeljs/lib/easeljs-0.7.1.combined',
         requirejs: '../vendor/requirejs/require',
         'requirejs-domready': '../vendor/requirejs-domready/domReady',
-        'requirejs-index': '../vendor/requirejs-index/index'
+        'requirejs-index': '../vendor/requirejs-index/index',
+        gsap: '../vendor/gsap/src/uncompressed/TweenMax',
+        PreloadJS: '../vendor/PreloadJS/lib/preloadjs-0.4.1.combined'
     },
     shim: {
         easel: {
+            exports: 'createjs'
+        },
+        PreloadJS: {
             exports: 'createjs'
         },
         bootstrap: [

@@ -13,22 +13,26 @@ define(['drawing-engine/Main'],function (drawingEngine) {
             transclude: true,
             link:function($scope,$element,$attrs){
 
-                var engine = drawingEngine($element[0]);
+                var de = drawingEngine($element[0]);
 
-                $attrs.$observe('width',_updateSize);
-                $attrs.$observe('height',_updateSize);
+                de.complete = function(engine){
+                    $attrs.$observe('width',_updateSize);
+                    $attrs.$observe('height',_updateSize);
 
-                $scope.drawingEngine = {};
-                for (var name in engine){
-                    var attr = engine[name];
+                    $scope.drawingEngine = {};
+                    for (var name in engine){
+                        var attr = engine[name];
 
-                    if(name[0]!=='_' && typeof(attr) === 'function'){
-                        console.log(name);
-                        $scope.drawingEngine[name] = attr.bind(engine);
+                        if(name[0]!=='_' && typeof(attr) === 'function'){
+                            console.log(name);
+                            $scope.drawingEngine[name] = attr.bind(engine);
+                        }
+
+
                     }
-
-
                 }
+
+
             },
             replace : true
         };

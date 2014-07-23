@@ -132,7 +132,8 @@ module.exports = function (grunt) {
                 files: [
                     {expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'},
                     {expand: true, cwd:'<%= appDir %>/', src: ['js/**'], dest: '<%= builtDir %>'},
-                    {expand: true, cwd:'<%= appDir %>/', src: ['fonts/**'], dest: '<%= builtDir %>'}
+                    {expand: true, cwd:'<%= appDir %>/', src: ['fonts/**'], dest: '<%= builtDir %>'},
+                    {expand: true, cwd:'<%= appDir %>/', src: ['images/**'], dest: '<%= builtDir %>'}
                 ]
             },
             vendor:{

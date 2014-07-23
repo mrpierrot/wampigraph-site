@@ -23,6 +23,7 @@ define([
     p._rows,
     p._lastCol,
     p._lastRow,
+    p._lastX,
     p._canvasWidth,
     p._canvasHeight,
     p._pearls,
@@ -44,7 +45,7 @@ define([
         this.rendering.addChild(this._grid);
 
         this._rows = rows || 10;
-        this._cols = cols || 10;
+        this._cols = cols || 40;
         this._canvasWidth = this._cols*this.PEARL_WIDTH;
         this._canvasHeight = this._rows*this.PEARL_HEIGHT;
 
@@ -53,7 +54,12 @@ define([
         this.rendering.on('pressmove',this._pressMoveHandler,this);
         this.rendering.on('pressup',this._pressUpHandler,this);
         this.rendering.on('click',this._clickHandler,this);
+        this.rendering.on('mousedown',this._mouseDownHandler,this);
 
+    }
+
+    p._mouseDownHandler = function Engine__mouseDownHandler(){
+        this._lastX = this._stage.mouseX;
     }
 
     p._pressMoveHandler = function Engine__pressMoveHandler(){
@@ -68,11 +74,12 @@ define([
             ||this._lastRow!==row
             ){
 
-            this._togglePearl(col,row);
+            this._togglePearl(col,row,(mouseX-this._lastX > 0)?'right':'left');
 
             this._lastCol = col;
             this._lastRow = row;
         }
+        this._lastX = mouseX;
 
     }
 
@@ -97,7 +104,7 @@ define([
 
     }
 
-    p._togglePearl = function Engine__togglePearl(col,row){
+    p._togglePearl = function Engine__togglePearl(col,row,direction){
         if (col < 0) return;
         if (col >= this._cols) return;
         if (row < 0) return;
@@ -107,7 +114,7 @@ define([
 
         var pearl = this._pearls[index];
         if(pearl){
-            pearl.toggle();
+            pearl.toggle(direction);
         }
     }
 
@@ -142,15 +149,11 @@ define([
         this._pearls = [];
 
 
-        for(var y=0;y<this._cols;y++){
-            for(var x=0;x<this._rows;x++){
+        for(var y=0;y<this._rows;y++){
+            for(var x=0;x<this._cols;x++){
                 var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
-                pearl.rendering.x = x*this.PEARL_WIDTH;
-                pearl.rendering.y = y*this.PEARL_HEIGHT;
-
-                pearl.setDebugIndex(this._pearls.push(pearl)-1);
-
-
+                pearl.setPosition(x*this.PEARL_WIDTH,y*this.PEARL_HEIGHT);
+                this._pearls.push(pearl);
             }
         }
 
@@ -183,8 +186,7 @@ define([
                 for( var i= 0;i<diffCols;i++){
                     var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
                     var index = start +i;
-                    pearl.rendering.x = (index%this._cols)*this.PEARL_WIDTH;
-                    pearl.rendering.y = (~~(index/this._cols))*this.PEARL_HEIGHT;
+                    pearl.setPosition((index%this._cols)*this.PEARL_WIDTH,(~~(index/this._cols))*this.PEARL_HEIGHT);
                     args.push(pearl);
                 }
                 this._pearls.splice.apply(this._pearls,args);
@@ -203,8 +205,7 @@ define([
             for( var i= 0,c=diffRows*this._cols;i<c;i++){
                 var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
                 var index = start +i;
-                pearl.rendering.x = (index%this._cols)*this.PEARL_WIDTH;
-                pearl.rendering.y = (~~(index/this._cols))*this.PEARL_HEIGHT;
+                pearl.setPosition((index%this._cols)*this.PEARL_WIDTH,(~~(index/this._cols))*this.PEARL_HEIGHT);
                 this._pearls.push(pearl);
             }
         }
