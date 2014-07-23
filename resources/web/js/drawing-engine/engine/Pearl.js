@@ -52,10 +52,10 @@ define(['../Assets'],function (Assets) {
         this.isToggle = !this.isToggle;
         if(direction === 'left'){
             this._shape.x = !this.isToggle?-this._width:0;
-            TweenLite.to(this._shape,0.2,{x:'-='+this._width,delay:0.05,ease:Circ.easeInOut});
+            TweenLite.to(this._shape,0.2,{x:'-='+this._width,ease:Circ.easeInOut});
         }else{
             this._shape.x = !this.isToggle?-this._width:-this._width*2;
-            TweenLite.to(this._shape,0.2,{x:'+='+this._width,delay:0.05,ease:Circ.easeInOut});
+            TweenLite.to(this._shape,0.2,{x:'+='+this._width,ease:Circ.easeInOut});
         }
 
     }
