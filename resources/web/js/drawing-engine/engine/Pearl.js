@@ -1,6 +1,9 @@
 /**
  * Created by Pierrot on 21/07/14.
  */
+
+'use strict';
+
 define(function () {
     var clazz = function Pearl(width,height){
         this._initialize(width,height);

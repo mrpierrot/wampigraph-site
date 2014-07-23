@@ -1,5 +1,7 @@
+
+'use strict';
+
 define(['drawing-engine/Main'],function (drawingEngine) {
-    'use strict';
 
     var _updateSize =  function drawingEngine_updateSize(newValue){
 

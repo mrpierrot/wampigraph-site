@@ -1,8 +1,11 @@
 /**
  * Created by Pierrot on 22/07/14.
  */
+
+'use strict';
+
 define(function () {
-    'use strict';
+
 
     return function(){
         return {

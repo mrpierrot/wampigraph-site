@@ -1,6 +1,7 @@
 /**
  * Created by Pierrot on 15/07/14.
  */
+'use strict';
 
 define([
     'angular',
@@ -9,7 +10,7 @@ define([
     './directives/index',
     'angular-bootstrap'
 ],function (angular,ngRoute,controllers,directives) {
-    'use strict';
+
 
     var app = angular.module('WampiGraphApp', ['ngRoute','ui.bootstrap']);
 

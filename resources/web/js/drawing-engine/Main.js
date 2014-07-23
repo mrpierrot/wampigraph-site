@@ -2,11 +2,12 @@
  * Created by Pierrot on 21/07/14.
  */
 
+'use strict';
+
 define([
     'easeljs',
     './engine/Engine'
     ],function (easelsjs,Engine) {
-    'use strict';
 
 
     var _stage = null;

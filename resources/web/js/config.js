@@ -4,6 +4,9 @@
  * This file is included in ::_requirejs.html.twig and in Gruntfile.js. The
  * baseUrl is not here so we can dynamically vary it in ::_requirejs.html.twig
  */
+
+'use strict';
+
 requirejs.config({
     baseUrl: '/assets/js',
     paths: {
