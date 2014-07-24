@@ -29,7 +29,7 @@ define(['../Assets'],function (Assets) {
 
 
         this._shape = new createjs.Shape();
-        var color = "#FFFFFF";
+        var color = "#e7e7e7";
         var toggleColor = "#6577ff";
         this._shape.graphics.c().f(color).dr(0,0,this._width,this._height).ef()
             .f(toggleColor).dr(this._width,0,this._width,this._height).ef()
@@ -49,15 +49,22 @@ define(['../Assets'],function (Assets) {
     }
 
     p.toggle = function Pearl_toggle(direction){
-        this.isToggle = !this.isToggle;
-        if(direction === 'left'){
-            this._shape.x = !this.isToggle?-this._width:0;
-            TweenLite.to(this._shape,0.2,{x:'-='+this._width,ease:Circ.easeInOut});
-        }else{
-            this._shape.x = !this.isToggle?-this._width:-this._width*2;
-            TweenLite.to(this._shape,0.2,{x:'+='+this._width,ease:Circ.easeInOut});
-        }
+        this.toggled(!this.isToggle,direction);
 
+    }
+
+    p.toggled = function Pearl_toggled(toggled,direction){
+        if(toggled != this.isToggle){
+            this.isToggle = toggled;
+            TweenLite.killTweensOf(this._shape);
+            if(direction === 'left'){
+                this._shape.x = !this.isToggle?-this._width:0;
+                TweenLite.to(this._shape,0.8,{x:'-='+this._width,ease:Back.easeOut});
+            }else{
+                this._shape.x = !this.isToggle?-this._width:-this._width*2;
+                TweenLite.to(this._shape,0.8,{x:'+='+this._width,ease:Back.easeOut});
+            }
+        }
     }
 
     p.setDebugIndex = function Pearl_setDebugIndex(index){

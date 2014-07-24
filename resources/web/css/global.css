@@ -6172,5 +6172,11 @@ button.close {
   height: 100%;
 }
 .container .core .tools-bar {
+  display: inline-block;
+  width: 78px;
   vertical-align: top;
+}
+.container .core .tools-bar .btn-group-vertical {
+  margin: 10px auto 10px auto;
+  width: 78px;
 }

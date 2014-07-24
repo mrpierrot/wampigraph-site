@@ -5,13 +5,14 @@
 'use strict';
 
 define([
-    './Pearl'
+    './Pearl',
+    'easeljs'
     ],function (Pearl) {
     var clazz = function Engine(stage,cols,rows){
         this._initialize(stage,cols,rows);
     };
 
-    var p = clazz.prototype;
+    var p = clazz.prototype = new createjs.EventDispatcher();
 
     p.PEARL_WIDTH = 20;
     p.PEARL_HEIGHT = 50;
@@ -24,12 +25,15 @@ define([
     p._lastCol,
     p._lastRow,
     p._lastX,
+    p._lastY,
     p._canvasWidth,
     p._canvasHeight,
+    p._history,
+    p._historyIndex;
     p._pearls,
     p._pearlsContainer = null,
     p._grid = null,
-    p._stage = null;
+    p._stage = null,
     p._tool = null;
 
 
@@ -59,34 +63,77 @@ define([
     }
 
     p._mouseDownHandler = function Engine__mouseDownHandler(){
+        if(this._tool !== this.TOOL_BRUSH)return;
         this._lastX = this._stage.mouseX;
+    }
+
+    p._mouseUpHandler = function Engine__mouseUpHandler(){
+        if(this._tool !== this.TOOL_BRUSH)return;
+        this._saveState();
     }
 
     p._pressMoveHandler = function Engine__pressMoveHandler(){
         if(this._tool !== this.TOOL_BRUSH)return;
+
+        // On recupere la position de la souris
         var mouseX = this._stage.mouseX,
             mouseY = this._stage.mouseY;
 
+        // On calcul la position de la souris en colonnes/lignes du cavena de perles
         var col = ~~(mouseX/this.PEARL_WIDTH);
         var row = ~~(mouseY/this.PEARL_HEIGHT);
 
+        // si la la souris s'est deplacé sur une autre perle que la derniere déjà survolé
         if(this._lastCol!==col
             ||this._lastRow!==row
             ){
 
-            this._togglePearl(col,row,(mouseX-this._lastX > 0)?'right':'left');
+            // On trace une ligne droite entre la position de la souris actuel et la derniere position connu
+            // Pour celà, on utilise l'algorithme de Bresenham ( http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm )
+            var x0 = this._lastCol,
+                y0 = this._lastRow,
+                x1 = col,
+                y1 = row;
 
-            this._lastCol = col;
-            this._lastRow = row;
+            if(x0 != null && y0!=null){
+                var dx = Math.abs(x1-x0),
+                    dy = Math.abs(y1-y0),
+                    sx = (x0 < x1) ? 1 : -1,
+                    sy = (y0 < y1) ? 1 : -1,
+                    err = dx-dy;
+
+                do{
+                    // on tourne la perle courante
+
+                    this._togglePearl(x0,y0,(mouseX-this._lastX > 0)?'right':'left');
+
+                    var e2 = 2*err;
+                    if (e2 >-dy){ err -= dy; x0  += sx; }
+                    if (e2 < dx){ err += dx; y0  += sy; }
+
+
+                }while(!((x0==x1) && (y0==y1)));
+            }
+
+
+
         }
+
+        // stockage de la position de la souris en la definissant comme derniere valeur
+        this._lastCol = col;
+        this._lastRow = row;
         this._lastX = mouseX;
+        this._lastY = mouseY;
 
     }
+
+
 
     p._pressUpHandler = function Engine__pressUpHandler(){
         if(this._tool !== this.TOOL_BRUSH)return;
         this._lastCol = null;
         this._lastRow = null;
+        this._saveState();
     }
 
     p._clickHandler = function Engine__clickHandler(){
@@ -143,24 +190,7 @@ define([
         g.es();
     }
 
-
-    p.reset = function Engine_reset(){
-
-        this._pearls = [];
-
-
-        for(var y=0;y<this._rows;y++){
-            for(var x=0;x<this._cols;x++){
-                var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
-                pearl.setPosition(x*this.PEARL_WIDTH,y*this.PEARL_HEIGHT);
-                this._pearls.push(pearl);
-            }
-        }
-
-        this._updateDisplay();
-    }
-
-    p.setSize = function Engine_setSize(rows,cols){
+    p._setSize = function Engine__setSize(cols,rows){
         var oldRows = this._rows,
             oldCols = this._cols;
 
@@ -215,6 +245,78 @@ define([
     }
 
 
+    p._saveState = function Engine__saveState(){
+        if(this._historyIndex >= 0){
+            this._historyIndex++;
+            this._history.splice(this._historyIndex,this._history.length,this.getData());
+            console.log('Engine__saveState',this._historyIndex,this._history.length);
+        }
+        this.dispatchEvent("historyChanged");
+    }
+
+    p.undo = function Engine_undo(){
+        console.log('Engine_undo',this._historyIndex,this._history.length);
+        if(this._historyIndex > 0 && this._history.length > 1){
+            this._historyIndex--;
+            this.load(this._history[this._historyIndex]);
+            this.dispatchEvent("historyChanged");
+        }
+    }
+
+    p.redo = function Engine_redo(){
+        console.log('Engine_redo',this._historyIndex,this._history.length);
+        if(this._historyIndex < this._history.length-1){
+            this._historyIndex++;
+            this.load(this._history[this._historyIndex]);
+            this.dispatchEvent("historyChanged");
+        }
+    }
+
+    p.canUndo = function Engine_canUndo(){
+        return this._historyIndex > 0;
+    }
+
+    p.canRedo = function Engine_canRedo(){
+        return this._historyIndex < this._history.length-1;
+    }
+
+    p.reset = function Engine_reset(){
+
+        this._pearls = [];
+
+
+
+
+        for(var y=0;y<this._rows;y++){
+            for(var x=0;x<this._cols;x++){
+                var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
+                pearl.setPosition(x*this.PEARL_WIDTH,y*this.PEARL_HEIGHT);
+                this._pearls.push(pearl);
+            }
+        }
+        this._history = [this.getData()];
+        this._historyIndex = 0;
+
+        this._updateDisplay();
+    }
+
+    p.load = function Engine_load(data){
+        this._setSize(data.cols,data.rows);
+        for(var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearls[i].toggled(data.raw[i]==="1");
+
+        }
+    }
+
+
+
+    p.setSize = function Engine_setSize(cols,rows){
+        this._setSize(cols,rows);
+        this._saveState();
+
+    }
+
+
 
     p.setTool = function Engine_setTool(name){
         console.log('Tool selected : '+name);
@@ -235,7 +337,7 @@ define([
         var raw = "";
 
         for(var i= 0,c=this._pearls.length;i<c;i++){
-           raw += this._pearls[i].isToggle?"0":"1";
+           raw += this._pearls[i].isToggle?"1":"0";
         }
 
         return {
