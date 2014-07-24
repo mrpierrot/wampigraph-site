@@ -173,7 +173,7 @@ define([
 
         }
 
-        var g = this._grid.graphics.c().ss(1).s("#DCDCDC");
+       /* var g = this._grid.graphics.c().ss(1).s("#DCDCDC");
 
 
         for(var x=0;x<this._cols;x++){
@@ -187,7 +187,7 @@ define([
         }
 
 
-        g.es();
+        g.es();*/
     }
 
     p._setSize = function Engine__setSize(cols,rows){
