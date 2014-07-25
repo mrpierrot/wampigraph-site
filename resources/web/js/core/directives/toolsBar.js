@@ -24,7 +24,7 @@ define(function () {
     };
 
 
-    return function($modal){
+    return function($modal,$timeout){
         return {
 
             restrict: 'E',
@@ -41,11 +41,13 @@ define(function () {
                         });
                         drawingEngine.addEventListener("historyChanged",function(){
                             console.log("historyChanged");
-
-                            $scope.$apply(function(){
-                                $scope.canUndo = drawingEngine.canUndo();
-                                $scope.canRedo = drawingEngine.canRedo();
+                            $timeout(function(){
+                                $scope.$apply(function(){
+                                    $scope.canUndo = drawingEngine.canUndo();
+                                    $scope.canRedo = drawingEngine.canRedo();
+                                });
                             });
+
 
                         });
 
