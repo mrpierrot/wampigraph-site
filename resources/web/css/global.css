@@ -6180,3 +6180,13 @@ button.close {
   margin: 10px auto 10px auto;
   width: 78px;
 }
+.resize-modal .align-box {
+  width: 102px;
+  margin: auto;
+}
+.resize-modal .align-box label {
+  width: 34px;
+  height: 34px;
+  padding: 6px 6px;
+  border-radius: 0;
+}

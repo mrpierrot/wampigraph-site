@@ -172,22 +172,6 @@ define([
             this._pearlsContainer.addChild(this._pearls[i].rendering);
 
         }
-
-       /* var g = this._grid.graphics.c().ss(1).s("#DCDCDC");
-
-
-        for(var x=0;x<this._cols;x++){
-            g.mt(x*this.PEARL_WIDTH+0.5,0);
-            g.lt(x*this.PEARL_WIDTH+0.5,this._canvasHeight);
-        }
-
-        for(var y=0;y<this._rows;y++){
-            g.mt(0,y*this.PEARL_HEIGHT+0.5);
-            g.lt(this._canvasWidth,y*this.PEARL_HEIGHT+0.5);
-        }
-
-
-        g.es();*/
     }
 
     p._setSize = function Engine__setSize(cols,rows){
@@ -280,6 +264,15 @@ define([
         return this._historyIndex < this._history.length-1;
     }
 
+    p.fill = function Engine_fill(toggled){
+        var dir = Math.random()>0.5?"left":"right";
+        for(var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearls[i].toggled(toggled,dir);
+
+        }
+        this._saveState();
+    }
+
     p.reset = function Engine_reset(){
 
         this._pearls = [];
@@ -310,7 +303,8 @@ define([
 
 
 
-    p.setSize = function Engine_setSize(cols,rows){
+    p.setSize = function Engine_setSize(cols,rows,vAlign,hAlign){
+        console.log(cols,rows,vAlign,hAlign);
         this._setSize(cols,rows);
         this._saveState();
 
@@ -346,6 +340,10 @@ define([
             raw: raw
         };
 
+    }
+
+    p.getDimensions = function Engine_getDimensions(){
+        return {cols:this._cols,rows:this._rows};
     }
 
 

@@ -5,8 +5,17 @@
         <label class="btn btn-success" ng-model="toolModel" btn-radio="'test'" uncheckable>Test</label>
     </div>
     <div class="btn-group-vertical">
-        <label class="btn btn-success" ng-model="canUndo" ng-click="toolsBar_undo()" ng-disabled="!canUndo">Annuler</label>
+        <label class="btn btn-success" ng-click="toolsBar_undo()" ng-disabled="!canUndo">Annuler</label>
         <label class="btn btn-success" ng-click="toolsBar_redo()" ng-disabled="!canRedo">Revenir</label>
+    </div>
+
+    <div class="btn-group-vertical">
+        <label class="btn btn-success" ng-click="toolsBar_fillNotToggled()" >Blanc</label>
+        <label class="btn btn-success" ng-click="toolsBar_fillToggled()" >Violet</label>
+    </div>
+
+    <div class="btn-group-vertical">
+        <label class="btn btn-success" ng-click="toolBar_resize()" >Retailler</label>
     </div>
 </div>
 

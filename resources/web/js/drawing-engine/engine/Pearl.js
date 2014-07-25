@@ -29,8 +29,8 @@ define(['../Assets'],function (Assets) {
 
 
         this._shape = new createjs.Shape();
-        var color = "#e7e7e7";
-        var toggleColor = "#6577ff";
+        var color = "#fcffea";
+        var toggleColor = "#745a81";
         this._shape.graphics.c().f(color).dr(0,0,this._width,this._height).ef()
             .f(toggleColor).dr(this._width,0,this._width,this._height).ef()
             .f(color).dr(this._width*2,0,this._width,this._height).ef()

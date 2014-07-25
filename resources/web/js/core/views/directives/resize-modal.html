@@ -1,0 +1,38 @@
+<div class="resize-modal">
+    <div class="modal-header">
+        <h3 class="modal-title">Retailler</h3>
+    </div>
+    <div class="modal-body">
+        <form name="resize-form">
+            <label>
+                Lignes: <input type="number" name="input" ng-model="dimensions.rows"
+                           min="0" max="99" required>
+                    <span class="error" ng-show="myForm.input.$error.required">Required!</span>
+                    <span class="error" ng-show="myForm.input.$error.number">Not valid number!</span>
+            </label>
+            <label>
+                Colonnes: <input type="number" name="input" ng-model="dimensions.cols"
+                               min="0" max="99" required>
+                <span class="error" ng-show="myForm.input.$error.required">Required!</span>
+                <span class="error" ng-show="myForm.input.$error.number">Not valid number!</span>
+            </label>
+            <div class="btn-group align-box">
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'top',hAlign:'left'}" uncheckable>TL</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'top',hAlign:'center'}" uncheckable>TC</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'top',hAlign:'right'}" uncheckable>TR</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'center',hAlign:'left'}" uncheckable>CL</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'center',hAlign:'center'}" uncheckable>CC</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'center',hAlign:'right'}" uncheckable>CR</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'left'}" uncheckable>BL</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'center'}" uncheckable>BC</label>
+                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'right'}" uncheckable>BR</label>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
