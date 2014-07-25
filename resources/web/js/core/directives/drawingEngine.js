@@ -9,11 +9,11 @@ define(['drawing-engine/Main'],function (drawingEngine) {
     return function($window){
         return {
             restrict: 'E',
-            template: '<canvas></canvas>',
+            template: '<div><div class="drawing-engine-viewport"><canvas></canvas></div></div>',
             transclude: true,
             link:function($scope,$element,$attrs){
 
-                var de = drawingEngine($element[0]);
+                var de = drawingEngine($('canvas',$element[0]).get(0));
 
                 de.complete = function(engine){
                     $attrs.$observe('width',_updateSize);

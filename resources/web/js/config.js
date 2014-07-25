@@ -21,7 +21,8 @@ requirejs.config({
         'requirejs-domready': '../vendor/requirejs-domready/domReady',
         'requirejs-index': '../vendor/requirejs-index/index',
         gsap: '../vendor/gsap/src/uncompressed/TweenMax',
-        PreloadJS: '../vendor/PreloadJS/lib/preloadjs-0.4.1.combined'
+        PreloadJS: '../vendor/PreloadJS/lib/preloadjs-0.4.1.combined',
+        pixi: '../vendor/pixi.js/bin/pixi'
     },
     shim: {
         easel: {

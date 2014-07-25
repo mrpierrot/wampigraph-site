@@ -7,9 +7,21 @@
   .core{
     height: 100%;
     .drawing-engine{
+      box-sizing: border-box;
+      display: inline-block;
+      padding-left: 88px;
+      height: 99%;
+      width: 99%;
+
+      .drawing-engine-viewport{
+        overflow: scroll;
+        height: 100%;
+        width: 100%;
+      }
     }
 
     .tools-bar {
+      position: absolute;
       display: inline-block;
       width: 78px;
       vertical-align: top;

@@ -19,7 +19,7 @@ define([
     var _interface = null;
     var _setEnv = function DrawingEngine_setEnv(canvas){
         console.log(canvas);
-        _stage = new createjs.Stage(canvas);
+        _stage = new createjs.SpriteStage(canvas);
         _stage.snapToPixelsEnabled = true;
         _stage.mouseMoveOutside = true;
         _stage.enableMouseOver(60);
