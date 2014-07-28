@@ -8,11 +8,12 @@ define([
     'angular-route',
     './controllers/index',
     './directives/index',
-    'angular-bootstrap'
+    'angular-bootstrap',
+    'angular-ui-slider'
 ],function (angular,ngRoute,controllers,directives) {
 
 
-    var app = angular.module('WampiGraphApp', ['ngRoute','ui.bootstrap']);
+    var app = angular.module('WampiGraphApp', ['ngRoute','ui.bootstrap','ui.slider']);
 
     app.init = function () {
        angular.bootstrap(document, ['WampiGraphApp']);

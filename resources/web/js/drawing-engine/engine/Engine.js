@@ -8,8 +8,8 @@ define([
     './Pearl',
     'easeljs'
     ],function (Pearl) {
-    var clazz = function Engine(stage,cols,rows){
-        this._initialize(stage,cols,rows);
+    var clazz = function Engine(stage,width,height,cols,rows){
+        this._initialize(stage,width,height,cols,rows);
     };
 
     var p = clazz.prototype = new createjs.EventDispatcher();
@@ -21,6 +21,11 @@ define([
 
     p.rendering = null,
     p._cols,
+    p._width,
+    p._height,
+    p._viewport,
+    p._xRate,
+    p._yRate,
     p._rows,
     p._lastCol,
     p._lastRow,
@@ -34,12 +39,23 @@ define([
     p._pearlsContainer = null,
     p._grid = null,
     p._stage = null,
-    p._tool = null;
+    p._tool = p.TOOL_BRUSH;
 
 
 
-    p._initialize = function Engine__initialize(stage,cols,rows){
+    p._initialize = function Engine__initialize(stage,width,height,cols,rows){
         this._stage = clazz.stage = stage;
+
+        this._width = width;
+        this._height = height;
+        this._cols = cols || 80;
+        this._rows = rows || 18;
+
+        this._viewport = {x:0,y:0,width:this._width,height:this._height};
+        this._xRate = 0;
+        this._yRate = 0;
+        //this._visiblePearls = [];
+
         this.rendering = new createjs.Container();
 
         this._pearlsContainer = new createjs.Container();
@@ -48,8 +64,7 @@ define([
         this._grid = new createjs.Shape();
         this.rendering.addChild(this._grid);
 
-        this._rows = rows || 10;
-        this._cols = cols || 40;
+
         this._canvasWidth = this._cols*this.PEARL_WIDTH;
         this._canvasHeight = this._rows*this.PEARL_HEIGHT;
 
@@ -59,6 +74,7 @@ define([
         this.rendering.on('pressup',this._pressUpHandler,this);
         this.rendering.on('click',this._clickHandler,this);
         this.rendering.on('mousedown',this._mouseDownHandler,this);
+
 
     }
 
@@ -76,8 +92,8 @@ define([
         if(this._tool !== this.TOOL_BRUSH)return;
 
         // On recupere la position de la souris
-        var mouseX = this._stage.mouseX,
-            mouseY = this._stage.mouseY;
+        var mouseX = this._stage.mouseX-this._viewport.x,
+            mouseY = this._stage.mouseY-this._viewport.y;
 
         // On calcul la position de la souris en colonnes/lignes du cavena de perles
         var col = ~~(mouseX/this.PEARL_WIDTH);
@@ -101,7 +117,6 @@ define([
                     sx = (x0 < x1) ? 1 : -1,
                     sy = (y0 < y1) ? 1 : -1,
                     err = dx-dy;
-
                 do{
                     // on tourne la perle courante
 
@@ -141,8 +156,8 @@ define([
         if(this._lastCol != null ||this._lastRow != null)return;
 
 
-        var mouseX = this._stage.mouseX,
-            mouseY = this._stage.mouseY;
+        var mouseX = this._stage.mouseX-this._viewport.x,
+            mouseY = this._stage.mouseY-this._viewport.y;
 
         var col = ~~(mouseX/this.PEARL_WIDTH);
         var row = ~~(mouseY/this.PEARL_HEIGHT);
@@ -172,6 +187,30 @@ define([
             this._pearlsContainer.addChild(this._pearls[i].rendering);
 
         }
+        this.updateViewport();
+    }
+
+    p.updateViewport = function Engine_updateViewport(width,height){
+        if(width)this._viewport.width = +width;
+        if(height)this._viewport.height = +height;
+
+        var diffX = this._viewport.width - this._canvasWidth;
+        var diffY = this._viewport.height - this._canvasHeight;
+
+        this.rendering.x = this._viewport.x = (diffX < 0)?this._xRate*diffX:diffX*0.5;
+        this.rendering.y = this._viewport.y = (diffY < 0)?this._yRate*diffY:diffY*0.5;
+
+        for(var i= 0,c=this._pearls.length;i<c;i++){
+            var pearl = this._pearls[i].rendering;
+            if( pearl.x + this.PEARL_WIDTH < -this._viewport.x ){ pearl.visible = false; continue; }
+            else if( pearl.x > -this._viewport.x + this._viewport.width ){ pearl.visible = false; continue; }
+            else if( pearl.y + this.PEARL_HEIGHT < -this._viewport.y ){ pearl.visible = false; continue; }
+            else if( pearl.y > -this._viewport.y + this._viewport.height ){ pearl.visible = false; continue; }
+            else { pearl.visible = true;}
+
+
+        }
+
     }
 
     p._setSize = function Engine__setSize(cols,rows){
@@ -224,8 +263,7 @@ define([
             }
         }
 
-        this._stage.canvas.width = this._cols*this.PEARL_WIDTH;
-        this._stage.canvas.height = this._rows*this.PEARL_HEIGHT;
+
         this._updateDisplay();
 
     }
@@ -292,8 +330,6 @@ define([
         this._history = [this.getData()];
         this._historyIndex = 0;
 
-        this._stage.canvas.width = this._cols*this.PEARL_WIDTH;
-        this._stage.canvas.height = this._rows*this.PEARL_HEIGHT;
         this._updateDisplay();
     }
 
@@ -323,7 +359,7 @@ define([
                 this._tool = name;
                 break;
             default :
-                this._tool = null;
+                this._tool = this.TOOL_BRUSH;
         }
     }
 
@@ -342,8 +378,19 @@ define([
 
     }
 
+    p.moveViewport = function Engine__moveViewport(x,y){
+        if(x<0)x=0;
+        if(x>1)x=1;
+        if(y<0)y=0;
+        if(y>1)y=1;
+        this._xRate = x;
+        this._yRate = y;
+        this.updateViewport();
+    }
+
+
     p.getDimensions = function Engine_getDimensions(){
-        return {cols:this._cols,rows:this._rows};
+        return {cols:this._cols,rows:this._rows,xRate:this._xRate,yRate:this._yRate};
     }
 
 

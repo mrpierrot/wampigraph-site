@@ -22,7 +22,10 @@ requirejs.config({
         'requirejs-index': '../vendor/requirejs-index/index',
         gsap: '../vendor/gsap/src/uncompressed/TweenMax',
         PreloadJS: '../vendor/PreloadJS/lib/preloadjs-0.4.1.combined',
-        pixi: '../vendor/pixi.js/bin/pixi'
+        //'angular-bootstrap-slider': '../vendor/angular-bootstrap-slider/slider',
+        //'seiyria-bootstrap-slider': '../vendor/seiyria-bootstrap-slider/js/bootstrap-slider',
+        'angular-ui-slider': '../vendor/angular-ui-slider/src/slider',
+        'jquery-ui': '../vendor/jquery-ui/ui/minified/jquery-ui.min'
     },
     shim: {
         easel: {
@@ -32,6 +35,9 @@ requirejs.config({
             exports: 'createjs'
         },
         bootstrap: [
+            'jquery'
+        ],
+        'jquery-ui': [
             'jquery'
         ],
         angular: {
@@ -49,6 +55,14 @@ requirejs.config({
         'angular-bootstrap': {
             deps: [
                 'angular'
+            ],
+            exports: 'angular'
+        },
+        'angular-ui-slider': {
+            deps: [
+                'angular',
+                'jquery',
+                'jquery-ui'
             ],
             exports: 'angular'
         }

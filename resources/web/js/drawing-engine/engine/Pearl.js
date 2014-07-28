@@ -20,32 +20,12 @@ define(['../Assets'],function (Assets) {
     p._initialize = function Pearl__initialize(width,height){
         this._width = width;
         this._height = height;
-        this.rendering = new createjs.Container();
-
-        this._mask = new createjs.Shape();
-        this._mask.graphics.c().f("#FF00FF").dr(0,0,this._width,this._height).ef();
-        this.rendering.mask = this._mask;
-        this.rendering.addChild(this._mask);
-
-
-        this._shape = new createjs.Shape();
-        var color = "#fcffea";
-        var toggleColor = "#745a81";
-        this._shape.graphics.c().f(color).dr(0,0,this._width,this._height).ef()
-            .f(toggleColor).dr(this._width,0,this._width,this._height).ef()
-            .f(color).dr(this._width*2,0,this._width,this._height).ef()
-            .f(toggleColor).dr(this._width*3,0,this._width,this._height).ef();
-        this.rendering.addChild(this._shape);
-        this._shape.cache(0,0,this._width*3,this._height);
-        //
-
-        this.rendering.addChild(new createjs.Bitmap(Assets.pearl));
-
+        this.rendering = new createjs.Sprite(Assets.pearl)
     }
 
     p.setPosition = function(x,y){
-        this._mask.x = this.rendering.x = x;
-        this._mask.y = this.rendering.y = y;
+        this.rendering.x = x;
+        this.rendering.y = y;
 
     }
 
@@ -55,16 +35,15 @@ define(['../Assets'],function (Assets) {
     }
 
     p.toggled = function Pearl_toggled(toggled,direction){
+
         if(toggled != this.isToggle){
+            direction = direction || (Math.random()>0.5?'left':'right');
+
             this.isToggle = toggled;
-            TweenLite.killTweensOf(this._shape);
-            if(direction === 'left'){
-                this._shape.x = !this.isToggle?-this._width:0;
-                TweenLite.to(this._shape,0.8,{x:'-='+this._width,ease:Back.easeOut});
-            }else{
-                this._shape.x = !this.isToggle?-this._width:-this._width*2;
-                TweenLite.to(this._shape,0.8,{x:'+='+this._width,ease:Back.easeOut});
-            }
+            var label = (this.isToggle?'a2b':'b2a')+'-'+direction;
+            console.log(label);
+            this.rendering.gotoAndPlay(label);
+
         }
     }
 

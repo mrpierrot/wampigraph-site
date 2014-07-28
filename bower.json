@@ -24,7 +24,7 @@
         "components-bootstrap": "~3.2.0",
         "easeljs": "master",
         "PreloadJS": "master",
-        "pixi.js": "~1.6.1",
-        "gsap": "1.13.1"
+        "gsap": "1.13.1",
+        "angular-ui-slider": "~0.0.2"
     }
 }

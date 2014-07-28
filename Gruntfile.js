@@ -15,6 +15,7 @@ module.exports = function (grunt) {
     var lessPaths = [
         '<%= appDir %>/css',
         '<%= appDir %>/vendor/components-bootstrap/less'
+        //'<%= appDir %>/vendor/seiyria-bootstrap-slider/dist/css'
 
     ];
     var lessFiles = {
@@ -128,6 +129,11 @@ module.exports = function (grunt) {
                     {expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'}
                 ]
             },
+            js:{
+                files: [
+                    {expand: true, cwd:'<%= appDir %>/', src: ['js/**'], dest: '<%= builtDir %>'}
+                ]
+            },
             main:{
                 files: [
                     {expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'},
@@ -175,8 +181,8 @@ module.exports = function (grunt) {
                 }
             },
             sync:{
-                files: ['<%= appDir %>/**'],
-                tasks: ['copy:main'],
+                files: ['<%= appDir %>/js/**'],
+                tasks: ['copy:js'],
                 options: {
 
                 }

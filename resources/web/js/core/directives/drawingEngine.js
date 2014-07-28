@@ -3,34 +3,65 @@
 
 define(['drawing-engine/Main'],function (drawingEngine) {
 
-    var _updateSize =  function drawingEngine_updateSize(newValue){
 
-    };
     return function($window){
         return {
             restrict: 'E',
-            template: '<div><div class="drawing-engine-viewport"><canvas></canvas></div></div>',
+            templateUrl: 'assets/js/core/views/directives/drawing-engine.html',
             transclude: true,
             link:function($scope,$element,$attrs){
+                $scope.drawingEngine_scrollX = 0;
+                $scope.drawingEngine_scrollY = 0;
 
-                var de = drawingEngine($('canvas',$element[0]).get(0));
+                var root = $($element[0]);
+                var canvas = $('canvas',root).get(0);
+                var hSlide = $('.h-slide',root);
+                var vSlide = $('.v-slide',root);
 
+                var de = drawingEngine(canvas);
                 de.complete = function(engine){
-                    $attrs.$observe('width',_updateSize);
-                    $attrs.$observe('height',_updateSize);
+
 
                     $scope.drawingEngine = {};
                     for (var name in engine){
                         var attr = engine[name];
-
                         if(name[0]!=='_' && typeof(attr) === 'function'){
-                            console.log(name);
                             $scope.drawingEngine[name] = attr.bind(engine);
                         }
-
-
                     }
+
+                    $scope.$watch('drawingEngine_scrollX',function(value){
+                        //console.log('drawingEngine_scrollX',value);
+                        $scope.drawingEngine.moveViewport($scope.drawingEngine_scrollX/1000,$scope.drawingEngine_scrollY/1000);
+                    });
+                    $scope.$watch('drawingEngine_scrollY',function(value){
+                        //console.log('drawingEngine_scrollY',value);
+                        $scope.drawingEngine.moveViewport($scope.drawingEngine_scrollX/1000,$scope.drawingEngine_scrollY/1000);
+                    });
+
+                    $attrs.$observe('width',function(value){
+                        console.log('data-width',value,$attrs);
+                        value = value || 800;
+                        root.width(value);
+                        canvas.width = value-vSlide.width()-15;
+                        if($scope.drawingEngine){
+                            $scope.drawingEngine.updateViewport(value);
+                        }
+                    });
+                    $attrs.$observe('height',function(value){
+                        console.log('data-height',value);
+                        value = value || 600;
+                        root.height(value);
+                        canvas.height = value-hSlide.height();
+                        vSlide.height(canvas.height);
+                        if($scope.drawingEngine){
+                            $scope.drawingEngine.updateViewport(null,value);
+                        }
+                    });
+
+
                 }
+
 
 
             },
