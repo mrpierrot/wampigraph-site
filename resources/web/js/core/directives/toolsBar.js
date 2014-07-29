@@ -38,6 +38,7 @@ define(function () {
                     if(drawingEngine){
                         $scope.$watch('toolModel',function($newValue){
                             drawingEngine.setTool($newValue);
+                            $scope.openPatternCreatorPanel  = $newValue === 'patternCreator';
                         });
                         drawingEngine.addEventListener("historyChanged",function(){
                             console.log("historyChanged");
@@ -78,9 +79,18 @@ define(function () {
                     }
                 }
 
+                $scope.toolsBar_patternCreatorOK = function toolsBar_patternCreatorOK(){
+                    if($scope.drawingEngine){
+                       var pattern =  $scope.drawingEngine.getPattern();
+                        console.log("pattern : ",pattern);
+                    }
+                }
+
                 $scope.toolBar_resize = function toolBar_resize(){
 
                     if($scope.drawingEngine){
+                        $scope.drawingEngine.clearTools();
+                        $scope.toolModel = null;
                         var modalInstance = $modal.open({
                             templateUrl: 'assets/js/core/views/directives/resize-modal.html',
                             controller: ResizeModalInstanceCtrl,

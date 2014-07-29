@@ -64,7 +64,7 @@ define([
         this._canvasWidth = this._cols*Const.PEARL_WIDTH;
         this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
 
-        this._patternSelector = new PatternSelector(this._stage);
+        this._patternSelector = new PatternSelector();
         this.rendering.addChild(this._patternSelector.rendering);
 
         this.reset();
@@ -156,11 +156,22 @@ define([
         var defaultRows = Const.PATTERN_CREATOR_CONFIG.rows;
         var cols = this._cols < defaultCols?this._cols:defaultCols;
         var rows = this._rows < defaultRows?this._cols:defaultRows;
-        var c = this._viewport.width < this._canvasWidth?~~(this._viewport.width/Const.PEARL_WIDTH):this._cols;
-        var r = this._viewport.height < this._canvasHeight?~~(this._viewport.height/Const.PEARL_HEIGHT):this._rows;
+
+        var c = this._cols,
+            cc = 0,
+            r = this._rows,
+            rr = 0;
+        if( this._viewport.width < this._canvasWidth){
+            c = ~~(this._viewport.width/Const.PEARL_WIDTH);
+            cc = ~~(this._viewport.x/Const.PEARL_WIDTH);
+        }
+        if(this._viewport.height < this._canvasHeight){
+            r = ~~(this._viewport.height/Const.PEARL_HEIGHT);
+            rr = ~~(this._viewport.y/Const.PEARL_HEIGHT);
+        }
         this._patternSelector.activate(
-            ~~((c-cols)*0.5),
-            ~~((r-rows)*0.5),
+            ~~((c-cols)*0.5)-cc,
+            ~~((r-rows)*0.5)-rr,
             cols,rows,this._cols,this._rows);
 
     }
@@ -391,6 +402,12 @@ define([
         }
     }
 
+    p.clearTools = function Engine_clearTools(){
+        this._toolDisablePatternCreator();
+        this._tool = null;
+    }
+
+
     p.getData = function Engine_getRawData(){
         var raw = "";
 
@@ -414,6 +431,23 @@ define([
         this._xRate = x;
         this._yRate = y;
         this.updateViewport();
+    }
+
+    p.getPattern = function Engine_getPattern(){
+        if(this._tool !== Const.TOOL_PATTERN_CREATOR)return null;
+        var bounds = this._patternSelector.getBounds();
+        console.log(bounds);
+        var raw = "";
+        for(var y =bounds.y;y<bounds.h;y++){
+            for( var x = bounds.x;x<bounds.w;x++){
+                raw += this._pearls[x+y*this._cols].isToggle?"1":"0";
+            }
+        }
+        return {
+            cols:bounds.w,
+            rows:bounds.h,
+            raw:raw
+        }
     }
 
 

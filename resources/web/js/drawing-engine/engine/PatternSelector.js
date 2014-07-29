@@ -7,14 +7,14 @@ define([
     'easeljs'
 ],function (PatternSelectorAnchor,Const) {
 
-    var clazz = function PatternSelector(stage){
-        this._initialize(stage);
+    var clazz = function PatternSelector(){
+        this._initialize();
     };
 
     var p = clazz.prototype;
 
     p.rendering = null,
-    p._stage,
+    p.bounds,
     p._maxCol,
     p._maxRow,
     p._anchorTopLeft,
@@ -25,23 +25,22 @@ define([
     p._anchorBottomLeft,
     p._anchorBottomMiddle,
     p._anchorBottomRight,
-    p._rectangle,
     p._shape
     ;
 
-    p._initialize = function PatternSelector__initialize(stage){
-        this._stage = stage;
+    p._initialize = function PatternSelector__initialize(){
+
         this.rendering = new createjs.Container();
 
 
-        this._anchorTopLeft = new PatternSelectorAnchor(stage);
-        this._anchorTopMiddle = new PatternSelectorAnchor(stage);
-        this._anchorTopRight = new PatternSelectorAnchor(stage);
-        this._anchorCenterLeft = new PatternSelectorAnchor(stage);
-        this._anchorCenterRight = new PatternSelectorAnchor(stage);
-        this._anchorBottomLeft = new PatternSelectorAnchor(stage);
-        this._anchorBottomMiddle = new PatternSelectorAnchor(stage);
-        this._anchorBottomRight  = new PatternSelectorAnchor(stage);
+        this._anchorTopLeft = new PatternSelectorAnchor(this,'TL');
+        this._anchorTopMiddle = new PatternSelectorAnchor(this,'TM');
+        this._anchorTopRight = new PatternSelectorAnchor(this,'TR');
+        this._anchorCenterLeft = new PatternSelectorAnchor(this,'CL');
+        this._anchorCenterRight = new PatternSelectorAnchor(this,'CR');
+        this._anchorBottomLeft = new PatternSelectorAnchor(this,'BL');
+        this._anchorBottomMiddle = new PatternSelectorAnchor(this,'BM');
+        this._anchorBottomRight  = new PatternSelectorAnchor(this,'BR');
 
         this._shape = new createjs.Shape();
         this.rendering.addChild(this._shape);
@@ -55,21 +54,21 @@ define([
         this.rendering.addChild(this._anchorBottomMiddle.rendering);
         this.rendering.addChild(this._anchorBottomRight.rendering);
 
-        this._rectangle = {x:0,y:0,w:1,h:1};
+        this.bounds = {x:0,y:0,w:1,h:1};
 
         this.rendering.visible = false;
     }
 
     p._update = function PatternSelectorAnchor__update(){
 
-        var rect = this._rectangle,
-            top = rect.y,
+        var rect = this.bounds;
+
+        var top = rect.y,
             center = rect.y+rect.h*0.5,
             bottom = rect.y+rect.h,
             left = rect.x,
             middle = rect.x+rect.w*0.5,
             right = rect.x+rect.w;
-
         this._anchorTopLeft.setPosition(left,top);
         this._anchorTopMiddle.setPosition(middle,top);
         this._anchorTopRight.setPosition(right,top);
@@ -89,16 +88,20 @@ define([
 
     p._apply = function PatternSelectorAnchor__apply(){
 
+        this.bounds.x = ~~(0.5+this.bounds.x /Const.PEARL_WIDTH)*Const.PEARL_WIDTH;
+        this.bounds.y = ~~(0.5+this.bounds.y /Const.PEARL_HEIGHT)*Const.PEARL_HEIGHT;
+        this.bounds.w = ~~(0.5+this.bounds.w /Const.PEARL_WIDTH)*Const.PEARL_WIDTH;
+        this.bounds.h = ~~(0.5+this.bounds.h /Const.PEARL_HEIGHT)*Const.PEARL_HEIGHT;
+        this._update();
     }
 
     p.activate = function PatternSelectorAnchor_activate(col,row,width,height,maxRow,maxCol){
-        console.log(col,row,width,height,maxRow,maxCol);
         this._maxRow = maxRow;
         this._maxCol = maxCol;
-        this._rectangle.x = col*Const.PEARL_WIDTH;
-        this._rectangle.y = row*Const.PEARL_HEIGHT;
-        this._rectangle.w = width*Const.PEARL_WIDTH;
-        this._rectangle.h = height*Const.PEARL_HEIGHT;
+        this.bounds.x = col*Const.PEARL_WIDTH;
+        this.bounds.y = row*Const.PEARL_HEIGHT;
+        this.bounds.w = width*Const.PEARL_WIDTH;
+        this.bounds.h = height*Const.PEARL_HEIGHT;
         this._update();
         this.rendering.visible = true;
     }
@@ -108,7 +111,14 @@ define([
     }
 
 
-
+    p.getBounds = function PatternSelectorAnchor_getBounds(){
+        return {
+            x:~~(this.bounds.x/Const.PEARL_WIDTH),
+            y:~~(this.bounds.y/Const.PEARL_HEIGHT),
+            w:~~(this.bounds.w/Const.PEARL_WIDTH),
+            h:~~(this.bounds.h/Const.PEARL_HEIGHT)
+        }
+    }
 
     return clazz;
 });

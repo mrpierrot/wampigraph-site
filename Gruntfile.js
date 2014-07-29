@@ -203,7 +203,7 @@ module.exports = function (grunt) {
     });
 */
     // the "default" task (e.g. simply "Grunt") runs tasks for development
-    grunt.registerTask('default', ['jshint', 'less:dev','clean-build']);
+    grunt.registerTask('default', ['clean-build', 'watch']);
     grunt.registerTask('install', ['composer:install', 'shell:bower-install','requirejs','copy']);
     grunt.registerTask('clean-build', ['clean:build', 'requirejs','copy']);
 

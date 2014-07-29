@@ -1,0 +1,22 @@
+<accordion close-others="1">
+    <accordion-group ng-show="patternCreatorPanelVisible" is-open="patternCreatorPanelOpened">
+        <accordion-heading>
+            Créer un motif <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </accordion-heading>
+        <div class="btn-group-vertical">
+            <label class="btn btn-success" ng-click="toolsBar_patternCreatorOK()" >OK</label>
+        </div>
+    </accordion-group>
+    <accordion-group >
+        <accordion-heading>
+            Bibliotheque de motif <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </accordion-heading>
+
+    </accordion-group>
+    <accordion-group >
+        <accordion-heading>
+            Bibliotheque de wampums <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </accordion-heading>
+
+    </accordion-group>
+</accordion>

@@ -1,5 +1,9 @@
 @import "imports.less";
 
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer;
+}
+
 .container{
   width: 100vw!important;
   height: 100vh;
@@ -8,16 +12,8 @@
     height: 100%;
     .drawing-engine{
       box-sizing: border-box;
-      /*display: inline-block;*/
+      display: inline-block;
       padding-left: 88px;
-      /*height: 99%;
-      width: 99%;
-
-      .drawing-engine-viewport{
-        overflow: scroll;
-        height: 100%;
-        width: 100%;
-      }*/
 
       .v-slide{
         display: inline-block;
@@ -37,6 +33,11 @@
         margin: 10px auto 10px auto;
         width: 78px;
       }
+    }
+    .panels{
+      vertical-align: top;
+      display: inline-block;
+      width: 240px;
     }
   }
 }

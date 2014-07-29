@@ -41,7 +41,6 @@ define(['../Assets'],function (Assets) {
 
             this.isToggle = toggled;
             var label = (this.isToggle?'a2b':'b2a')+'-'+direction;
-            console.log(label);
             this.rendering.gotoAndPlay(label);
 
         }

@@ -6,5 +6,6 @@
 
 requirejs_index([
     'drawingEngine',
+    'panels',
     'toolsBar'
 ]);

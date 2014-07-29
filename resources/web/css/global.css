@@ -6164,6 +6164,12 @@ button.close {
     display: none !important;
   }
 }
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
 .container {
   width: 100vw!important;
   height: 100vh;
@@ -6174,16 +6180,8 @@ button.close {
 }
 .container .core .drawing-engine {
   box-sizing: border-box;
-  /*display: inline-block;*/
+  display: inline-block;
   padding-left: 88px;
-  /*height: 99%;
-      width: 99%;
-
-      .drawing-engine-viewport{
-        overflow: scroll;
-        height: 100%;
-        width: 100%;
-      }*/
 }
 .container .core .drawing-engine .v-slide {
   display: inline-block;
@@ -6200,6 +6198,11 @@ button.close {
 .container .core .tools-bar .btn-group-vertical {
   margin: 10px auto 10px auto;
   width: 78px;
+}
+.container .core .panels {
+  vertical-align: top;
+  display: inline-block;
+  width: 240px;
 }
 .resize-modal .align-box {
   width: 102px;
