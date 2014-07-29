@@ -11,7 +11,7 @@ define(['drawing-engine/Main'],function (drawingEngine) {
             transclude: true,
             link:function($scope,$element,$attrs){
                 $scope.drawingEngine_scrollX = 0;
-                $scope.drawingEngine_scrollY = 0;
+                $scope.drawingEngine_scrollY = 1000;
 
                 var root = $($element[0]);
                 var canvas = $('canvas',root).get(0);
@@ -32,11 +32,11 @@ define(['drawing-engine/Main'],function (drawingEngine) {
 
                     $scope.$watch('drawingEngine_scrollX',function(value){
                         //console.log('drawingEngine_scrollX',value);
-                        $scope.drawingEngine.moveViewport($scope.drawingEngine_scrollX/1000,$scope.drawingEngine_scrollY/1000);
+                        $scope.drawingEngine.moveViewport($scope.drawingEngine_scrollX/1000,1-($scope.drawingEngine_scrollY/1000));
                     });
                     $scope.$watch('drawingEngine_scrollY',function(value){
                         //console.log('drawingEngine_scrollY',value);
-                        $scope.drawingEngine.moveViewport($scope.drawingEngine_scrollX/1000,$scope.drawingEngine_scrollY/1000);
+                        $scope.drawingEngine.moveViewport($scope.drawingEngine_scrollX/1000,1-($scope.drawingEngine_scrollY/1000));
                     });
 
                     $attrs.$observe('width',function(value){

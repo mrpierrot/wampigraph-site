@@ -6,18 +6,15 @@
 
 define([
     './Pearl',
+    './PatternSelector',
+    './Const',
     'easeljs'
-    ],function (Pearl) {
+    ],function (Pearl,PatternSelector,Const) {
     var clazz = function Engine(stage,width,height,cols,rows){
         this._initialize(stage,width,height,cols,rows);
     };
 
     var p = clazz.prototype = new createjs.EventDispatcher();
-
-    p.PEARL_WIDTH = 20;
-    p.PEARL_HEIGHT = 50;
-
-    p.TOOL_BRUSH = 'brush';
 
     p.rendering = null,
     p._cols,
@@ -37,9 +34,9 @@ define([
     p._historyIndex;
     p._pearls,
     p._pearlsContainer = null,
-    p._grid = null,
     p._stage = null,
-    p._tool = p.TOOL_BRUSH;
+    p._patternSelector,
+    p._tool = null;
 
 
 
@@ -61,12 +58,14 @@ define([
         this._pearlsContainer = new createjs.Container();
         this.rendering.addChild(this._pearlsContainer);
 
-        this._grid = new createjs.Shape();
-        this.rendering.addChild(this._grid);
 
 
-        this._canvasWidth = this._cols*this.PEARL_WIDTH;
-        this._canvasHeight = this._rows*this.PEARL_HEIGHT;
+
+        this._canvasWidth = this._cols*Const.PEARL_WIDTH;
+        this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
+
+        this._patternSelector = new PatternSelector(this._stage);
+        this.rendering.addChild(this._patternSelector.rendering);
 
         this.reset();
 
@@ -79,25 +78,25 @@ define([
     }
 
     p._mouseDownHandler = function Engine__mouseDownHandler(){
-        if(this._tool !== this.TOOL_BRUSH)return;
+        if(this._tool !== Const.TOOL_BRUSH)return;
         this._lastX = this._stage.mouseX;
     }
 
     p._mouseUpHandler = function Engine__mouseUpHandler(){
-        if(this._tool !== this.TOOL_BRUSH)return;
+        if(this._tool !== Const.TOOL_BRUSH)return;
         this._saveState();
     }
 
     p._pressMoveHandler = function Engine__pressMoveHandler(){
-        if(this._tool !== this.TOOL_BRUSH)return;
+        if(this._tool !== Const.TOOL_BRUSH)return;
 
         // On recupere la position de la souris
         var mouseX = this._stage.mouseX-this._viewport.x,
             mouseY = this._stage.mouseY-this._viewport.y;
 
         // On calcul la position de la souris en colonnes/lignes du cavena de perles
-        var col = ~~(mouseX/this.PEARL_WIDTH);
-        var row = ~~(mouseY/this.PEARL_HEIGHT);
+        var col = ~~(mouseX/Const.PEARL_WIDTH);
+        var row = ~~(mouseY/Const.PEARL_HEIGHT);
 
         // si la la souris s'est deplacé sur une autre perle que la derniere déjà survolé
         if(this._lastCol!==col
@@ -145,22 +144,40 @@ define([
 
 
     p._pressUpHandler = function Engine__pressUpHandler(){
-        if(this._tool !== this.TOOL_BRUSH)return;
+        if(this._tool !== Const.TOOL_BRUSH)return;
         this._lastCol = null;
         this._lastRow = null;
         this._saveState();
     }
 
+    p._toolInitPatternCreator = function Engine__toolInitPatternCreator(){
+
+        var defaultCols = Const.PATTERN_CREATOR_CONFIG.cols;
+        var defaultRows = Const.PATTERN_CREATOR_CONFIG.rows;
+        var cols = this._cols < defaultCols?this._cols:defaultCols;
+        var rows = this._rows < defaultRows?this._cols:defaultRows;
+        var c = this._viewport.width < this._canvasWidth?~~(this._viewport.width/Const.PEARL_WIDTH):this._cols;
+        var r = this._viewport.height < this._canvasHeight?~~(this._viewport.height/Const.PEARL_HEIGHT):this._rows;
+        this._patternSelector.activate(
+            ~~((c-cols)*0.5),
+            ~~((r-rows)*0.5),
+            cols,rows,this._cols,this._rows);
+
+    }
+    p._toolDisablePatternCreator = function Engine__toolDisablePatternCreator(){
+        this._patternSelector.desactivate();
+    }
+
     p._clickHandler = function Engine__clickHandler(){
-        if(this._tool !== this.TOOL_BRUSH)return;
+        if(this._tool !== Const.TOOL_BRUSH)return;
         if(this._lastCol != null ||this._lastRow != null)return;
 
 
         var mouseX = this._stage.mouseX-this._viewport.x,
             mouseY = this._stage.mouseY-this._viewport.y;
 
-        var col = ~~(mouseX/this.PEARL_WIDTH);
-        var row = ~~(mouseY/this.PEARL_HEIGHT);
+        var col = ~~(mouseX/Const.PEARL_WIDTH);
+        var row = ~~(mouseY/Const.PEARL_HEIGHT);
 
         this._togglePearl(col,row);
 
@@ -202,9 +219,9 @@ define([
 
         for(var i= 0,c=this._pearls.length;i<c;i++){
             var pearl = this._pearls[i].rendering;
-            if( pearl.x + this.PEARL_WIDTH < -this._viewport.x ){ pearl.visible = false; continue; }
+            if( pearl.x + Const.PEARL_WIDTH < -this._viewport.x ){ pearl.visible = false; continue; }
             else if( pearl.x > -this._viewport.x + this._viewport.width ){ pearl.visible = false; continue; }
-            else if( pearl.y + this.PEARL_HEIGHT < -this._viewport.y ){ pearl.visible = false; continue; }
+            else if( pearl.y + Const.PEARL_HEIGHT < -this._viewport.y ){ pearl.visible = false; continue; }
             else if( pearl.y > -this._viewport.y + this._viewport.height ){ pearl.visible = false; continue; }
             else { pearl.visible = true;}
 
@@ -219,8 +236,8 @@ define([
 
         this._rows = rows;
         this._cols = cols;
-        this._canvasWidth = this._cols*this.PEARL_WIDTH;
-        this._canvasHeight = this._rows*this.PEARL_HEIGHT;
+        this._canvasWidth = this._cols*Const.PEARL_WIDTH;
+        this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
 
 
         var diffCols = this._cols-oldCols;
@@ -237,9 +254,9 @@ define([
                 var start = y*oldCols+oldCols+gap;
                 var args = [start,0];
                 for( var i= 0;i<diffCols;i++){
-                    var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
+                    var pearl = new Pearl(Const.PEARL_WIDTH,Const.PEARL_HEIGHT);
                     var index = start +i;
-                    pearl.setPosition((index%this._cols)*this.PEARL_WIDTH,(~~(index/this._cols))*this.PEARL_HEIGHT);
+                    pearl.setPosition((index%this._cols)*Const.PEARL_WIDTH,(~~(index/this._cols))*Const.PEARL_HEIGHT);
                     args.push(pearl);
                 }
                 this._pearls.splice.apply(this._pearls,args);
@@ -256,9 +273,9 @@ define([
         }else if(diffRows > 0){
             var start = oldRows*this._cols;
             for( var i= 0,c=diffRows*this._cols;i<c;i++){
-                var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
+                var pearl = new Pearl(Const.PEARL_WIDTH,Const.PEARL_HEIGHT);
                 var index = start +i;
-                pearl.setPosition((index%this._cols)*this.PEARL_WIDTH,(~~(index/this._cols))*this.PEARL_HEIGHT);
+                pearl.setPosition((index%this._cols)*Const.PEARL_WIDTH,(~~(index/this._cols))*Const.PEARL_HEIGHT);
                 this._pearls.push(pearl);
             }
         }
@@ -322,8 +339,8 @@ define([
 
         for(var y=0;y<this._rows;y++){
             for(var x=0;x<this._cols;x++){
-                var pearl = new Pearl(this.PEARL_WIDTH,this.PEARL_HEIGHT);
-                pearl.setPosition(x*this.PEARL_WIDTH,y*this.PEARL_HEIGHT);
+                var pearl = new Pearl(Const.PEARL_WIDTH,Const.PEARL_HEIGHT);
+                pearl.setPosition(x*Const.PEARL_WIDTH,y*Const.PEARL_HEIGHT);
                 this._pearls.push(pearl);
             }
         }
@@ -353,13 +370,24 @@ define([
 
 
     p.setTool = function Engine_setTool(name){
+        console.log('Old tool : '+this._tool);
         console.log('Tool selected : '+name);
+        switch (this._tool){
+            case Const.TOOL_PATTERN_CREATOR:
+                this._tool = name;
+                this._toolDisablePatternCreator();
+        }
+
         switch (name){
-            case this.TOOL_BRUSH:
+            case Const.TOOL_BRUSH:
                 this._tool = name;
                 break;
+            case Const.TOOL_PATTERN_CREATOR:
+                this._tool = name;
+                this._toolInitPatternCreator();
+                break;
             default :
-                this._tool = this.TOOL_BRUSH;
+                this._tool = null;
         }
     }
 

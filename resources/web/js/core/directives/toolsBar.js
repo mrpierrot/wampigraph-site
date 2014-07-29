@@ -32,7 +32,7 @@ define(function () {
             templateUrl: 'assets/js/core/views/directives/tools-bar.html',
             link:function($scope,$element,$attrs){
 
-                $scope.toolModel = 'brush';
+                $scope.toolModel = 'patternCreator';
                 $scope.canUndo = $scope.canRedo = false;
                 $scope.$watch('drawingEngine',function(drawingEngine){
                     if(drawingEngine){
