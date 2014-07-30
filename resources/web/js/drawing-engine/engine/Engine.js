@@ -438,8 +438,8 @@ define([
         var bounds = this._patternSelector.getBounds();
         console.log(bounds);
         var raw = "";
-        for(var y =bounds.y;y<bounds.h;y++){
-            for( var x = bounds.x;x<bounds.w;x++){
+        for(var y =bounds.y;y<bounds.y+bounds.h;y++){
+            for( var x = bounds.x;x<bounds.x+bounds.w;x++){
                 raw += this._pearls[x+y*this._cols].isToggle?"1":"0";
             }
         }

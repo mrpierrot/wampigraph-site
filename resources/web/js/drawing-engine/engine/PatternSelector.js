@@ -80,8 +80,8 @@ define([
 
 
         this._shape.graphics.c()
-            .s(1)
-            .ss('#000000')
+            .s('#FFFFFF')
+            .ss(3)
             .dr(left+0.5,top+0.5,rect.w,rect.h);
 
     }

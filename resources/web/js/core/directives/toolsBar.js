@@ -26,19 +26,19 @@ define(function () {
 
     return function($modal,$timeout){
         return {
-
             restrict: 'E',
-            transclude: true,
             templateUrl: 'assets/js/core/views/directives/tools-bar.html',
             link:function($scope,$element,$attrs){
 
-                $scope.toolModel = 'patternCreator';
+                $scope.model = {tool:'patternCreator'};
                 $scope.canUndo = $scope.canRedo = false;
                 $scope.$watch('drawingEngine',function(drawingEngine){
+                    console.log(drawingEngine);
                     if(drawingEngine){
-                        $scope.$watch('toolModel',function($newValue){
+                        $scope.$watch('model.tool',function($newValue){
                             drawingEngine.setTool($newValue);
                             $scope.openPatternCreatorPanel  = $newValue === 'patternCreator';
+
                         });
                         drawingEngine.addEventListener("historyChanged",function(){
                             console.log("historyChanged");
@@ -55,28 +55,26 @@ define(function () {
                     }
                 });
 
+                $scope.$watch('model.tool',function($newValue){
+                    $scope.openPatternCreatorPanel  = $newValue === 'patternCreator';
+                    $scope.$broadcast('DE_setTool',[$newValue]);
+                });
+
                 $scope.toolsBar_undo = function toolsBar_undo(){
-                    if($scope.drawingEngine){
-                        $scope.drawingEngine.undo();
-                    }
+                    $scope.$broadcast('DE_undo');
+
                 }
 
                 $scope.toolsBar_redo = function toolsBar_redo(){
-                    if($scope.drawingEngine){
-                        $scope.drawingEngine.redo();
-                    }
+                    $scope.$broadcast('DE_redo');
                 }
 
                 $scope.toolsBar_fillNotToggled = function toolsBar_fillNotToggled(){
-                    if($scope.drawingEngine){
-                        $scope.drawingEngine.fill(false);
-                    }
+                    $scope.$broadcast('DE_fill',[false]);
                 }
 
                 $scope.toolsBar_fillToggled = function toolsBar_fillToggled(){
-                    if($scope.drawingEngine){
-                        $scope.drawingEngine.fill(true);
-                    }
+                    $scope.$broadcast('DE_fill',[true]);
                 }
 
                 $scope.toolsBar_patternCreatorOK = function toolsBar_patternCreatorOK(){
@@ -89,7 +87,8 @@ define(function () {
                 $scope.toolBar_resize = function toolBar_resize(){
 
                     if($scope.drawingEngine){
-                        $scope.drawingEngine.clearTools();
+                        $scope.model.tool = null;
+                        $scope.$broadcast('DE_clearTools');
                         $scope.toolModel = null;
                         var modalInstance = $modal.open({
                             templateUrl: 'assets/js/core/views/directives/resize-modal.html',
@@ -97,6 +96,7 @@ define(function () {
                             size: 'sm',
                             resolve: {
                                 dimensions:function(){
+                                    return $scope.drawingEngine.getDimensions();
                                     return $scope.drawingEngine.getDimensions();
                                 }
                             }

@@ -1,20 +1,20 @@
 <div>
     <div class="btn-group-vertical">
-        <label class="btn btn-success" ng-model="toolModel" btn-radio="'brush'" uncheckable>Pinceau</label>
-        <label class="btn btn-success" ng-model="toolModel" btn-radio="'patternCreator'" uncheckable>Motif</label>
+        <label class="btn btn-success icon-pencil" tooltip="Pinceau"  tooltip-placement="right" ng-model="model.tool" btn-radio="'brush'" uncheckable></label>
+        <label class="btn btn-success icon-scissors" tooltip="Créer un motif"  tooltip-placement="right" ng-model="model.tool" btn-radio="'patternCreator'" uncheckable></label>
     </div>
     <div class="btn-group-vertical">
-        <label class="btn btn-success" ng-click="toolsBar_undo()" ng-disabled="!canUndo">Annuler</label>
-        <label class="btn btn-success" ng-click="toolsBar_redo()" ng-disabled="!canRedo">Revenir</label>
-    </div>
-
-    <div class="btn-group-vertical">
-        <label class="btn btn-success" ng-click="toolsBar_fillNotToggled()" >Blanc</label>
-        <label class="btn btn-success" ng-click="toolsBar_fillToggled()" >Violet</label>
+        <label class="btn btn-success icon-undo" tooltip="Aller en arrière"  tooltip-placement="right" ng-click="toolsBar_undo()" ng-disabled="!canUndo"></label>
+        <label class="btn btn-success icon-redo" tooltip="Aller en avant"  tooltip-placement="right" ng-click="toolsBar_redo()" ng-disabled="!canRedo"></label>
     </div>
 
     <div class="btn-group-vertical">
-        <label class="btn btn-success" ng-click="toolBar_resize()" >Retailler</label>
+        <label class="btn btn-success" tooltip="Remplir en blanc"  tooltip-placement="right"  ng-click="toolsBar_fillNotToggled()" >Blanc</label>
+        <label class="btn btn-success" tooltip="Remplir en bleu"  tooltip-placement="right"  ng-click="toolsBar_fillToggled()" >Violet</label>
+    </div>
+
+    <div class="btn-group-vertical">
+        <label class="btn btn-success icon-crop" tooltip="Retailler le wampum" tooltip-placement="right"  ng-click="toolBar_resize()" ></label>
     </div>
 </div>
 
