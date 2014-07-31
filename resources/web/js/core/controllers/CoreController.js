@@ -7,10 +7,9 @@
 define(['angular'],function (angular) {
 
 
-    return function ($scope,$window) {
+    return function ($scope,$window,$timeout) {
         $window = $($window);
         $window.bind('resize',function(){
-            $scope.onResizeHandler();
             $timeout(function(){
                 $scope.$apply(function(){
                     $scope.windowHeight = $window.height();

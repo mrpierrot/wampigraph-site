@@ -27,13 +27,12 @@ define(function () {
     return function($modal,$timeout){
         return {
             restrict: 'E',
-            templateUrl: 'assets/js/core/views/directives/tools-bar.html',
+            templateUrl: 'assets/js/core/views/directives/wg-tools-bar.html',
             link:function($scope,$element,$attrs){
 
                 $scope.model = {tool:'patternCreator'};
                 $scope.canUndo = $scope.canRedo = false;
                 $scope.$watch('drawingEngine',function(drawingEngine){
-                    console.log(drawingEngine);
                     if(drawingEngine){
                         $scope.$watch('model.tool',function($newValue){
                             drawingEngine.setTool($newValue);
@@ -91,7 +90,7 @@ define(function () {
                         $scope.$broadcast('DE_clearTools');
                         $scope.toolModel = null;
                         var modalInstance = $modal.open({
-                            templateUrl: 'assets/js/core/views/directives/resize-modal.html',
+                            templateUrl: 'assets/js/core/views/directives/wg-resize-modal.html',
                             controller: ResizeModalInstanceCtrl,
                             size: 'sm',
                             resolve: {

@@ -5,7 +5,9 @@
 'use strict';
 
 requirejs_index([
-    'drawingEngine',
-    'panels',
-    'toolsBar'
+    'wgDrawingEngine',
+    'wgAccordion',
+    'wgLibraryPanel',
+    'wgPatternCreatePanel',
+    'wgToolsBar'
 ]);

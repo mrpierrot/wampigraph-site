@@ -7,7 +7,7 @@ define(['drawing-engine/Main'],function (drawingEngine) {
     return function($window){
         return {
             restrict: 'E',
-            templateUrl: 'assets/js/core/views/directives/drawing-engine.html',
+            templateUrl: 'assets/js/core/views/directives/wg-drawing-engine.html',
             link:function($scope,$element,$attrs){
                 $scope.drawingEngine_scrollX = 0;
                 $scope.drawingEngine_scrollY = 1000;

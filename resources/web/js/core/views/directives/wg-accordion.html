@@ -1,0 +1,26 @@
+<accordion close-others="1">
+    <accordion-group is-disabled="status.disabled[0]" is-open="status.open[0]" >
+        <accordion-heading >
+            <span ng-class="{'text-muted':status.disabled[0]}"> Créer un motif <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open[0], 'glyphicon-chevron-right': !status.open[0]}"></i></span>
+        </accordion-heading>
+        <div class="accordion-content">
+            <wg-pattern-create-panel></wg-pattern-create-panel>
+        </div>
+    </accordion-group>
+    <accordion-group is-disabled="status.disabled[1]" is-open="status.open[1]">
+        <accordion-heading>
+            Bibliotheque de motifs <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open[0], 'glyphicon-chevron-right': !status.open[0]}"></i></span>
+        </accordion-heading>
+        <div class="accordion-content">
+            <wg-library-panel></wg-library-panel>
+        </div>
+    </accordion-group>
+    <accordion-group is-disabled="status.disabled[2]" is-open="status.open[2]" >
+        <accordion-heading>
+            Bibliotheque de wampum <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open[0], 'glyphicon-chevron-right': !status.open[0]}"></i></span>
+        </accordion-heading>
+        <div class="accordion-content">
+            <wg-library-panel></wg-library-panel>
+        </div>
+    </accordion-group>
+</accordion>
