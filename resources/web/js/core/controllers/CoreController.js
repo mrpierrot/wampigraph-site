@@ -9,17 +9,18 @@ define(['angular'],function (angular) {
 
     return function ($scope,$window,$timeout) {
         $window = $($window);
+
+        var resize = function(){
+            $scope.windowHeight = $window.height()-51;
+            $scope.windowWidth = $window.width();
+            console.log($scope.windowWidth,$scope.windowHeight);
+        }
         $window.bind('resize',function(){
             $timeout(function(){
-                $scope.$apply(function(){
-                    $scope.windowHeight = $window.height();
-                    $scope.windowWidth = $window.width();
-                    console.log(windowWidth,windowHeight);
-                });
+                $scope.$apply(resize);
             });
         });
-        $scope.windowHeight = $window.height();
-        $scope.windowWidth = $window.width();
+        resize();
 
     };
 });

@@ -19,7 +19,10 @@ module.exports = function (grunt) {
 
     ];
     var lessFiles = {
-        '<%= appDir %>/css/global.css': 'resources/less/global.less'
+        '<%= appDir %>/css/core.css': 'resources/less/core.less',
+        '<%= appDir %>/css/imports.css': 'resources/less/imports.less',
+        '<%= appDir %>/css/login.css': 'resources/less/login.less',
+        '<%= appDir %>/css/painter.css': 'resources/less/painter.less'
     };
 
     // Load tasks from our external plugins. These are what we're configuring above
@@ -203,7 +206,7 @@ module.exports = function (grunt) {
     });
 */
     // the "default" task (e.g. simply "Grunt") runs tasks for development
-    grunt.registerTask('default', ['clean-build', 'watch']);
+    grunt.registerTask('default', ['less:dev','clean-build', 'watch']);
     grunt.registerTask('install', ['composer:install', 'shell:bower-install','requirejs','copy']);
     grunt.registerTask('clean-build', ['clean:build', 'requirejs','copy']);
 

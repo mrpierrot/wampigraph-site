@@ -27,30 +27,40 @@ $app->register(new TwigServiceProvider(), array(
     'charset'=> 'utf8'
 ));
 
-$app['twig'] = $app->share($app->extend('twig', function($twig) {
+$app['twig'] = $app->share($app->extend('twig', function($twig) use ($app) {
     $twig->addExtension(new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapBadgeExtension());
     $twig->addExtension(new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapIconExtension());
     $twig->addExtension(new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapLabelExtension());
     $twig->addExtension(new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapFormExtension());
 
-    $days = array('Lun','Mar','Mer','Jeu','Ven','Sam','Dim');
-    $twig->addFilter(new Twig_SimpleFilter('cqpx_opening', function ($string) use ($days) {
-        $ret = '<span class="opening">';
-        $lunch_opening = array();
-        for($i=0,$c=strlen($string);$i<$c;$i++){
-            if($string[$i]==1){
-                $ret.= '<span>'.$days[$i].'</span>';
-            }else{
-                $ret.= '<span></span>';
-            }
-        }
-        $ret.'</span>';
-        return $ret;
+    $twig->addFunction(new Twig_SimpleFunction('wg_route_is_active', function ($route) use ($app) {
+        return $route == $app['request']->attributes->get('_route') ?'active':'';
     }));
     return $twig;
 }));
 
-$app->register(new Silex\Provider\SecurityServiceProvider());
+$app->register(new Silex\Provider\SecurityServiceProvider(),array(
+    'security.firewalls' =>array(
+        'login' => array(
+            'pattern' => '^/login$',
+        ),
+        'secured' => array(
+            'pattern' => '^.*$',
+            'form' => array('login_path' => '/login', 'check_path' => '/login-check'),
+            'logout' => array('logout_path' => '/logout'),
+            'users' =>  $app->share(function () use ($app) {
+                    return new CasusLudi\Providers\UserProvider($app['db']);
+             })
+        )
+    ),
+    'security.role_hierarchy' => array(
+        'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
+    ),
+    'security.access_rules' => array(
+        array('^/admin', 'ROLE_ADMIN'),
+        array('^.*$', 'ROLE_USER'),
+    )
+));
 
 $app->register(new SessionServiceProvider());
 $app->register(new DoctrineServiceProvider());

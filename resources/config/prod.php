@@ -10,9 +10,9 @@
 $app['db.options'] = array(
     'driver'   => 'pdo_mysql',
     'host'     => '127.0.0.1',
-    'dbname'   => 'pirecadeau',
-    'user'     => 'pirecadeau',
-    'password' => 'scQCMPBwEWu9pm2n',
+    'dbname'   => 'wampigraph',
+    'user'     => 'root',
+    'password' => 'root',
     'charset'  => 'utf8'
 );
 
@@ -26,6 +26,9 @@ $app['swiftmailer.options'] = array(
 
 );
 
+
+
+/*
 $app['images'] = array(
     'path_root' => __DIR__.'/../data/images',
     'url_root' => '/image',
@@ -36,3 +39,4 @@ $app['images'] = array(
 $app['proposal.sender.mail'] = 'cqpx.garbage@gmail.com';
 $app['proposal.dest.mail'] = 'pierre.chabiland@gmail.com';
 
+*/

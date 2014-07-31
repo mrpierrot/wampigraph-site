@@ -10,14 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 $home = $app['controllers_factory'];
 
-$app->mount('/',new CasusLudi\ControllerProviders\Front());
-/*
-$app->match('/login',function(Request $request) use ($app){
+$app->mount('/',new CasusLudi\ControllerProviders\Core());
 
-    return $app['twig']->render('admin/login.html.twig', array(
-        'error'         => $app['security.last_error']($request),
-        'last_username' => $app['session']->get('_security.last_username'),
-    ));
-});*/
-
-$app->mount('/admin',new CasusLudi\ControllerProviders\Admin());
+//$app->mount('/admin',new CasusLudi\ControllerProviders\Admin());

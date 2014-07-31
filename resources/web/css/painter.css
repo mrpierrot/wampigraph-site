@@ -1,0 +1,115 @@
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
+.core {
+  width: 100vw!important;
+  height: calc(100vh - 51px);
+  background-color: #DCDCDC;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  padding-top: 51px;
+  box-sizing: content-box;
+}
+.core .painter {
+  height: 100%;
+}
+.core .painter .drawing-engine {
+  box-sizing: border-box;
+  display: inline-block;
+  background: #282828;
+}
+.core .painter .drawing-engine .h-slide {
+  display: block;
+  height: 20px;
+  background: #424242;
+  margin-top: -5px;
+}
+.core .painter .drawing-engine .h-slide .slide {
+  background: none;
+  border: none;
+  margin-left: 40px;
+}
+.core .painter .drawing-engine .h-slide .ui-slider-handle {
+  width: 40px;
+  height: 20px;
+  top: 0;
+  margin: 0 0 0 -40px;
+  background: #828282;
+  border: none;
+}
+.core .painter .drawing-engine .h-slide .ui-state-focus {
+  border: none;
+}
+.core .painter .drawing-engine .h-slide a:focus {
+  outline: none;
+}
+.core .painter .drawing-engine .v-slide {
+  display: inline-block;
+  width: 20px;
+  background: #424242;
+}
+.core .painter .drawing-engine .v-slide .slide {
+  background: none;
+  border: none;
+  margin-top: 40px;
+  box-sizing: border-box;
+}
+.core .painter .drawing-engine .v-slide .ui-slider-handle {
+  width: 20px;
+  height: 40px;
+  left: 0;
+  margin: -40px 0 0 0;
+  background: #828282;
+  border: none;
+}
+.core .painter .drawing-engine .v-slide .ui-state-focus {
+  border: none;
+}
+.core .painter .drawing-engine .v-slide a:focus {
+  outline: none;
+}
+.core .painter .tools-bar {
+  display: inline-block;
+  width: 78px;
+  height: calc(100vh - 51px);
+  vertical-align: top;
+  background: #464646;
+  padding: 5px;
+  box-sizing: content-box;
+}
+.core .painter .tools-bar .btn-group-vertical {
+  margin: 10px auto 10px auto;
+  width: 78px;
+}
+.core .painter .panels {
+  vertical-align: top;
+  display: inline-block;
+  width: 240px;
+  height: calc(100vh - 51px);
+  background: #464646;
+  padding: 5px;
+  box-sizing: content-box;
+}
+.core .painter .panels .panel-body {
+  padding: 0px;
+}
+.core .painter .panels .panel-body .accordion-content {
+  height: 600px;
+  height: calc(100vh - 230px);
+  padding: 15px;
+  overflow: auto;
+}
+.resize-modal .align-box {
+  width: 102px;
+  margin: auto;
+}
+.resize-modal .align-box label {
+  width: 34px;
+  height: 34px;
+  padding: 6px 6px;
+  border-radius: 0;
+}

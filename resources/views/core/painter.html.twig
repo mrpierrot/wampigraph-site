@@ -1,7 +1,11 @@
-{% extends 'layouts/global.html.twig' %}
+{% extends 'layouts/core.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="assets/css/painter.css">
+{% endblock %}
 
-
+{% block container_classes %}core{% endblock %}
 {% block container_attrs %}ng-view{% endblock %}
 
 {% block headjs %}

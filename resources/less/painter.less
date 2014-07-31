@@ -1,17 +1,20 @@
-@import "imports.less";
+
+@w-height: ~"calc(100vh - 51px)";;
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer;
 }
 
-.container{
+.core{
   width: 100vw!important;
-  height: 100vh;
+  height: @w-height;
   background-color: #DCDCDC;
   overflow: hidden;
   margin: 0;
   padding: 0;
-  .core{
+  padding-top: 51px;
+  box-sizing: content-box;
+  .painter{
     height: 100%;
     .drawing-engine{
       box-sizing: border-box;
@@ -74,7 +77,7 @@
     .tools-bar {
       display: inline-block;
       width: 78px;
-      height: 100vh;
+      height: @w-height;
       vertical-align: top;
       background: #464646;
       padding: 5px;
@@ -88,7 +91,7 @@
       vertical-align: top;
       display: inline-block;
       width: 240px;
-      height: 100vh;
+      height: @w-height;
       background: #464646;
       padding: 5px;
       box-sizing: content-box;
@@ -96,7 +99,7 @@
         padding: 0px;
         .accordion-content{
           height: 600px;
-          height: ~"calc(100vh - 180px)";
+          height: ~"calc(100vh - 230px)";
           padding: 15px;
           overflow: auto;
         }
