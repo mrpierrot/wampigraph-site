@@ -17,5 +17,9 @@
         <label class="btn btn-success icon-crop" tooltip="Retailler le wampum" tooltip-placement="right"  ng-click="toolBar_resize()" ></label>
     </div>
 
+    <div class="btn-group-vertical">
+        <label class="btn btn-success icon-disk" ng-class="{'icon-disk':!saveButtonWait,'icon-busy':saveButtonWait,'disabled':saveButtonWait}" tooltip="Sauver le wampum" tooltip-placement="right"  ng-click="toolBar_save()" ></label>
+    </div>
+
 </div>
 

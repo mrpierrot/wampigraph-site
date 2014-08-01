@@ -22,14 +22,9 @@ class Painter {
         ));
     }
 
-    public function saveWampum(Request $request, Application $app){
+    public function save(Request $request, Application $app){
 
-        return null;
-    }
-
-    public function savePattern(Request $request, Application $app){
-
-        return null;
+        return $app->json(true,200);
     }
 
     public function loadPatternsLibrary(Request $request, Application $app){

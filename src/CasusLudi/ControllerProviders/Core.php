@@ -29,6 +29,7 @@ class Core  implements ControllerProviderInterface{
 
 
         $controllers->match('/creer/','CasusLudi\\Controllers\\Painter::app','GET')->bind('painter');
+        $controllers->match('/painter/api/save','CasusLudi\\Controllers\\Painter::save','POST')->bind('painter-save');
 
 
 

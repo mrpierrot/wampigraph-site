@@ -2,7 +2,7 @@
  * Created by Pierrot on 29/07/14.
  */
 define(function () {
-    return function(){
+    return function(wgMediator){
         return {
             restrict: 'E',
             transclude: true,
@@ -15,7 +15,7 @@ define(function () {
                 }
 
 
-                $scope.$watch('openPatternCreatorPanel',function(value){
+                wgMediator.$on('core:createPatternMode',function(event,value){
                     $scope.status.open[0] = value;
                     $scope.status.disabled[0] = !value;
                 })

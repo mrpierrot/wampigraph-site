@@ -37,7 +37,7 @@ define(['../Assets'],function (Assets) {
     p.toggled = function Pearl_toggled(toggled,direction){
 
         if(toggled != this.isToggle){
-            direction = direction || (Math.random()>0.5?'left':'right');
+            direction = direction || 'left';
 
             this.isToggle = toggled;
             var label = (this.isToggle?'a2b':'b2a')+'-'+direction;

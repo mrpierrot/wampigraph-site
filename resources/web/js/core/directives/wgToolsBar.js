@@ -28,7 +28,7 @@ define(function () {
 
                 $scope.$watch('model.tool',function($newValue){
                     wgMediator.$emit('wgToolbar:setTool',$newValue);
-                    $scope.openPatternCreatorPanel  = $newValue === 'patternCreator';
+
 
                 });
 
@@ -55,6 +55,23 @@ define(function () {
 
                 }
 
+                $scope.toolBar_save = function toolBar_resize(){
+                    wgMediator.$emit('wgToolbar:save');
+
+                }
+
+                $scope.saveButtonWait = false;
+                wgMediator.$on('core:save:init',function(){
+                    $scope.saveButtonWait = true;
+                });
+
+                wgMediator.$on('core:save:complete',function(){
+                    $scope.saveButtonWait = false;
+                });
+
+                wgMediator.$on('core:save:error',function(){
+                    $scope.saveButtonWait = false;
+                });
 
 
             },

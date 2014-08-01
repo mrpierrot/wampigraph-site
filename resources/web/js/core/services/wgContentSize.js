@@ -8,14 +8,14 @@ define(function () {
         $scope.width = 800;
         $scope.height = 600;
 
+        var $core = $('.core');
         $window = $($window);
         var resize = function(){
-            $scope.height = $window.height()-51;
-            $scope.width = $window.width();
+            $scope.height = $core.height();
+            $scope.width = $core.width();
             $timeout(function(){
                 $scope.$apply();
             });
-
         }
         $window.bind('resize',function(){
             resize()
