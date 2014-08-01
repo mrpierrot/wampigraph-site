@@ -8,9 +8,10 @@ define([
     'angular-route',
     './controllers/index',
     './directives/index',
+    './services/index',
     'angular-bootstrap',
     'angular-ui-slider'
-],function (angular,ngRoute,controllers,directives) {
+],function (angular,ngRoute,controllers,directives,services) {
 
 
     var app = angular.module('WampiGraphApp', ['ngRoute','ui.bootstrap','ui.slider']);
@@ -21,11 +22,11 @@ define([
 
     app.controller(controllers);
     app.directive(directives);
+    app.factory(services);
 
     app.config(['$routeProvider',function($routeProvider){
         $routeProvider.when('/',{
-            templateUrl: 'assets/js/core/views/core.html',
-            controller:'CoreController'
+            templateUrl: '/assets/js/core/views/core.html'
         }).otherwise({
             redirectTo: '/'
         });

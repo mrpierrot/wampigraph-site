@@ -18,38 +18,19 @@ class Core  implements ControllerProviderInterface{
     public  function  connect(Application $app){
 
         $controllers = $app['controllers_factory'];
-        $controllers->match('/creer','CasusLudi\\Controllers\\Core::painter','GET')
-            ->bind('painter');
 
-        $controllers->match('','CasusLudi\\Controllers\\Core::home','GET')
-            ->bind('home');
+        $controllers->match('','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
+        $controllers->match('/mes-motifs','CasusLudi\\Controllers\\Core::myPatterns','GET')->bind('my-patterns');
+        $controllers->match('/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET')->bind('my-wampums');
 
-        $controllers->match('/mes-motifs','CasusLudi\\Controllers\\Core::myPatterns','GET')
-            ->bind('my-patterns');
-        $controllers->match('/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET')
-            ->bind('my-wampums');
+        $controllers->match('/login','CasusLudi\\Controllers\\Auth::login','GET')->bind('login');
+        $controllers->match('/login-check','CasusLudi\\Controllers\\Auth::loginCheck','GET')->bind('login-check');
+        $controllers->match('/logout','CasusLudi\\Controllers\\Auth::logout','GET')->bind('logout');
 
 
+        $controllers->match('/creer/','CasusLudi\\Controllers\\Painter::app','GET')->bind('painter');
 
 
-        $controllers->match('/login',function(Request $request) use ($app){
-
-            return $app['twig']->render('core/login.html.twig', array(
-                'error'         => $app['security.last_error']($request),
-                'last_username' => $app['session']->get('_security.last_username'),
-            ));
-        })->bind('login');
-
-
-        $controllers->match('/login-check',function() use ($app){
-
-            return $app->redirect($app->path('home'));
-        })->bind('admin_login_check');
-
-        $controllers->match('/logout',function() use ($app){
-
-            return $app->redirect($app->path('login'));
-        })->bind('admin_logout');
 
 
         return $controllers;

@@ -21,13 +21,6 @@ class Core {
         ));
     }
 
-    public function painter(Request $request, Application $app){
-
-        return $app['twig']->render('/core/painter.html.twig',array(
-
-
-        ));
-    }
 
     public function myPatterns(Request $request, Application $app){
 

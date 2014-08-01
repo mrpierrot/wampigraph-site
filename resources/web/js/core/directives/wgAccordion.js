@@ -6,7 +6,7 @@ define(function () {
         return {
             restrict: 'E',
             transclude: true,
-            templateUrl: 'assets/js/core/views/directives/wg-accordion.html',
+            templateUrl: '/assets/js/core/views/directives/wg-accordion.html',
             link:function($scope,$element,$attrs){
 
                 $scope.status={

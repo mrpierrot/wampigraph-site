@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="assets/css/painter.css">
+    <link rel="stylesheet" href="/assets/css/painter.css">
 {% endblock %}
 
 {% block container_classes %}core{% endblock %}
@@ -11,6 +11,6 @@
 {% block headjs %}
     {{ parent() }}
 
-   <script data-main="assets/js/config" src="assets/vendor/requirejs-index/index.js"></script>
-   <script data-main="assets/js/config" src="assets/vendor/requirejs/require.js"></script>
+   <script data-main="/assets/js/config" src="/assets/vendor/requirejs-index/index.js"></script>
+   <script data-main="/assets/js/config" src="/assets/vendor/requirejs/require.js"></script>
 {% endblock %}

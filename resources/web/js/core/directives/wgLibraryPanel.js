@@ -6,7 +6,7 @@ define(function () {
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'assets/js/core/views/directives/wg-library-panel.html',
+            templateUrl: '/assets/js/core/views/directives/wg-library-panel.html',
             link:function($scope,$element,$attrs){
 
 

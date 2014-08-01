@@ -4,10 +4,11 @@
 define(['drawing-engine/Main'],function (drawingEngine) {
 
 
-    return function($window){
+    return function($window,wgMediator,wgContentSize){
         return {
             restrict: 'E',
-            templateUrl: 'assets/js/core/views/directives/wg-drawing-engine.html',
+            templateUrl: '/assets/js/core/views/directives/wg-drawing-engine.html',
+            scope:{},
             link:function($scope,$element,$attrs){
                 $scope.drawingEngine_scrollX = 0;
                 $scope.drawingEngine_scrollY = 1000;
@@ -20,39 +21,28 @@ define(['drawing-engine/Main'],function (drawingEngine) {
                 var de = drawingEngine(canvas);
                 de.complete = function(engine){
 
-
-                    $scope.drawingEngine = {};
-                    for (var name in engine){
-                        var attr = engine[name];
-                        if(name[0]!=='_' && typeof(attr) === 'function'){
-                            $scope.drawingEngine[name] = attr.bind(engine);
-                            $scope.$on('DE_'+name,function(event,data){
-                                var action = event.name.split('_')[1];
-                                engine[action].apply(engine,data);
-                            });
-                        }
-                    }
-
+                    wgMediator.$emit('drawingEngine:ready',engine);
 
                     $scope.$watch('drawingEngine_scrollX',function(value){
-                        //console.log('drawingEngine_scrollX',value);
-                        engine.moveViewport($scope.drawingEngine_scrollX/1000,1-($scope.drawingEngine_scrollY/1000));
-                    });
-                    $scope.$watch('drawingEngine_scrollY',function(value){
-                        //console.log('drawingEngine_scrollY',value);
                         engine.moveViewport($scope.drawingEngine_scrollX/1000,1-($scope.drawingEngine_scrollY/1000));
                     });
 
-                    $attrs.$observe('width',function(value){
-                        console.log('data-width',value,$attrs);
+                    $scope.$watch('drawingEngine_scrollY',function(value){
+                        engine.moveViewport($scope.drawingEngine_scrollX/1000,1-($scope.drawingEngine_scrollY/1000));
+                    });
+
+                    var updateWidth = function(value){
+                        console.log('data-width',value);
                         value = value || 800;
+                        value -=338;
                         root.width(value);
                         canvas.width = value-vSlide.width();
                         hSlide.width(canvas.width);
                         engine.updateViewport(value);
 
-                    });
-                    $scope.$watch('windowHeight',function(value){
+                    }
+
+                    var updateHeight = function(value){
                         console.log('data-height',value);
                         value = value || 600;
                         root.height(value);
@@ -60,7 +50,14 @@ define(['drawing-engine/Main'],function (drawingEngine) {
                         $('.slide',vSlide).height(canvas.height-40);
                         engine.updateViewport(null,value);
 
-                    });
+                    }
+
+                    wgContentSize.$watch('width',updateWidth);
+                    wgContentSize.$watch('height',updateHeight);
+                    updateWidth(wgContentSize.width);
+                    updateHeight(wgContentSize.height);
+
+
 
 
                 }

@@ -39,9 +39,9 @@ define([
         var _setApp = function DrawingEngine_setApp(){
 
             var filesManager = new FilesLoaderManager([
-                {id:'anchor',src:'assets/images/drawing-engine/anchor.png'},
-                {id:'pearlSprite',src:'assets/images/drawing-engine/pearl-anim.png'},
-                {id:'pearlData',src:'assets/images/drawing-engine/pearl-anim.json'}
+                {id:'anchor',src:'/assets/images/drawing-engine/anchor.png'},
+                {id:'pearlSprite',src:'/assets/images/drawing-engine/pearl-anim.png'},
+                {id:'pearlData',src:'/assets/images/drawing-engine/pearl-anim.json'}
             ],Assets);
 
             filesManager.on('complete',function(){
