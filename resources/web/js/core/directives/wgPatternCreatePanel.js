@@ -7,10 +7,15 @@ define(function () {
             restrict: 'E',
             replace: true,
             templateUrl: '/assets/js/core/views/directives/wg-pattern-create-panel.html',
+            scope:{},
             link:function($scope,$element,$attrs){
 
+                $scope.infos = {
+                    title: "Nouveau motif",
+                    description: ""
+                }
                 $scope.savePattern = function(){
-                    wgMediator.$emit('patternCreate');
+                    wgMediator.$emit('pattern:create',$scope.infos);
                 }
 
 

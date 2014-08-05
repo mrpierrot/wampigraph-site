@@ -10,8 +10,8 @@ define(function () {
             link:function($scope,$element,$attrs){
 
                 $scope.status={
-                    open:[false,true,false],
-                    disabled:[true,false,false]
+                    open:[false,false,false,true],
+                    disabled:[true,false,false,false]
                 }
 
 

@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    <form class="form-signin" role="form" action="{{ path('admin_login_check') }}" method="post">
+    <form class="form-signin" role="form" action="{{ path('login-check') }}" method="post">
         <h2 class="form-signin-heading">Veuillez vous connecter</h2>
         {{ error }}
         <input type="text"  name="_username" class="form-control" placeholder="Email address" required autofocus>

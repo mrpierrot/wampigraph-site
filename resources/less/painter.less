@@ -14,6 +14,17 @@
   padding: 0;
   padding-top: 51px;
   box-sizing: content-box;
+  position: relative;
+  .alert-container{
+    position: absolute;
+    z-index: 10000;
+    width: 100vw;
+    .alert{
+      width: 400px;
+      margin: 10px auto 0 auto;
+    }
+  }
+
   .painter{
     height: 100%;
     .drawing-engine{

@@ -23,4 +23,12 @@
             <wg-library-panel></wg-library-panel>
         </div>
     </accordion-group>
+    <accordion-group is-disabled="status.disabled[3]" is-open="status.open[3]" >
+        <accordion-heading >
+            <span> Description<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open[0], 'glyphicon-chevron-right': !status.open[0]}"></i></span>
+        </accordion-heading>
+        <div class="accordion-content">
+            <wg-wampum-infos-panel></wg-wampum-infos-panel>
+        </div>
+    </accordion-group>
 </accordion>
