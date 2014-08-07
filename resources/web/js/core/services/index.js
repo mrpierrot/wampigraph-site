@@ -7,6 +7,6 @@
 requirejs_index([
     'wgResizeModal',
     'wgContentSize',
-    'wgInfos',
+    //'wgInfos',
     'wgMediator'
 ]);

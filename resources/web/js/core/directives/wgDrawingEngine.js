@@ -17,10 +17,25 @@ define(['drawing-engine/Main'],function (drawingEngine) {
                 var canvas = $('canvas',root).get(0);
                 var hSlide = $('.h-slide',root);
                 var vSlide = $('.v-slide',root);
+                var _engine = null;
+                var _raw = null;
+                wgMediator.$on('core:load:complete',function(event,infos){
+                    _raw = infos.raw;
+                    _loadDrawing();
+                });
+
+                var _loadDrawing = function(){
+                    console.log("_loadDrawing",_engine,_raw)
+                    if(_engine && _raw){
+
+                        _engine.load(_raw);
+                    }
+                }
 
                 var de = drawingEngine(canvas);
                 de.complete = function(engine){
-
+                    _engine = engine;
+                    _loadDrawing();
                     wgMediator.$emit('drawingEngine:ready',engine);
 
                     $scope.$watch('drawingEngine_scrollX',function(value){

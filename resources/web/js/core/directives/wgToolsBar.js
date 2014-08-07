@@ -42,11 +42,11 @@ define(function () {
                 }
 
                 $scope.toolsBar_fillNotToggled = function toolsBar_fillNotToggled(){
-                    wgMediator.$emit('wgToolbar:fill',[false]);
+                    wgMediator.$emit('wgToolbar:fill',false);
                 }
 
                 $scope.toolsBar_fillToggled = function toolsBar_fillToggled(){
-                    wgMediator.$emit('wgToolbar:fill',[true]);
+                    wgMediator.$emit('wgToolbar:fill',true);
                 }
 
                 $scope.toolBar_resize = function toolBar_resize(){

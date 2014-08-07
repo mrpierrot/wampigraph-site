@@ -14,6 +14,7 @@ define(function () {
                     title: "Nouveau motif",
                     description: ""
                 }
+
                 $scope.savePattern = function(){
                     wgMediator.$emit('pattern:create',$scope.infos);
                 }

@@ -4,8 +4,12 @@
 define(function () {
     return function(){
         return {
+            //id:null,
+            original_id:null,
+            type:'wampum',
             title: "Nouveau Wampum",
-            description: ""
+            description: "",
+            raw:null
         };
     };
 });

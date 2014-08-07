@@ -7,7 +7,23 @@
 define(['angular'],function (angular) {
 
 
-    return function ($scope,$window,$timeout,wgMediator,wgResizeModal,wgInfos,$http) {
+    return function ($scope,$window,$timeout,wgMediator,wgResizeModal,$http,$routeParams) {
+
+        if($routeParams.id){
+            $http.get(
+                '/painter/api/get/'+$routeParams.id
+            ).success(function(data){
+                console.log("get : ",data);
+                data.raw = JSON.parse(data.raw);
+                for(var attr in data){
+                    wgMediator.infos[attr] = data[attr];
+                }
+                wgMediator.$emit('core:load:complete',wgMediator.infos);
+            }).error(function(){
+                wgMediator.$emit('core:load:error');
+                _addAlert('danger','Un erreur est survenu lors de la recuperation du wampum');
+            });
+        }
 
         $scope.alerts = [
         ];
@@ -55,9 +71,16 @@ define(['angular'],function (angular) {
 
             wgMediator.$on('wgToolbar:save',function(){
                 wgMediator.$emit('core:save:init');
-                var raw = engine.getData();
-                console.log(wgInfos);
-                $http.post('/painter/api/save',{raw:raw,infos:wgInfos}).success(function(data){
+                wgMediator.infos.raw = JSON.stringify(engine.getData());
+                console.log(wgMediator.infos);
+                $http.post(
+                    '/painter/api/save',
+                    $.param(wgMediator.infos),
+                    {
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    }
+                 ).success(function(data){
+                    wgMediator.infos.id = data.id;
                     wgMediator.$emit('core:save:complete');
                 }).error(function(){
                     wgMediator.$emit('core:save:error');
@@ -67,9 +90,15 @@ define(['angular'],function (angular) {
 
             wgMediator.$on('pattern:create',function(event,infos){
                 wgMediator.$emit('pattern:save:init');
-                var raw = engine.getPattern();
-                console.log(infos);
-                $http.post('/painter/api/pattern/save',{raw:raw,infos:infos}).success(function(data){
+                infos.raw = JSON.stringify(engine.getPattern());
+                $http.post(
+                    '/painter/api/save',
+                    $.param(infos),
+                    {
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    }
+                ).success(function(data){
+                    infos.id = data.id;
                     wgMediator.$emit('pattern:save:complete');
                 }).error(function(){
                     wgMediator.$emit('pattern:save:error');
