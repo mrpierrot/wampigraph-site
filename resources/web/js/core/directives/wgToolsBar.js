@@ -5,14 +5,14 @@
 'use strict';
 
 define(function () {
-
+var i = 0;
     return function($modal,$timeout,wgMediator){
         return {
             restrict: 'E',
             templateUrl: '/assets/js/core/views/directives/wg-tools-bar.html',
             scope: {},
             link:function($scope,$element,$attrs){
-
+console.log("toolbar init"+(i++));
                 $scope.model = {tool:'brush'};
                 $scope.canUndo = $scope.canRedo = false;
 
@@ -51,6 +51,7 @@ define(function () {
 
                 $scope.toolBar_resize = function toolBar_resize(){
                     $scope.model.tool = null;
+                    console.log('toolBar_resize'+(i++));
                     wgMediator.$emit('wgToolbar:resize');
 
                 }

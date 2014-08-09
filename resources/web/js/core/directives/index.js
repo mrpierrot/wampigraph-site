@@ -10,5 +10,6 @@ requirejs_index([
     'wgLibraryPanel',
     'wgPatternCreatePanel',
     'wgWampumInfosPanel',
+    'wgAlerts',
     'wgToolsBar'
 ]);

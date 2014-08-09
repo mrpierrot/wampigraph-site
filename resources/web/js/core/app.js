@@ -26,9 +26,11 @@ define([
 
     app.config(['$routeProvider',function($routeProvider){
         $routeProvider.when('/',{
-            templateUrl: '/assets/js/core/views/core.html'
+            templateUrl: '/assets/js/core/views/core.html',
+            reloadOnSearch: false
         }).when('/:id',{
-            templateUrl: '/assets/js/core/views/core.html'
+            templateUrl: '/assets/js/core/views/core.html',
+            reloadOnSearch: false
         }).otherwise({
             redirectTo: '/'
         });

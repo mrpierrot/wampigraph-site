@@ -19,6 +19,19 @@ define(function () {
                     wgMediator.$emit('pattern:create',$scope.infos);
                 }
 
+                $scope.saveButtonWait = false;
+                wgMediator.$on('pattern:save:init',function(){
+                    $scope.saveButtonWait = true;
+                });
+
+                wgMediator.$on('pattern:save:complete',function(){
+                    $scope.saveButtonWait = false;
+                });
+
+                wgMediator.$on('pattern:save:error',function(){
+                    $scope.saveButtonWait = false;
+                });
+
 
             }
         }
