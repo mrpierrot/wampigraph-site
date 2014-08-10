@@ -113,6 +113,34 @@
   padding: 15px;
   overflow: auto;
 }
+.core .painter .panels .edit {
+  font-size: 1em;
+}
+.core .painter .panels .assets-list {
+  list-style: none;
+  padding: 0;
+}
+.core .painter .panels .assets-list .btn-primary {
+  height: 62px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  padding: 2px;
+  margin: 1px;
+  border: 2px solid #357ebd;
+}
+.core .painter .panels .assets-list .btn-primary.active {
+  border: 2px solid #4cae4c;
+}
+.core .painter .panels .assets-list .btn-primary:focus {
+  border-color: none!important;
+  box-shadow: none!important;
+  -webkit-box-shadow: none!important;
+  outline: 0!important;
+}
+.core .painter .panels .assets-list.wampums-list {
+  width: 170px;
+  margin: auto;
+}
 .core .painter .footer {
   width: 100vw;
   height: 32px;

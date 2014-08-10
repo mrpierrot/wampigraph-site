@@ -23,7 +23,7 @@ class Image {
         if($result['raw']){
             $data = json_decode($result['raw']);
             $xRate = 2;
-            $yRate = 2;
+            $yRate = 3;
             $cols = $data->cols;
             $rows = $data->rows;
             $raw = $data->raw;

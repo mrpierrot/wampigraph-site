@@ -8,6 +8,8 @@ define(function () {
             console.log("core:load:complete",infos);
             if(infos.original_id){
                 wgMediator.$emit('footer:message','Voir la source','#/'+infos.original_id);
+            }else{
+                wgMediator.$emit('footer:clear');
             }
 
         });

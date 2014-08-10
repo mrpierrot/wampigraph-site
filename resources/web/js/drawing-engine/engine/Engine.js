@@ -242,6 +242,7 @@ define([
     }
 
     p._setSize = function Engine__setSize(cols,rows){
+        console.log(cols,rows);
         var oldRows = this._rows,
             oldCols = this._cols;
 
@@ -332,6 +333,10 @@ define([
         return this._historyIndex < this._history.length-1;
     }
 
+    p.clearHistory = function(){
+
+    }
+
     p.fill = function Engine_fill(toggled){
         var dir = Math.random()>0.5?"left":"right";
         for(var i= 0,c=this._pearls.length;i<c;i++){
@@ -362,11 +367,20 @@ define([
     }
 
     p.load = function Engine_load(data){
-        this._setSize(data.cols,data.rows);
+        console.log("pearls : ",this._pearls.length);
+        //this._setSize(data.cols,data.rows);
+        this._cols = data.cols;
+        this._rows = data.rows;
+        this._canvasWidth = this._cols*Const.PEARL_WIDTH;
+        this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
+        this.reset();
+        console.log("pearls : ",this._pearls.length);
         for(var i= 0,c=this._pearls.length;i<c;i++){
             this._pearls[i].toggled(data.raw[i]==="1");
 
         }
+        this._history = [this.getData()];
+        this.updateViewport();
     }
 
 

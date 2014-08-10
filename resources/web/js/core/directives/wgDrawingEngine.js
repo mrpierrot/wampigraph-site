@@ -34,6 +34,7 @@ define(['drawing-engine/Main'],function (drawingEngine) {
 
                 var de = drawingEngine(canvas);
                 de.complete = function(engine){
+                    console.log('emit:drawingEngine:ready');
                     _engine = engine;
                     _loadDrawing();
                     wgMediator.$emit('drawingEngine:ready',engine);

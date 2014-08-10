@@ -16,6 +16,13 @@ define(function () {
                     $scope.url = url;
                     $scope.message = message;
 
+                });
+
+                wgMediator.$on('footer:clear',function(event,message,url){
+
+                    $scope.url = null;
+                    $scope.message = null;
+
                 })
             }
         }

@@ -7,10 +7,11 @@
 requirejs_index([
     'wgDrawingEngine',
     'wgAccordion',
-    'wgLibraryPanel',
     'wgPatternCreatePanel',
     'wgWampumInfosPanel',
     'wgAlerts',
     'wgFooter',
+    'wgPatternLibrary',
+    'wgWampumLibrary',
     'wgToolsBar'
 ]);
