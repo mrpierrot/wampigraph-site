@@ -1,6 +1,10 @@
 <div>
-    <div ng-if="model.selection"><a ng-href="#/{{model.selection.id}}" class="edit icon-pencil">Editer le motif selectionné</a> </div>
-    <div class="assets-list">
-        <button type="button" class="btn btn-primary" ng-repeat="asset in assets" ng-model="model.selection" btn-radio="{{asset}}"><img ng-src="/thumbnail/{{asset.id}}" /></button>
+    <a ng-show="model.selection" ng-href="#/{{model.selection.id}}" class="edit">
+        <span class="icon-pencil"></span> Editer le motif selectionné
+    </a>
+    <div class="assets-list-container">
+        <div class="assets-list">
+            <button type="button" class="btn btn-primary" ng-repeat="asset in assets" ng-model="model.selection" btn-radio="{{asset}}"><img ng-src="/thumbnail/{{asset.id}}" /></button>
+        </div>
     </div>
 </div>

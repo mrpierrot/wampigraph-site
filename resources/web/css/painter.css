@@ -14,6 +14,10 @@
   padding-top: 51px;
   box-sizing: content-box;
   position: relative;
+  color: #357ebd;
+}
+.core a {
+  color: #357ebd;
 }
 .core .alert-container {
   position: absolute;
@@ -35,7 +39,7 @@
 .core .painter .drawing-engine .h-slide {
   display: block;
   height: 20px;
-  background: #424242;
+  background: #dddddd;
   margin-top: -5px;
 }
 .core .painter .drawing-engine .h-slide .slide {
@@ -60,7 +64,7 @@
 .core .painter .drawing-engine .v-slide {
   display: inline-block;
   width: 20px;
-  background: #424242;
+  background: #dddddd;
 }
 .core .painter .drawing-engine .v-slide .slide {
   background: none;
@@ -87,7 +91,7 @@
   width: 78px;
   height: calc(100vh - 93px);
   vertical-align: top;
-  background: #464646;
+  background: #dddddd;
   padding: 5px;
   box-sizing: content-box;
 }
@@ -100,7 +104,7 @@
   display: inline-block;
   width: 240px;
   height: calc(100vh - 93px);
-  background: #464646;
+  background: #dddddd;
   padding: 5px;
   box-sizing: content-box;
 }
@@ -110,17 +114,32 @@
 .core .painter .panels .panel-body .accordion-content {
   height: 600px;
   height: calc(100vh - 290px);
-  padding: 15px;
-  overflow: auto;
+  padding: 15px 0px 15px 15px;
+  /*overflow: auto;*/
 }
 .core .painter .panels .edit {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #357ebd;
+  border-radius: 4px;
+  display: inline-block;
+}
+.core .painter .panels .edit .icon-pencil {
   font-size: 1em;
 }
-.core .painter .panels .assets-list {
-  list-style: none;
-  padding: 0;
+.core .painter .panels .edit:hover {
+  text-decoration: none;
+  background-color: #357ebd;
+  color: #ffffff;
 }
-.core .painter .panels .assets-list .btn-primary {
+.core .painter .panels .edit:hover .icon-pencil {
+  text-decoration: none;
+}
+.core .painter .panels .assets-list-container {
+  overflow: auto;
+}
+.core .painter .panels .assets-list-container .assets-list .btn-primary {
+  display: block;
   height: 62px;
   border-radius: 2px;
   background-color: #ffffff;
@@ -128,18 +147,27 @@
   margin: 1px;
   border: 2px solid #357ebd;
 }
-.core .painter .panels .assets-list .btn-primary.active {
+.core .painter .panels .assets-list-container .assets-list .btn-primary.active {
   border: 2px solid #4cae4c;
 }
-.core .painter .panels .assets-list .btn-primary:focus {
+.core .painter .panels .assets-list-container .assets-list .btn-primary:focus {
   border-color: none!important;
   box-shadow: none!important;
   -webkit-box-shadow: none!important;
   outline: 0!important;
 }
-.core .painter .panels .assets-list.wampums-list {
+.core .painter .panels .assets-list-container .assets-list.wampums-list {
   width: 170px;
   margin: auto;
+  list-style: none;
+  padding: 0;
+}
+.core .painter .panels .patterns-list .assets-list-container {
+  min-height: 100%;
+  height: 100%;
+}
+.core .painter .panels .wampums-list .assets-list-container {
+  height: calc(100%);
 }
 .core .painter .footer {
   width: 100vw;

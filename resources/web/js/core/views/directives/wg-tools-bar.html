@@ -1,24 +1,24 @@
 <div>
     <div class="btn-group-vertical">
-        <label class="btn btn-success icon-pencil" tooltip="Pinceau"  tooltip-placement="right" ng-model="model.tool" btn-radio="'brush'" uncheckable></label>
-        <label class="btn btn-success icon-scissors" tooltip="Créer un motif"  tooltip-placement="right" ng-model="model.tool" btn-radio="'patternCreator'" uncheckable></label>
+        <label class="btn btn-primary icon-pencil" tooltip="Pinceau"  tooltip-placement="right" ng-model="model.tool" btn-radio="'brush'" uncheckable></label>
+        <label class="btn btn-primary icon-scissors" tooltip="Créer un motif"  tooltip-placement="right" ng-model="model.tool" btn-radio="'patternCreator'" uncheckable></label>
     </div>
     <div class="btn-group-vertical">
-        <label class="btn btn-success icon-undo" tooltip="Aller en arrière"  tooltip-placement="right" ng-click="toolsBar_undo()" ng-disabled="!canUndo"></label>
-        <label class="btn btn-success icon-redo" tooltip="Aller en avant"  tooltip-placement="right" ng-click="toolsBar_redo()" ng-disabled="!canRedo"></label>
-    </div>
-
-    <div class="btn-group-vertical">
-        <label class="btn btn-success" tooltip="Remplir en blanc"  tooltip-placement="right"  ng-click="toolsBar_fillNotToggled()" >Blanc</label>
-        <label class="btn btn-success" tooltip="Remplir en bleu"  tooltip-placement="right"  ng-click="toolsBar_fillToggled()" >Violet</label>
+        <label class="btn btn-primary icon-undo" tooltip="Aller en arrière"  tooltip-placement="right" ng-click="toolsBar_undo()" ng-disabled="!canUndo"></label>
+        <label class="btn btn-primary icon-redo" tooltip="Aller en avant"  tooltip-placement="right" ng-click="toolsBar_redo()" ng-disabled="!canRedo"></label>
     </div>
 
     <div class="btn-group-vertical">
-        <label class="btn btn-success icon-crop" tooltip="Retailler le wampum" tooltip-placement="right"  ng-click="toolBar_resize()" ></label>
+        <label class="btn btn-primary" tooltip="Remplir en blanc"  tooltip-placement="right"  ng-click="toolsBar_fillNotToggled()" >Blanc</label>
+        <label class="btn btn-primary" tooltip="Remplir en bleu"  tooltip-placement="right"  ng-click="toolsBar_fillToggled()" >Violet</label>
     </div>
 
     <div class="btn-group-vertical">
-        <label class="btn btn-success icon-disk" ng-class="{'icon-disk':!saveButtonWait,'icon-busy':saveButtonWait,'disabled':saveButtonWait}" tooltip="Sauver le wampum" tooltip-placement="right"  ng-click="toolBar_save()" ></label>
+        <label class="btn btn-primary icon-crop" tooltip="Retailler le wampum" tooltip-placement="right"  ng-click="toolBar_resize()" ></label>
+    </div>
+
+    <div class="btn-group-vertical">
+        <label class="btn btn-primary icon-disk" ng-class="{'icon-disk':!saveButtonWait,'icon-busy':saveButtonWait,'disabled':saveButtonWait}" tooltip="Sauver le wampum" tooltip-placement="right"  ng-click="toolBar_save()" ></label>
     </div>
 
 </div>

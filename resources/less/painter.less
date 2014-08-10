@@ -1,6 +1,8 @@
 
-@w-height: ~"calc(100vh - 51px)";
-@w-height-unless-footer: ~"calc(100vh - 93px)";
+@wg-w-height: ~"calc(100vh - 51px)";
+@wg-w-height-unless-footer: ~"calc(100vh - 93px)";
+@wg-fg-color: #357ebd;
+@wg-bg-color: #dddddd;
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer;
@@ -8,7 +10,7 @@
 
 .core{
   width: 100vw!important;
-  height: @w-height;
+  height: @wg-w-height;
   background-color: #DCDCDC;
   overflow: hidden;
   margin: 0;
@@ -16,6 +18,10 @@
   padding-top: 51px;
   box-sizing: content-box;
   position: relative;
+  color: @wg-fg-color;
+  a{
+    color: @wg-fg-color;
+  }
   .alert-container{
     position: absolute;
     z-index: 10000;
@@ -35,7 +41,7 @@
       .h-slide{
         display: block;
         height: 20px;
-        background: #424242;
+        background: @wg-bg-color;
         margin-top: -5px;
         .slide{
           background: none;
@@ -61,7 +67,7 @@
       .v-slide{
         display: inline-block;
         width: 20px;
-        background: #424242;
+        background: @wg-bg-color;
         .slide{
           background: none;
           border: none;
@@ -89,9 +95,9 @@
     .tools-bar {
       display: inline-block;
       width: 78px;
-      height: @w-height-unless-footer;
+      height: @wg-w-height-unless-footer;
       vertical-align: top;
-      background: #464646;
+      background: @wg-bg-color;
       padding: 5px;
       box-sizing: content-box;
       .btn-group-vertical{
@@ -103,8 +109,8 @@
       vertical-align: top;
       display: inline-block;
       width: 240px;
-      height: @w-height-unless-footer;
-      background: #464646;
+      height: @wg-w-height-unless-footer;
+      background: @wg-bg-color;
       padding: 5px;
       box-sizing: content-box;
       .panel-body{
@@ -112,45 +118,78 @@
         .accordion-content{
           height: 600px;
           height: ~"calc(100vh - 290px)";
-          padding: 15px;
-          overflow: auto;
+          padding: 15px 0px 15px 15px;
+          /*overflow: auto;*/
         }
       }
 
       .edit{
-        font-size: 1em;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid @wg-fg-color;
+        border-radius: 4px;
+        display: inline-block;
+        .icon-pencil{
+          font-size: 1em;
+        }
+        &:hover{
+          .icon-pencil{
+            text-decoration: none;
+          }
+          text-decoration: none;
+          background-color: @wg-fg-color;
+          color: #ffffff;
+        }
+
       }
 
-      .assets-list{
-        list-style: none;
-        padding: 0;
+      .assets-list-container{
+        overflow: auto;
+        .assets-list{
 
-        .btn-primary{
-          height: 62px;
-          border-radius: 2px;
+          .btn-primary{
+            display: block;
+            height: 62px;
+            border-radius: 2px;
 
-          background-color: #ffffff;
-          padding: 2px;
-          margin: 1px;
-          border: 2px solid #357ebd;
-          &.active{
-            border: 2px solid #4cae4c;
+            background-color: #ffffff;
+            padding: 2px;
+            margin: 1px;
+            border: 2px solid @wg-fg-color;
+            &.active{
+              border: 2px solid #4cae4c;
 
+            }
+            &:focus{
+              box-shadow: none!important;
+              border-color: none!important;
+              box-shadow: none!important;
+              -webkit-box-shadow: none!important;
+              outline: 0!important;
+            }
           }
-          &:focus{
-            box-shadow: none!important;
-            border-color: none!important;
-            box-shadow: none!important;
-            -webkit-box-shadow: none!important;
-            outline: 0!important;
+          &.wampums-list{
+            width: 170px;
+            margin: auto;
+            list-style: none;
+            padding: 0;
           }
-        }
-        &.wampums-list{
-          width: 170px;
-          margin: auto;
         }
       }
 
+      .patterns-list{
+        .assets-list-container{
+          //height: ~"calc(100% - 60px)";
+          min-height: 100%;
+          height: 100%;
+        }
+      }
+
+      .wampums-list{
+        .assets-list-container{
+          height: ~"calc(100%)";
+        }
+      }
     }
 
     .footer{
