@@ -5,7 +5,7 @@ define(function () {
     return function(wgMediator){
         return {
             restrict: 'E',
-            transclude: true,
+            replace: true,
             templateUrl: '/assets/js/core/views/directives/wg-alerts.html',
             $scope:{},
             link:function($scope,$element,$attrs){

@@ -8,8 +8,8 @@ define(['angular'],function (angular) {
 
 
     return function ($scope,wgEngine,wgMediator,$http,$routeParams) {
-        /*console.log("CoreController");
-        $scope.$on("$routeUpdate", function(event, route) {
+        console.log("CoreController");
+        /*$scope.$on("$routeUpdate", function(event, route) {
             console.log("$routeUpdate");
         });*/
 
@@ -17,7 +17,6 @@ define(['angular'],function (angular) {
             $http.get(
                 '/painter/api/get/'+$routeParams.id
             ).success(function(data){
-                console.log("get : ",data);
                 data.raw = JSON.parse(data.raw);
                 for(var attr in data){
                     wgMediator.infos[attr] = data[attr];

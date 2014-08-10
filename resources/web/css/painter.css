@@ -85,7 +85,7 @@
 .core .painter .tools-bar {
   display: inline-block;
   width: 78px;
-  height: calc(100vh - 51px);
+  height: calc(100vh - 93px);
   vertical-align: top;
   background: #464646;
   padding: 5px;
@@ -99,7 +99,7 @@
   vertical-align: top;
   display: inline-block;
   width: 240px;
-  height: calc(100vh - 51px);
+  height: calc(100vh - 93px);
   background: #464646;
   padding: 5px;
   box-sizing: content-box;
@@ -109,9 +109,20 @@
 }
 .core .painter .panels .panel-body .accordion-content {
   height: 600px;
-  height: calc(100vh - 230px);
+  height: calc(100vh - 290px);
   padding: 15px;
   overflow: auto;
+}
+.core .painter .footer {
+  width: 100vw;
+  height: 32px;
+  background: #464646;
+  text-align: center;
+  color: #ffffff;
+  line-height: 32px;
+}
+.core .painter .footer a {
+  color: #ffffff;
 }
 .resize-modal .align-box {
   width: 102px;

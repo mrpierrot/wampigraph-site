@@ -1,5 +1,6 @@
 
-@w-height: ~"calc(100vh - 51px)";;
+@w-height: ~"calc(100vh - 51px)";
+@w-height-unless-footer: ~"calc(100vh - 93px)";
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer;
@@ -88,7 +89,7 @@
     .tools-bar {
       display: inline-block;
       width: 78px;
-      height: @w-height;
+      height: @w-height-unless-footer;
       vertical-align: top;
       background: #464646;
       padding: 5px;
@@ -102,7 +103,7 @@
       vertical-align: top;
       display: inline-block;
       width: 240px;
-      height: @w-height;
+      height: @w-height-unless-footer;
       background: #464646;
       padding: 5px;
       box-sizing: content-box;
@@ -110,12 +111,24 @@
         padding: 0px;
         .accordion-content{
           height: 600px;
-          height: ~"calc(100vh - 230px)";
+          height: ~"calc(100vh - 290px)";
           padding: 15px;
           overflow: auto;
         }
       }
 
+    }
+
+    .footer{
+      width: 100vw;
+      height: 32px;
+      background: #464646;
+      text-align: center;
+      color: #ffffff;;
+      line-height: 32px;
+      a{
+        color: #ffffff;
+      }
     }
   }
 }

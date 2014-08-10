@@ -3,10 +3,24 @@
  */
 define(function () {
     return function(wgMediator,wgResizeModal,$http){
+
+        wgMediator.$on('core:load:complete',function(event,infos){
+            console.log("core:load:complete",infos);
+            if(infos.original_id){
+                wgMediator.$emit('footer:message','Voir la source','#/'+infos.original_id);
+            }
+
+        });
+
         wgMediator.$on('drawingEngine:ready',function(event,engine){
+
+
+
                 engine.on('historyChanged',function(){
                     wgMediator.$emit('drawingEngine:historyChanged',engine.canUndo(),engine.canRedo());
                 });
+
+
 
                 wgMediator.$on('wgToolbar:setTool',function(event,tool){
                     engine.setTool(tool);
@@ -59,7 +73,8 @@ define(function () {
                     wgMediator.$emit('pattern:save:init');
                     infos.raw = JSON.stringify(engine.getPattern());
                     infos.type = 'pattern';
-                    infos.original_id = wgMediator.infos.original_id;
+                    infos.original_id = wgMediator.infos.id || null;
+
                     $http.post(
                         '/painter/api/save',
                         $.param(infos),
@@ -71,6 +86,7 @@ define(function () {
                             engine.clearTools();
                             wgMediator.$emit('core:createPatternMode',false);
                             wgMediator.$emit('pattern:save:complete');
+                            wgMediator.$emit('footer:message','Editer le motif "'+infos.title+'"','#/'+infos.id);
                         }).error(function(){
                             wgMediator.$emit('pattern:save:error');
                             wgMediator.$emit('alerts:add','danger','Un erreur est survenu lors de la sauvegarde du motif');

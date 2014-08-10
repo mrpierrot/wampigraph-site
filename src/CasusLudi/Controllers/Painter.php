@@ -25,7 +25,7 @@ class Painter {
 
     public  function  getDrawing($id, Request $request, Application $app){
 
-        $sql = "SELECT id,title,description,raw FROM wampums WHERE id = ?";
+        $sql = "SELECT id,original_id,title,description,raw FROM wampums WHERE id = ?";
         $result = $app['db']->fetchAssoc($sql,array($id));
         return $app->json($result,200);
     }
@@ -46,6 +46,7 @@ class Painter {
         $id = null;
         $edit_mode = array_key_exists('id',$data) && filter_var($data['id'],FILTER_VALIDATE_INT);
         $data['status'] = 1;
+        if(!$data['original_id'])$data['original_id']=null;
         if($edit_mode){
             $id = $data['id'];
             $app['db']->update('wampums',$data,array('id'=>$id));

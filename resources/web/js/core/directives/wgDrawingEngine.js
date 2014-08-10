@@ -25,7 +25,7 @@ define(['drawing-engine/Main'],function (drawingEngine) {
                 });
 
                 var _loadDrawing = function(){
-                    console.log("_loadDrawing",_engine,_raw)
+                    //console.log("_loadDrawing",_engine,_raw)
                     if(_engine && _raw){
 
                         _engine.load(_raw);
@@ -47,7 +47,7 @@ define(['drawing-engine/Main'],function (drawingEngine) {
                     });
 
                     var updateWidth = function(value){
-                        console.log('data-width',value);
+                        //console.log('data-width',value);
                         value = value || 800;
                         value -=338;
                         root.width(value);
@@ -58,8 +58,9 @@ define(['drawing-engine/Main'],function (drawingEngine) {
                     }
 
                     var updateHeight = function(value){
-                        console.log('data-height',value);
+                        //console.log('data-height',value);
                         value = value || 600;
+                        value -=32;
                         root.height(value);
                         canvas.height = value-hSlide.height();
                         $('.slide',vSlide).height(canvas.height-40);
