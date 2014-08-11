@@ -13,7 +13,6 @@ define([
     'angular-ui-slider'
 ],function (angular,ngRoute,controllers,directives,services) {
 
-
     var app = angular.module('WampiGraphApp', ['ngRoute','ui.bootstrap','ui.slider']);
 
     app.init = function () {

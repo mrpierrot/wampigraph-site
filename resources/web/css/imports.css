@@ -6179,13 +6179,19 @@ button.close {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  font-size: 2em;
+  font-size: 1.5em;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .icon-pencil:before {
   content: "\e600";
+}
+.icon-paint-format:before {
+  content: "\e611";
+}
+.icon-file:before {
+  content: "\e612";
 }
 .icon-disk:before {
   content: "\e60e";

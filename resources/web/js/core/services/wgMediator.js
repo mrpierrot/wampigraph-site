@@ -5,7 +5,6 @@ define(function () {
     return function($rootScope){
         var scope = $rootScope.$new(true);
         scope.infos = {
-            //id:null,
             original_id:null,
                 type:'wampum',
                 title: "Nouveau Wampum",

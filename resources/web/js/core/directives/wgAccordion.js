@@ -13,11 +13,17 @@ define(function () {
                     open:[false,false,false,true],
                     disabled:[true,false,false,false]
                 }
+                var _names = {
+                    'createPattern':0,
+                    'patternLib':1,
+                    'wampumLib':2,
+                    'infos':3
+                }
 
-
-                wgMediator.$on('core:createPatternMode',function(event,value){
-                    $scope.status.open[0] = value;
-                    $scope.status.disabled[0] = !value;
+                wgMediator.$on('core:openPanel',function(event,name,open,disabled){
+                    var index = _names[name];
+                    $scope.status.open[index] = open;
+                    if(typeof disabled!="undefined")$scope.status.disabled[index] = disabled;
                 })
 
             }

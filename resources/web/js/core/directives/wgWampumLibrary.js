@@ -9,11 +9,19 @@ define(function () {
             templateUrl: '/assets/js/core/views/directives/wg-wampum-library.html',
             link:function($scope,$element,$attrs){
                  var index =0;
-                 $http.get('/painter/api/lib/wampum/'+index).success(function(data){
-                    $scope.assets = data;
-                 }).error(function(){
+                $scope.assets = [];
+                $scope.loadWampums = function(){
+                    index = $scope.assets.length;
+                    $http.get('/painter/api/lib/wampum/'+index).success(function(data){
+                        console.log(data);
+                        for(var i= 0,c=data.length;i<c;i++){
+                            $scope.assets.push(data[i]);
+                        }
 
-                 });
+                    }).error(function(){
+
+                    });
+                }
             }
         }
     };

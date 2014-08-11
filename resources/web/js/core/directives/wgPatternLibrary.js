@@ -10,17 +10,27 @@ define(function () {
             scope:{},
             link:function($scope,$element,$attrs){
                  var index =0;
-                 $http.get('/painter/api/lib/pattern/'+index).success(function(data){
-                    $scope.assets = data;
-                    $scope.model = {selection:null} ;
-                 }).error(function(){
-
-                 });
+                 $scope.assets = [];
 
                 $scope.$watch('model.selection',function(value){
                     console.log(value);
                     wgMediator.$emit('wgPercentHeight:update');
+                    wgMediator.$emit('patternLib:selection',value);
                 });
+
+                $scope.loadPatterns = function(){
+                    console.log('loadPatterns');
+                    index = $scope.assets.length;
+                    $http.get('/painter/api/lib/pattern/'+index).success(function(data){
+                        console.log(data);
+                        for(var i= 0,c=data.length;i<c;i++){
+                            $scope.assets.push(data[i]);
+                        }
+
+                    }).error(function(){
+
+                    });
+                }
 
             }
         }

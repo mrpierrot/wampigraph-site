@@ -9,6 +9,7 @@ requirejs_index([
     'wgAccordion',
     'wgPatternCreatePanel',
     'wgWampumInfosPanel',
+    'wgInfiniteScroll',
     'wgAlerts',
     'wgFooter',
     'wgPatternLibrary',

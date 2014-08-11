@@ -7,9 +7,10 @@
 define([
     './Pearl',
     './PatternSelector',
+    './PatternApplicator',
     './Const',
     'easeljs'
-    ],function (Pearl,PatternSelector,Const) {
+    ],function (Pearl,PatternSelector,PatternApplicator,Const) {
     var clazz = function Engine(stage,width,height,cols,rows){
         this._initialize(stage,width,height,cols,rows);
     };
@@ -36,6 +37,7 @@ define([
     p._pearlsContainer = null,
     p._stage = null,
     p._patternSelector,
+    p._patternApplicator,
     p._tool = null;
 
 
@@ -67,6 +69,9 @@ define([
         this._patternSelector = new PatternSelector();
         this.rendering.addChild(this._patternSelector.rendering);
 
+        this._patternApplicator = new PatternApplicator();
+        this.rendering.addChild(this._patternApplicator.rendering);
+
         this.reset();
 
         this.rendering.on('pressmove',this._pressMoveHandler,this);
@@ -74,6 +79,18 @@ define([
         this.rendering.on('click',this._clickHandler,this);
         this.rendering.on('mousedown',this._mouseDownHandler,this);
 
+
+    }
+
+    p.handleEvent = function Engine_handleTick(event){
+        if(event.type == "tick"){
+            if(this._tool !== Const.TOOL_PATTERN_APPLICATOR)return;
+            var mouseX = this._stage.mouseX-this._viewport.x,
+                mouseY = this._stage.mouseY-this._viewport.y;
+            var col = ~~(mouseX/Const.PEARL_WIDTH)-~~(this._patternApplicator.data.cols*0.5);
+            var row = ~~(mouseY/Const.PEARL_HEIGHT)-~~(this._patternApplicator.data.rows*0.5);
+            this._patternApplicator.setPosition(col,row);
+        }
 
     }
 
@@ -150,6 +167,10 @@ define([
         this._saveState();
     }
 
+    p._toolInitPatternApply = function Engine__toolInitPatternApply(){
+        this._patternApplicator.activate();
+    }
+
     p._toolInitPatternCreator = function Engine__toolInitPatternCreator(){
 
         var defaultCols = Const.PATTERN_CREATOR_CONFIG.cols;
@@ -179,7 +200,17 @@ define([
         this._patternSelector.desactivate();
     }
 
+    p._toolDisablePatternApply = function Engine__toolDisablePatternApply(){
+        this._patternApplicator.desactivate();
+    }
+
     p._clickHandler = function Engine__clickHandler(){
+        this._clickTogglePearl();
+        this._clickApplyPattern();
+
+    }
+
+    p._clickTogglePearl = function Engine__clickTogglePearl(){
         if(this._tool !== Const.TOOL_BRUSH)return;
         if(this._lastCol != null ||this._lastRow != null)return;
 
@@ -191,7 +222,23 @@ define([
         var row = ~~(mouseY/Const.PEARL_HEIGHT);
 
         this._togglePearl(col,row);
+    }
 
+    p._clickApplyPattern = function Engine__clickApplyPattern(){
+        if(this._tool !== Const.TOOL_PATTERN_APPLICATOR)return;
+
+        var data = this._patternApplicator.data,
+            raw = data.raw,
+            cols = data.cols,
+            rows = data.rows;
+
+        for( var i= 0,c=raw.length;i<c;i++){
+            var col = (i%cols)+this._patternApplicator.col,
+                row = (~~(i/cols))+this._patternApplicator.row,
+                isToggled = raw[i]=="1";
+            this._setPearlToggled(isToggled,col,row);
+        }
+        this._saveState();
     }
 
     p._togglePearl = function Engine__togglePearl(col,row,direction){
@@ -205,6 +252,20 @@ define([
         var pearl = this._pearls[index];
         if(pearl){
             pearl.toggle(direction);
+        }
+    }
+
+    p._setPearlToggled = function Engine__setPearlToggled(toggled,col,row,direction){
+        if (col < 0) return;
+        if (col >= this._cols) return;
+        if (row < 0) return;
+        if (row >= this._rows) return;
+
+        var index = col+row*this._cols;
+
+        var pearl = this._pearls[index];
+        if(pearl){
+            pearl.toggled(toggled,direction);
         }
     }
 
@@ -311,7 +372,7 @@ define([
         console.log('Engine_undo',this._historyIndex,this._history.length);
         if(this._historyIndex > 0 && this._history.length > 1){
             this._historyIndex--;
-            this.load(this._history[this._historyIndex]);
+            this._loadState(this._historyIndex);
             this.dispatchEvent("historyChanged");
         }
     }
@@ -320,7 +381,7 @@ define([
         console.log('Engine_redo',this._historyIndex,this._history.length);
         if(this._historyIndex < this._history.length-1){
             this._historyIndex++;
-            this.load(this._history[this._historyIndex]);
+            this._loadState(this._historyIndex);
             this.dispatchEvent("historyChanged");
         }
     }
@@ -366,9 +427,17 @@ define([
         this._updateDisplay();
     }
 
+    p._loadState = function Engine_load(index){
+        var data = this._history[index];
+        this._setSize(data.cols,data.rows);
+        for(var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearls[i].toggled(data.raw[i]==="1");
+        }
+        this.updateViewport();
+    }
+
     p.load = function Engine_load(data){
         console.log("pearls : ",this._pearls.length);
-        //this._setSize(data.cols,data.rows);
         this._cols = data.cols;
         this._rows = data.rows;
         this._canvasWidth = this._cols*Const.PEARL_WIDTH;
@@ -399,8 +468,9 @@ define([
         console.log('Tool selected : '+name);
         switch (this._tool){
             case Const.TOOL_PATTERN_CREATOR:
-                this._tool = name;
                 this._toolDisablePatternCreator();
+            case Const.TOOL_PATTERN_APPLICATOR:
+                this._toolDisablePatternApply();
         }
 
         switch (name){
@@ -410,6 +480,10 @@ define([
             case Const.TOOL_PATTERN_CREATOR:
                 this._tool = name;
                 this._toolInitPatternCreator();
+                break;
+            case Const.TOOL_PATTERN_APPLICATOR:
+                this._tool = name;
+                this._toolInitPatternApply();
                 break;
             default :
                 this._tool = null;
@@ -464,6 +538,28 @@ define([
         }
     }
 
+    p.setPattern = function Engine_setPattern(data){
+        this._patternApplicator.setData(data);
+
+        var defaultCols = data.cols;
+        var defaultRows = data.rows;
+        var cols = this._cols < defaultCols?this._cols:defaultCols;
+        var rows = this._rows < defaultRows?this._cols:defaultRows;
+
+        var c = this._cols,
+            cc = 0,
+            r = this._rows,
+            rr = 0;
+        if( this._viewport.width < this._canvasWidth){
+            c = ~~(this._viewport.width/Const.PEARL_WIDTH);
+            cc = ~~(this._viewport.x/Const.PEARL_WIDTH);
+        }
+        if(this._viewport.height < this._canvasHeight){
+            r = ~~(this._viewport.height/Const.PEARL_HEIGHT);
+            rr = ~~(this._viewport.y/Const.PEARL_HEIGHT);
+        }
+        this._patternApplicator.setPosition(~~((c-cols)*0.5)-cc,~~((r-rows)*0.5)-rr);
+    }
 
     p.getDimensions = function Engine_getDimensions(){
         return {cols:this._cols,rows:this._rows,xRate:this._xRate,yRate:this._yRate};

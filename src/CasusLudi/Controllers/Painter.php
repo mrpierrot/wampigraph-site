@@ -63,7 +63,7 @@ class Painter {
 
     public function loadLibrary($type,$index,Request $request, Application $app){
         if(!$index)$index=0;
-        $sql = "SELECT id,title,description,raw FROM wampums WHERE status=1 and type=? LIMIT $index,30";
+        $sql = "SELECT id,title,description,raw FROM wampums WHERE status=1 and type=? LIMIT $index,20";
         $result = $app['db']->fetchAll($sql,array($type));
         return $app->json($result,200);
     }

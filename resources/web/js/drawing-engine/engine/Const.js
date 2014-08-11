@@ -5,6 +5,7 @@ define(function () {
     return {
         TOOL_BRUSH:'brush',
         TOOL_PATTERN_CREATOR:'patternCreator',
+        TOOL_PATTERN_APPLICATOR:'patternApplicator',
         PATTERN_CREATOR_CONFIG:{
             cols:10,
             rows:5

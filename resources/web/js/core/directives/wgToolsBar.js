@@ -24,7 +24,11 @@ var i = 0;
                             $scope.canRedo = canRedo;
                         });
                     });
-                })
+                });
+
+                wgMediator.$on('core:toolChanged',function(event,tool){
+                    $scope.model.tool = tool;
+                });
 
                 $scope.$watch('model.tool',function($newValue){
                     wgMediator.$emit('wgToolbar:setTool',$newValue);
@@ -56,8 +60,13 @@ var i = 0;
 
                 }
 
-                $scope.toolBar_save = function toolBar_resize(){
+                $scope.toolBar_save = function toolBar_save(){
                     wgMediator.$emit('wgToolbar:save');
+
+                }
+
+                $scope.toolBar_new = function toolBar_new(){
+                    wgMediator.$emit('wgToolbar:new');
 
                 }
 

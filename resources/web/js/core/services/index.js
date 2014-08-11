@@ -6,6 +6,7 @@
 
 requirejs_index([
     'wgResizeModal',
+    'wgNewWampumModal',
     'wgContentSize',
     'wgEngine',
     'wgMediator'

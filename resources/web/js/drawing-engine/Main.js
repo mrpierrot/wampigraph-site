@@ -41,7 +41,9 @@ define([
             var filesManager = new FilesLoaderManager([
                 {id:'anchor',src:'/assets/images/drawing-engine/anchor.png'},
                 {id:'pearlSprite',src:'/assets/images/drawing-engine/pearl-anim.png'},
-                {id:'pearlData',src:'/assets/images/drawing-engine/pearl-anim.json'}
+                {id:'pearlData',src:'/assets/images/drawing-engine/pearl-anim.json'},
+                {id:'pearlFaceA',src:'/assets/images/drawing-engine/pearlFaceA.png'},
+                {id:'pearlFaceB',src:'/assets/images/drawing-engine/pearlFaceB.png'}
             ],Assets);
 
             filesManager.on('complete',function(){
@@ -57,8 +59,8 @@ define([
 
 
                 _engine = new Engine(_stage,_stage.canvas.width,_stage.canvas.height);
-
                 _stage.addChild(_engine.rendering);
+                createjs.Ticker.addEventListener("tick",  _engine);
                 _interface.complete(_engine);
             },this)
 

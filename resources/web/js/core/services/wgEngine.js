@@ -2,7 +2,7 @@
  * Created by Pierrot on 01/08/14.
  */
 define(function () {
-    return function(wgMediator,wgResizeModal,$http){
+    return function(wgMediator,wgResizeModal,wgNewWampumModal,$http){
 
         wgMediator.$on('core:load:complete',function(event,infos){
             console.log("core:load:complete",infos);
@@ -11,7 +11,7 @@ define(function () {
             }else{
                 wgMediator.$emit('footer:clear');
             }
-
+            wgMediator.$emit('core:toolChanged','brush');
         });
 
         wgMediator.$on('drawingEngine:ready',function(event,engine){
@@ -22,11 +22,17 @@ define(function () {
                     wgMediator.$emit('drawingEngine:historyChanged',engine.canUndo(),engine.canRedo());
                 });
 
-
+                wgMediator.$on('patternLib:selection',function(event,pattern){
+                    if(pattern){
+                        wgMediator.$emit('core:toolChanged','patternApplicator');
+                       engine.setPattern(JSON.parse(pattern.raw));
+                    }
+                });
 
                 wgMediator.$on('wgToolbar:setTool',function(event,tool){
                     engine.setTool(tool);
-                    wgMediator.$emit('core:createPatternMode',tool === 'patternCreator');
+                    wgMediator.$emit('core:openPanel','createPattern',tool === 'patternCreator',tool !== 'patternCreator');
+                    wgMediator.$emit('core:openPanel','patternLib',tool === 'patternApplicator');
                 });
 
                 wgMediator.$on('wgToolbar:undo',function(){
@@ -94,6 +100,25 @@ define(function () {
                             wgMediator.$emit('pattern:save:error');
                             wgMediator.$emit('alerts:add','danger','Un erreur est survenu lors de la sauvegarde du motif');
                         });
+                });
+
+                wgMediator.$on('wgToolbar:new',function(){
+
+
+                    var modalInstance = wgNewWampumModal();
+                    modalInstance.result.then(function (data) {
+                        engine.reset();
+                        wgMediator.infos.original_id = null;
+                        wgMediator.infos.id = null;
+                        wgMediator.infos.type = 'wampum';
+                        wgMediator.infos.title = "Nouveau Wampum";
+                        wgMediator.infos.description = "";
+                        wgMediator.infos.raw = null;
+                        wgMediator.$emit('core:toolChanged','brush');
+                    }, function () {
+
+                    });
+
                 });
 
                 engine.setTool('brush');
