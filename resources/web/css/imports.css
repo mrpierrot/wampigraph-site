@@ -6199,6 +6199,9 @@ button.close {
 .icon-busy:before {
   content: "\e60f";
 }
+.icon-search:before {
+  content: "\e610";
+}
 .icon-checkmark:before {
   content: "\e603";
 }

@@ -89,6 +89,7 @@ define(function () {
                             wgMediator.$emit('core:createPatternMode',false);
                             wgMediator.$emit('pattern:save:complete');
                             wgMediator.$emit('footer:message','Editer le motif "'+infos.title+'"','#/'+infos.id);
+                            infos.id = null;
                         }).error(function(){
                             wgMediator.$emit('pattern:save:error');
                             wgMediator.$emit('alerts:add','danger','Un erreur est survenu lors de la sauvegarde du motif');

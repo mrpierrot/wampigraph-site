@@ -1,7 +1,16 @@
-<div class="assets-list-container">
-    <ul class="assets-list wampums-list">
-        <li ng-repeat="asset in assets">
-            <a href="#/{{asset.id}}" class="btn btn-primary" ><img ng-src="/thumbnail/{{asset.id}}" /></a>
-        </li>
-    </ul>
+<div>
+    <form class="form-inline search-form" role="form">
+        <div class="form-group">
+            <label class="sr-only" for="searchInput">Rechercher</label>
+            <input type="email" class="form-control" id="searchInput" placeholder="Rechercher">
+        </div>
+        <button type="submit" class="btn btn-default icon-search"></button>
+    </form>
+    <div class="scrollable-content">
+        <ul class="assets-list wampums-list">
+            <li ng-repeat="asset in assets">
+                <a href="#/{{asset.id}}" class="btn btn-primary" ><img ng-src="/thumbnail/{{asset.id}}" /></a>
+            </li>
+        </ul>
+    </div>
 </div>

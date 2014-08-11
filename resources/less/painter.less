@@ -3,6 +3,7 @@
 @wg-w-height-unless-footer: ~"calc(100vh - 93px)";
 @wg-fg-color: #357ebd;
 @wg-bg-color: #dddddd;
+@wg-bg-color-2: #f5f5f5;
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer;
@@ -118,16 +119,20 @@
         .accordion-content{
           height: 600px;
           height: ~"calc(100vh - 290px)";
-          padding: 15px 0px 15px 15px;
+          padding: 15px 0px 15px 0px;
           /*overflow: auto;*/
         }
       }
 
       .edit{
-        padding: 10px;
+        padding: 6px;
+        text-align: center;
+        margin-left: 15px;
         margin-bottom: 10px;
         border: 1px solid @wg-fg-color;
         border-radius: 4px;
+        width: 208px;
+        box-sizing: border-box;
         display: inline-block;
         .icon-pencil{
           font-size: 1em;
@@ -142,13 +147,33 @@
         }
 
       }
+      .search-form{
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 10px;
+        input {
+          width: 176px;
+        }
+        button{
+          font-size: 14px;
+          padding: 6px;
+        }
+      }
 
-      .assets-list-container{
+      *+.scrollable-content{
+        border-top: 1px solid @wg-bg-color;
+        padding-top: 10px;
+      }
+
+      .scrollable-content{
         overflow: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+
         .assets-list{
 
           .btn-primary{
-            display: block;
+            /*display: block;*/
             height: 62px;
             border-radius: 2px;
 
@@ -178,16 +203,19 @@
       }
 
       .patterns-list{
-        .assets-list-container{
-          //height: ~"calc(100% - 60px)";
-          min-height: 100%;
-          height: 100%;
+        .scrollable-content{
+          height: ~"calc(100vh - 350px)";
+
+
+          &.have-selection{
+            height: ~"calc(100vh - 403px)";
+          }
         }
       }
 
       .wampums-list{
-        .assets-list-container{
-          height: ~"calc(100%)";
+        .scrollable-content{
+          height: ~"calc(100vh - 350px)";
         }
       }
     }
@@ -195,12 +223,12 @@
     .footer{
       width: 100vw;
       height: 32px;
-      background: #464646;
+      background: @wg-bg-color-2;
       text-align: center;
-      color: #ffffff;;
+      color: @wg-fg-color;
       line-height: 32px;
       a{
-        color: #ffffff;
+        color: @wg-fg-color;
       }
     }
   }

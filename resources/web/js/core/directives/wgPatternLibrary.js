@@ -2,7 +2,7 @@
  * Created by Pierrot on 29/07/14.
  */
 define(function () {
-    return function($http){
+    return function($http,wgMediator){
         return {
             restrict: 'E',
             replace: true,
@@ -19,6 +19,7 @@ define(function () {
 
                 $scope.$watch('model.selection',function(value){
                     console.log(value);
+                    wgMediator.$emit('wgPercentHeight:update');
                 });
 
             }
