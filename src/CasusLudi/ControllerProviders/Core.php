@@ -19,9 +19,19 @@ class Core  implements ControllerProviderInterface{
 
         $controllers = $app['controllers_factory'];
 
+        $controllers->before(function () use ($app){
+            $token = $app['security']->getToken();
+            if (null !== $token) {
+                $user = $token->getUser();
+                $app['user'] = $user;
+                $app['twig']->addGlobal('user',$user);
+            }
+        });
+
         $controllers->match('','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
         $controllers->match('/mes-motifs','CasusLudi\\Controllers\\Core::myPatterns','GET')->bind('my-patterns');
         $controllers->match('/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET')->bind('my-wampums');
+        $controllers->match('/admin/api/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET');
 
         $controllers->match('/login','CasusLudi\\Controllers\\Auth::login','GET')->bind('login');
         $controllers->match('/login-check','CasusLudi\\Controllers\\Auth::loginCheck','GET')->bind('login-check');
@@ -36,7 +46,10 @@ class Core  implements ControllerProviderInterface{
             ->assert('type', 'wampum|pattern')
             ->assert('index', '\d+')
             ->bind('painter-get-drawings');
-        $controllers->match('/thumbnail/{id}','CasusLudi\\Controllers\\Image::getThumbnail','GET')->assert('id', '\d+')->bind('thumbnail');
+        $controllers->match('/thumbnail/{id}/{size}','CasusLudi\\Controllers\\Image::getThumbnail','GET')
+            ->assert('id', '\d+')
+            ->assert('size', '\d+x\d+')
+            ->value('size','2x3')->bind('thumbnail');
 
 
         return $controllers;

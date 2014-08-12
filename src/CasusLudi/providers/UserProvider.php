@@ -9,10 +9,10 @@ namespace CasusLudi\Providers;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Doctrine\DBAL\Connection;
+use CasusLudi\models\User;
 
 
 
@@ -33,7 +33,15 @@ class UserProvider implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
 
-        return new User($user['username'], $user['password'], explode(',', $user['roles']), true, true, true, true);
+        return new User(
+            $user['id'],
+            $user['firstname'],
+            $user['lastname'],
+            $user['email'],
+            $user['username'],
+            $user['password'],
+            explode(',', $user['roles']),
+            true, true, true, true);
     }
 
     public function refreshUser(UserInterface $user)
@@ -47,6 +55,6 @@ class UserProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        return $class === 'Symfony\Component\Security\Core\User\User';
+        return $class === 'CasusLudi\models\User';
     }
 }

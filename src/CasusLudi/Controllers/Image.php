@@ -16,14 +16,21 @@ use Symfony\Component\HttpFoundation\Response;
 class Image {
 
 
-    public function getThumbnail($id, Request $request, Application $app){
+    public function getThumbnail($id,$size, Request $request, Application $app){
 
         $sql = "SELECT raw FROM wampums WHERE id = ?";
         $result = $app['db']->fetchAssoc($sql,array($id));
         if($result['raw']){
             $data = json_decode($result['raw']);
-            $xRate = 2;
-            $yRate = 3;
+            $size = explode('x',$size);
+            if(count($size)>=2){
+                $xRate = intval($size[0]);
+                $yRate = intval($size[1]);
+            }else{
+                $xRate = 2;
+                $yRate = 3;
+            }
+
             $cols = $data->cols;
             $rows = $data->rows;
             $raw = $data->raw;

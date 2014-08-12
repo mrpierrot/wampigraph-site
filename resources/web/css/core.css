@@ -1,3 +1,22 @@
 .core {
   padding-top: 51px;
 }
+.wg-header .icon-cool {
+  font-size: 1em;
+}
+.wampums-list {
+  margin: 15px;
+}
+.wampums-list .wampum-item {
+  clear: both;
+}
+.wampums-list .wampum-item .thumbnail {
+  width: 400px;
+  height: 134px;
+  float: left;
+}
+.wampums-list .wampum-item .infos {
+  display: inline-block;
+  margin-left: 15px;
+  float: left;
+}

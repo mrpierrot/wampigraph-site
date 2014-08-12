@@ -6208,8 +6208,14 @@ button.close {
 .icon-search:before {
   content: "\e610";
 }
-.icon-checkmark:before {
+.icon-cool:before {
+  content: "\e614";
+}
+.icon-close:before {
   content: "\e603";
+}
+.icon-checkmark:before {
+  content: "\e613";
 }
 .icon-arrow-up-left:before {
   content: "\e604";

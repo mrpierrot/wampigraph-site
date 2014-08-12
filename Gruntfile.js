@@ -14,7 +14,8 @@ module.exports = function (grunt) {
     // less conf
     var lessPaths = [
         '<%= appDir %>/css',
-        '<%= appDir %>/vendor/components-bootstrap/less'
+        '<%= appDir %>/vendor/components-bootstrap/less',
+        '<%= appDir %>/vendor/angular-xeditable/dist/css'
         //'<%= appDir %>/vendor/seiyria-bootstrap-slider/dist/css'
 
     ];
@@ -47,7 +48,7 @@ module.exports = function (grunt) {
         builtDir: builtDir,
         requirejs: {
             all:{
-                rjsConfig: '<%= appDir %>/js/config.js'
+                rjsConfig: '<%= appDir %>/js/painter/config.js'
             }
         },
 

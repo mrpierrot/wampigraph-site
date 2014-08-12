@@ -1,0 +1,27 @@
+<!-- Fixed navbar -->
+<div class="wg-header navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand " href="{{ path('home') }}">Wampigraph</a>
+        </div>
+        <div class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav">
+                <li class="{{ wg_route_is_active('my-wampums') }}"><a href="{{ path('my-wampums') }}">Mes wampums</a></li>
+                <li class="{{ wg_route_is_active('my-patterns') }}"><a href="{{ path('my-patterns') }}">Mes motifs</a></li>
+                <li class="{{ wg_route_is_active('painter') }}"><a href="{{ path('painter') }}">Créer un wampum</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle " data-toggle="dropdown"><span class="icon-cool"></span> {{ user.firstname }} {{ user.lastname }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ path('logout') }}">Se deconnecter</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

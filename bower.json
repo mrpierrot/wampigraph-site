@@ -25,6 +25,7 @@
         "easeljs": "master",
         "PreloadJS": "master",
         "gsap": "1.13.1",
-        "angular-ui-slider": "~0.0.2"
+        "angular-ui-slider": "~0.0.2",
+        "angular-xeditable": "~0.1.8"
     }
 }
