@@ -14,8 +14,7 @@ module.exports = function (grunt) {
     // less conf
     var lessPaths = [
         '<%= appDir %>/css',
-        '<%= appDir %>/vendor/components-bootstrap/less',
-        '<%= appDir %>/vendor/angular-xeditable/dist/css'
+        '<%= appDir %>/vendor/components-bootstrap/less'
         //'<%= appDir %>/vendor/seiyria-bootstrap-slider/dist/css'
 
     ];

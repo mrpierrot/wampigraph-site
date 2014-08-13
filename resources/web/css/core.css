@@ -4,19 +4,60 @@
 .wg-header .icon-cool {
   font-size: 1em;
 }
-.wampums-list {
+.empty-text {
+  font-style: italic;
+}
+.not-granted {
+  display: none;
+}
+.btn-edit {
+  color: #777777;
+  cursor: hand;
+  font-size: 0.8em;
+  padding: 6px 10px;
+}
+.drawings-list {
   margin: 15px;
+  width: 100%;
 }
-.wampums-list .wampum-item {
-  clear: both;
+.drawings-list .drawing-item {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 10px;
+  table-layout: fixed;
 }
-.wampums-list .wampum-item .thumbnail {
+.drawings-list .drawing-item .thumbnail {
+  display: table-cell;
   width: 400px;
   height: 134px;
-  float: left;
 }
-.wampums-list .wampum-item .infos {
-  display: inline-block;
+.drawings-list .drawing-item .thumbnail img {
+  display: block;
+}
+.drawings-list .drawing-item .infos {
+  vertical-align: top;
+  display: table-cell;
   margin-left: 15px;
-  float: left;
+  width: 60%;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+.drawings-list .drawing-item .infos .author {
+  font-style: italic;
+  text-align: right;
+}
+.drawings-list .drawing-item .infos .author:before {
+  content: "~ ";
+}
+.drawings-list .drawing-item .infos .status {
+  text-align: right;
+}
+.drawings-list .drawing-item .admin {
+  vertical-align: top;
+  display: table-cell;
+}
+.drawings-list .drawing-item .admin button {
+  margin-bottom: 10px;
 }

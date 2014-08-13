@@ -1,0 +1,21 @@
+<div ng-repeat="drawing in items" class="drawing-item">
+    <a target="_blank" href="/editeur/#/{{ drawing.id }}" class="thumbnail">
+        <img ng-src="/thumbnail/{{ drawing.id }}/5x7" />
+    </a>
+    <div class="infos">
+        <h4 editable-text="drawing.title" onbeforesave="updateTitle(drawing,$data)" e-form="titleBtnForm">{{ drawing.title || 'Sans titre'}}<span class="btn-edit glyphicon glyphicon-pencil" ng-click="titleBtnForm.$show()" ng-hide="titleBtnForm.$visible"></span></h4>
+        <p class="description" onbeforesave="updateDescription(drawing,$data)" editable-textarea="drawing.description" e-form="descBtnForm" ng-class="{'empty-text':!drawing.description}">{{ drawing.description || 'Pas description' }}<span class="btn-edit glyphicon glyphicon-pencil" ng-click="descBtnForm.$show()" ng-hide="descBtnForm.$visible"></span></p>
+        <p class="author">{{ drawing.firstname }} {{ drawing.lastname }}</p>
+        <p class="status" >
+            <a is-granted="ROLE_ADMIN" href="#" onbeforesave="updateStatus(drawing,$data)"  editable-select="drawing.status" e-ng-options="s.value as s.label for s in statuses">
+                {{ showStatus(drawing) }}
+            </a>
+            <span not-granted-default="ROLE_ADMIN">{{ showStatus(drawing) }}</span>
+        </p>
+    </div>
+    <div class="admin">
+        <button class="btn btn-default glyphicon glyphicon-trash" is-granted="ROLE_ADMIN" ng-click="delete(drawing)"></button>
+        <button ng-if="drawing.status==2" class="btn btn-success glyphicon glyphicon-ok" is-granted="ROLE_ADMIN" ng-click="validate(drawing)"></button>
+
+    </div>
+</div>

@@ -53,9 +53,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
              })
         )
     ),
-    'security.role_hierarchy' => array(
-        'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
-    ),
+    'security.role_hierarchy' => $app['security.role_hierarchy'],
     'security.access_rules' => array(
         array('^/admin', 'ROLE_ADMIN'),
         array('^.*$', 'ROLE_USER'),
@@ -72,4 +70,6 @@ $app->register(new TranslationServiceProvider(), array(
     'translator.messages' => array(),
     'locale'=>'fr'
 ));
+
+
 

@@ -32,5 +32,13 @@ class Auth {
         return $app->redirect($app->path('login'));
     }
 
+    public function getConfig(Request $request, Application $app){
+
+        return $app->json(array(
+            'role_hierarchy'=>$app['security.role_hierarchy'],
+            'user_roles'=>$app['user']->getRoles()
+        ));
+    }
+
 
 } 

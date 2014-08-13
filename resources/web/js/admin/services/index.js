@@ -6,6 +6,6 @@
 
 requirejs_index(
     [
-
+        'wgMediator'
     ]
 )

@@ -31,7 +31,15 @@ class Core  implements ControllerProviderInterface{
         $controllers->match('','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
         $controllers->match('/mes-motifs','CasusLudi\\Controllers\\Core::myPatterns','GET')->bind('my-patterns');
         $controllers->match('/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET')->bind('my-wampums');
-        $controllers->match('/admin/api/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET');
+
+        $controllers->match('/api/auth/config','CasusLudi\\Controllers\\Auth::getConfig','GET');
+        $controllers->match('/api/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET');
+        $controllers->match('/api/drawing/update-field','CasusLudi\\Controllers\\Drawing::updateField','POST');
+
+        $controllers->match('/api/drawing/suggest/{id}','CasusLudi\\Controllers\\Drawing::suggest','GET')->assert('id', '\d+');
+        $controllers->match('/admin/api/drawing/delete/{id}','CasusLudi\\Controllers\\Drawing::delete','GET')->assert('id', '\d+');
+        $controllers->match('/admin/api/drawing/validate/{id}','CasusLudi\\Controllers\\Drawing::validate','GET')->assert('id', '\d+');
+        $controllers->match('/admin/api/drawing/update-status/{id}/{status}','CasusLudi\\Controllers\\Drawing::updateStatus','GET')->assert('id', '\d+')->assert('status', '\d+');
 
         $controllers->match('/login','CasusLudi\\Controllers\\Auth::login','GET')->bind('login');
         $controllers->match('/login-check','CasusLudi\\Controllers\\Auth::loginCheck','GET')->bind('login-check');

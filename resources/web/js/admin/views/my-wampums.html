@@ -1,13 +1,3 @@
-<div ng-controller="MyWampumsController" class="wampums-list">
-
-    <div ng-repeat="wampum in wampums" class="wampum-item">
-        <a href="/editeur/#/{{ wampum.id }}" class="thumbnail">
-            <img src="/thumbnail/{{ wampum.id }}/5x7" />
-        </a>
-        <div class="infos">
-            <h4>{{ wampum.title }}</h4>
-            <p class="description">{{ wampum.description }}</p>
-            <p class="author">{{ wampum.firstname }} {{ wampum.lastname }}</p>
-        </div>
-    </div>
+<div ng-controller="MyWampumsController" class="drawings-list">
+    <wg-drawings-list items="{{ wampums }}"></wg-drawings-list>
 </div>

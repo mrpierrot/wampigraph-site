@@ -10,7 +10,7 @@ define(['angular'],function (angular) {
     return function ($scope,$http) {
         $scope.wampums = [];
         $http.get(
-            '/admin/api/mes-wampums'
+            '/api/mes-wampums'
         ).success(function(data){
             for(var i= 0,c=data.length;i<c;i++){
                 $scope.wampums.push(data[i]);

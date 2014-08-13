@@ -9,7 +9,8 @@ requirejs.config({
         angular: '../../vendor/angular/angular',
         'angular-bootstrap': '../../vendor/angular-bootstrap/ui-bootstrap-tpls',
         'angular-route': '../../vendor/angular-route/angular-route',
-        'angular-xeditable': '../../vendor/angular-xeditable/dist/js/xeditable.min',
+        'angular-xeditable': '../../vendor/angular-xeditable/dist/js/xeditable',
+        'angular-roles': '../casusludi/angular-roles/angular-roles',
         'components-bootstrap': '../../vendor/components-bootstrap/js/bootstrap',
         requirejs: '../../vendor/requirejs/require',
         'requirejs-domready': '../../vendor/requirejs-domready/domReady',
@@ -37,6 +38,12 @@ requirejs.config({
             exports: 'angular'
         },
         'angular-route': {
+            deps: [
+                'angular'
+            ],
+            exports: 'angular'
+        },
+        'angular-roles': {
             deps: [
                 'angular'
             ],

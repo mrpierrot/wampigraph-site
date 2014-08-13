@@ -1,4 +1,5 @@
 @import "../vendor/jquery-ui/themes/base/jquery-ui.css";
+@import "../vendor/angular-xeditable/dist/css/xeditable.css";
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;

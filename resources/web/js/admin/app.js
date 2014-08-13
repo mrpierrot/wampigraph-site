@@ -10,13 +10,18 @@ define([
     './directives/index',
     './services/index',
     'angular-xeditable',
-    'angular-bootstrap'
+    'angular-bootstrap',
+    'angular-roles'
 ],function (angular,ngRoute,controllers,directives,services) {
 
-    var app = angular.module('AdminApp', ['ngRoute','ui.bootstrap','xeditable']);
+    var app = angular.module('AdminApp', ['ngRoute','ui.bootstrap','xeditable','angular-roles']),rolesConfig;
 
     app.init = function () {
-       angular.bootstrap(document, ['AdminApp']);
+        $.get('/api/auth/config',function(data){
+            rolesConfig = data;
+            angular.bootstrap(document, ['AdminApp']);
+        });
+
     };
 
     app.controller(controllers);
@@ -32,7 +37,11 @@ define([
         });
     }]);
 
-
+    app.run(function(editableOptions,roles) {
+        editableOptions.theme = 'bs3';
+        roles.setUserRoles(rolesConfig.user_roles);
+        roles.setRoleHierarchy(rolesConfig.role_hierarchy);
+    });
 
 
 
