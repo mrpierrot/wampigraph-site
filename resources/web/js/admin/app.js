@@ -37,6 +37,7 @@ define([
             .when('/patterns/validation',{templateUrl: '/assets/js/admin/views/validate-patterns.html'})
             .when('/infos/:id',{templateUrl: '/assets/js/admin/views/single-drawing.html'})
             .when('/corbeille',{templateUrl: '/assets/js/admin/views/garbage.html'})
+            .when('/utilisateurs',{templateUrl: '/assets/js/admin/views/users-list.html'})
             .otherwise({redirectTo: '/mes-wampums'});
     }]);
 

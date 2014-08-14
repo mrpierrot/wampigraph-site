@@ -6,6 +6,7 @@
 
 requirejs_index(
     [
+        'UsersListController',
         'MyWampumsController',
         'MyPatternsController',
         'GarbageController',

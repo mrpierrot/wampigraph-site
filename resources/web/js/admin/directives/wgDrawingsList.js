@@ -19,7 +19,7 @@ define(function () {
 
                 $scope.showStatus = function(drawing) {
                     var selected = $filter('filter')($scope.statuses, {value: drawing.status});
-                    return (drawing.status && selected.length) ? selected[0].label : 'Not set';
+                    return (drawing.status && selected.length) ? selected[0].label : 'Inconnu';
                 };
 
                 $scope.getType = function(drawing) {
@@ -65,7 +65,7 @@ define(function () {
 
                 $scope.delete = function(drawing){
                     return $http.get(
-                        '/admin/api/drawing/delete/'+drawing.id
+                        '/api/drawing/delete/'+drawing.id
                     ).success(function(data){
                             drawing.status = 8;
                     }).error(function(){

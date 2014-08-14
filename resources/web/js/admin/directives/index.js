@@ -6,6 +6,7 @@
 
 requirejs_index(
     [
-        'wgDrawingsList'
+        'wgDrawingsList',
+        'wgUsersList'
     ]
 )
