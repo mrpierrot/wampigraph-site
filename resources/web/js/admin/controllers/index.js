@@ -6,6 +6,11 @@
 
 requirejs_index(
     [
-        'MyWampumsController'
+        'MyWampumsController',
+        'MyPatternsController',
+        'GarbageController',
+        'SingleDrawingController',
+        'ValidateWampumsController',
+        'ValidatePatternsController'
     ]
 )

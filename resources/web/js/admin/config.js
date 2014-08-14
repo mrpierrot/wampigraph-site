@@ -19,6 +19,7 @@ requirejs.config({
         'jquery-ui': '../vendor/jquery-ui/ui/minified/jquery-ui.min',
         'angular-bootstrap-slider': '../../vendor/angular-bootstrap-slider/slider',
         'seiyria-bootstrap-slider': '../../vendor/seiyria-bootstrap-slider/js/bootstrap-slider',
+        'ngInfiniteScroll': '../../vendor/ngInfiniteScroll/build/ng-infinite-scroll',
         modernizr: '../../vendor/modernizr/modernizr'
     },
     shim: {
@@ -56,6 +57,12 @@ requirejs.config({
             exports: 'angular'
         },
         'angular-bootstrap': {
+            deps: [
+                'angular'
+            ],
+            exports: 'angular'
+        },
+        'ngInfiniteScroll': {
             deps: [
                 'angular'
             ],

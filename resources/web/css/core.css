@@ -16,6 +16,16 @@
   font-size: 0.8em;
   padding: 6px 10px;
 }
+.quote:before {
+  content: "“";
+  font-size: 1em;
+  line-height: 1em;
+}
+.quote:after {
+  content: "”";
+  font-size: 1em;
+  line-height: 1em;
+}
 .drawings-list {
   margin: 15px;
   width: 100%;
@@ -26,6 +36,22 @@
   border-spacing: 10px;
   table-layout: fixed;
 }
+.drawings-list .drawing-item.delete .thumbnail img {
+  filter: grayscale(80%);
+  -webkit-filter: grayscale(80%);
+  -moz-filter: grayscale(80%);
+  -o-filter: grayscale(80%);
+  -ms-filter: grayscale(80%);
+}
+.drawings-list .drawing-item.delete > * {
+  color: #dcdcdc !important;
+}
+.drawings-list .drawing-item.delete .description {
+  color: #dcdcdc !important;
+}
+.drawings-list .drawing-item.delete .btn-edit {
+  color: #dcdcdc !important;
+}
 .drawings-list .drawing-item .thumbnail {
   display: table-cell;
   width: 400px;
@@ -33,6 +59,19 @@
 }
 .drawings-list .drawing-item .thumbnail img {
   display: block;
+}
+.drawings-list .drawing-item .type {
+  font-style: italic;
+  font-size: 0.66em;
+  text-transform: capitalize;
+}
+.drawings-list .drawing-item .origine {
+  font-size: 0.66em;
+  font-style: italic;
+}
+.drawings-list .drawing-item .origine a {
+  font-size: 0.88em;
+  font-style: italic;
 }
 .drawings-list .drawing-item .infos {
   vertical-align: top;
@@ -53,6 +92,11 @@
 }
 .drawings-list .drawing-item .infos .status {
   text-align: right;
+}
+.drawings-list .drawing-item .infos .date {
+  font-style: italic;
+  text-align: right;
+  font-size: 0.66em;
 }
 .drawings-list .drawing-item .admin {
   vertical-align: top;

@@ -7,6 +7,7 @@ define(function () {
             restrict: 'E',
             templateUrl: '/assets/js/admin/views/directives/wg-drawings-list.html',
             link:function($scope,$element,$attrs){
+                var index = 0;
                 $scope.items = [];
 
                 $scope.statuses = [
@@ -19,6 +20,10 @@ define(function () {
                 $scope.showStatus = function(drawing) {
                     var selected = $filter('filter')($scope.statuses, {value: drawing.status});
                     return (drawing.status && selected.length) ? selected[0].label : 'Not set';
+                };
+
+                $scope.getType = function(drawing) {
+                    return (drawing.type == 'wampum')?'wampum':'motif';
                 };
 
                 $scope.updateTitle = function(drawing,title){
@@ -38,6 +43,7 @@ define(function () {
 
                     });
                 }
+
 
                 $scope.updateDescription = function(drawing,description){
                     return $http.post(
@@ -77,6 +83,26 @@ define(function () {
                     });
                 }
 
+                $scope.restore = function(drawing){
+                    return $http.get(
+                            '/api/drawing/restore/'+drawing.id
+                        ).success(function(data){
+                            drawing.status = 1;
+                        }).error(function(){
+
+                        });
+                }
+
+                $scope.suggest = function(drawing){
+                    return $http.get(
+                            '/api/drawing/suggest/'+drawing.id
+                        ).success(function(data){
+                            drawing.status = 2;
+                        }).error(function(){
+
+                        });
+                }
+
                 $scope.updateStatus = function(drawing,status){
                     return $http.get(
                         '/admin/api/drawing/update-status/'+drawing.id+'/'+status
@@ -91,6 +117,7 @@ define(function () {
                     var items = JSON.parse(value);
                     for(var i= 0,c=items.length;i<c;i++){
                          items[i].status = parseInt(items[i].status);
+                         items[i].update_date = Date.parse(items[i].update_date);
                     }
 
                     $scope.items = items;

@@ -28,24 +28,43 @@ class Core  implements ControllerProviderInterface{
             }
         });
 
-        $controllers->match('','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
-        $controllers->match('/mes-motifs','CasusLudi\\Controllers\\Core::myPatterns','GET')->bind('my-patterns');
-        $controllers->match('/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET')->bind('my-wampums');
-
-        $controllers->match('/api/auth/config','CasusLudi\\Controllers\\Auth::getConfig','GET');
-        $controllers->match('/api/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET');
-        $controllers->match('/api/drawing/update-field','CasusLudi\\Controllers\\Drawing::updateField','POST');
-
-        $controllers->match('/api/drawing/suggest/{id}','CasusLudi\\Controllers\\Drawing::suggest','GET')->assert('id', '\d+');
-        $controllers->match('/admin/api/drawing/delete/{id}','CasusLudi\\Controllers\\Drawing::delete','GET')->assert('id', '\d+');
-        $controllers->match('/admin/api/drawing/validate/{id}','CasusLudi\\Controllers\\Drawing::validate','GET')->assert('id', '\d+');
-        $controllers->match('/admin/api/drawing/update-status/{id}/{status}','CasusLudi\\Controllers\\Drawing::updateStatus','GET')->assert('id', '\d+')->assert('status', '\d+');
-
+        // routes de gestion du login
         $controllers->match('/login','CasusLudi\\Controllers\\Auth::login','GET')->bind('login');
         $controllers->match('/login-check','CasusLudi\\Controllers\\Auth::loginCheck','GET')->bind('login-check');
         $controllers->match('/logout','CasusLudi\\Controllers\\Auth::logout','GET')->bind('logout');
 
+        $controllers->match('','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
+        //$controllers->match('/mes-motifs','CasusLudi\\Controllers\\Core::myPatterns','GET')->bind('my-patterns');
+        //$controllers->match('/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET')->bind('my-wampums');
 
+        // default user api
+        $controllers->match('/api/auth/config','CasusLudi\\Controllers\\Auth::getConfig','GET');
+        $controllers->match('/api/mes-wampums','CasusLudi\\Controllers\\Core::myWampums','GET');
+        $controllers->match('/api/drawing/{id}','CasusLudi\\Controllers\\Drawing::loadById','get')->assert('id', '\d+');
+        $controllers->match('/api/drawing/update-field','CasusLudi\\Controllers\\Drawing::updateField','POST');
+        $controllers->match('/api/drawing/suggest/{id}','CasusLudi\\Controllers\\Drawing::suggest','GET')->assert('id', '\d+');
+        $controllers->match('/api/drawing/restore/{id}','CasusLudi\\Controllers\\Drawing::restore','GET')->assert('id', '\d+');
+        $controllers->match('/api/drawing/user/list/{type}/{index}','CasusLudi\\Controllers\\Drawing::loadUserList','GET')
+            ->value('index', 0)
+            ->assert('type', 'wampum|pattern')
+            ->assert('index', '\d+');
+
+        $controllers->match('/api/drawing/user/{userId}/list/{type}/{index}','CasusLudi\\Controllers\\Drawing::loadListByUserId','GET')
+            ->value('index', 0)
+            ->assert('type', 'wampum|pattern')
+            ->assert('index', '\d+')
+            ->assert('userId', '\d+');
+
+        // Admin api
+        $controllers->match('/admin/api/drawing/delete/{id}','CasusLudi\\Controllers\\Drawing::delete','GET')->assert('id', '\d+');
+        $controllers->match('/admin/api/drawing/validate/{id}','CasusLudi\\Controllers\\Drawing::validate','GET')->assert('id', '\d+');
+        $controllers->match('/admin/api/drawing/update-status/{id}/{status}','CasusLudi\\Controllers\\Drawing::updateStatus','GET')->assert('id', '\d+')->assert('status', '\d+');
+        $controllers->match('/admin/api/drawing/list/{type}/status/{status}/{index}','CasusLudi\\Controllers\\Drawing::loadListByStatus','GET')->assert('type', 'wampum|pattern')->assert('index', '\d+')->assert('status', '\d+');
+        $controllers->match('/admin/api/drawing/list/status/{status}/{index}','CasusLudi\\Controllers\\Drawing::loadListByStatus','GET')->assert('type', 'wampum|pattern')->assert('index', '\d+')->assert('status', '\d+')->value('type',null);
+
+
+
+        // Editeur API
         $controllers->match('/editeur/','CasusLudi\\Controllers\\Painter::app','GET')->bind('painter');
         $controllers->match('/painter/api/save','CasusLudi\\Controllers\\Painter::saveDrawing','POST')->bind('painter-save-drawing');
         $controllers->match('/painter/api/get/{id}','CasusLudi\\Controllers\\Painter::getDrawing','GET')->assert('id', '\d+')->bind('painter-get-drawing');

@@ -36,7 +36,8 @@ class Auth {
 
         return $app->json(array(
             'role_hierarchy'=>$app['security.role_hierarchy'],
-            'user_roles'=>$app['user']->getRoles()
+            'user_roles'=>$app['user']->getRoles(),
+            'user_id'=>$app['user']->getId()
         ));
     }
 

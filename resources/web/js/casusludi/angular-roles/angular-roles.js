@@ -8,6 +8,7 @@ angular.module('angular-roles',[]).
             'ROLE_USER':null
         }
         var _user_roles = ['ROLE_USER'];
+        var _user_id =null;
         return{
             setUserRoles: function(userRoles){
                 _user_roles = userRoles;
@@ -15,8 +16,12 @@ angular.module('angular-roles',[]).
             setRoleHierarchy:function(hierarchy){
                 _role_hierarchy = hierarchy;
             },
-            isGranted: function(role){
+            setUserId: function(userId){
+                _user_id = userId;
+            },
+            isGranted: function(role,userId){
                 // si le role existe
+                if(userId && userId == _user_id) return true;
                 if(_role_hierarchy[role]){
                     // pour chaque role de l'utilisateur
                     for(var i= 0,c=_user_roles.length;i<c;i++){
@@ -51,15 +56,19 @@ angular.module('angular-roles',[]).
         return {
             restrict: 'A',
             link:function($scope,$element,$attrs){
-                $attrs.$observe('isGranted',function(value){
-                        if(!roles.isGranted(value)){
+                $scope.$watch($attrs['isGranted'], function(value){
+                    if(value){
+                        var isGranted = false;
+                        if(typeof value === 'string')isGranted = roles.isGranted(value);
+                        if(typeof value === 'object')isGranted = roles.isGranted(value.role,value.userId);
+                        if(!isGranted){
                             $element.addClass("not-granted");
                         }else{
                             $element.removeClass("not-granted");
                         }
+                    }
 
-                })
-
+                }, true);
             }
         }
     }).
@@ -67,14 +76,18 @@ angular.module('angular-roles',[]).
         return {
             restrict: 'A',
             link:function($scope,$element,$attrs){
-                $attrs.$observe('notGrantedDefault',function(value){
-                    if(roles.isGranted(value)){
-                        $element.addClass("not-granted");
-                    }else{
-                        $element.removeClass("not-granted");
+                $scope.$watch($attrs['notGrantedDefault'], function(value){
+                    if(value){
+                        var isGranted = false;
+                        if(typeof value === 'string')isGranted = roles.isGranted(value);
+                        if(typeof value === 'object')isGranted = roles.isGranted(value.role,value.userId);
+                        if(isGranted){
+                            $element.addClass("not-granted");
+                        }else{
+                            $element.removeClass("not-granted");
+                        }
                     }
-
-                })
+                }, true);
 
             }
         }

@@ -1,3 +1,5 @@
+@light-gray: #DDDDDD;
+@gray: #DCDCDC;
 
 .core{
   padding-top: 51px;
@@ -20,10 +22,43 @@
   font-size: 0.8em;
   padding: 6px 10px;
 }
+
+.quote{
+  &:before{
+    content: "“";
+    font-size: 1em;
+    line-height: 1em;
+  }
+  &:after{
+    content: "”";
+    font-size: 1em;
+    line-height: 1em;
+  }
+}
 .drawings-list{
   margin: 15px;
   width: 100%;
   .drawing-item{
+    &.delete{
+      .thumbnail{
+        img{
+          filter: grayscale(80%);
+          -webkit-filter: grayscale(80%);
+          -moz-filter: grayscale(80%);
+          -o-filter: grayscale(80%);
+          -ms-filter: grayscale(80%);
+        }
+      }
+      &>*{
+        color: @gray!important;
+      }
+      .description{
+        color: @gray!important;
+      }
+      .btn-edit{
+        color: @gray!important;
+      }
+    }
     display: table;
     border-collapse: separate;
     border-spacing: 10px;
@@ -34,6 +69,19 @@
       height: 134px;
       img{
         display: block;
+      }
+    }
+    .type{
+      font-style: italic;
+      font-size: 0.66em;
+      text-transform: capitalize;
+    }
+    .origine{
+      font-size: 0.66em;
+      font-style: italic;
+      a{
+        font-size: 0.88em;
+        font-style: italic;
       }
     }
     .infos{
@@ -54,6 +102,11 @@
       }
       .status{
         text-align: right;
+      }
+      .date{
+        font-style: italic;
+        text-align: right;
+        font-size: 0.66em;
       }
     }
     .admin{

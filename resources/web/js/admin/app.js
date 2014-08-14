@@ -11,10 +11,11 @@ define([
     './services/index',
     'angular-xeditable',
     'angular-bootstrap',
+    'ngInfiniteScroll',
     'angular-roles'
 ],function (angular,ngRoute,controllers,directives,services) {
 
-    var app = angular.module('AdminApp', ['ngRoute','ui.bootstrap','xeditable','angular-roles']),rolesConfig;
+    var app = angular.module('AdminApp', ['ngRoute','ui.bootstrap','xeditable','angular-roles','infinite-scroll']),rolesConfig;
 
     app.init = function () {
         $.get('/api/auth/config',function(data){
@@ -30,16 +31,19 @@ define([
 
     app.config(['$routeProvider',function($routeProvider){
         $routeProvider
-        .when('/',{
-            templateUrl: '/assets/js/admin/views/my-wampums.html',
-        }).otherwise({
-            redirectTo: '/'
-        });
+            .when('/mes-wampums',{templateUrl: '/assets/js/admin/views/my-wampums.html'})
+            .when('/mes-motifs',{templateUrl: '/assets/js/admin/views/my-patterns.html'})
+            .when('/wampums/validation',{templateUrl: '/assets/js/admin/views/validate-wampums.html'})
+            .when('/patterns/validation',{templateUrl: '/assets/js/admin/views/validate-patterns.html'})
+            .when('/infos/:id',{templateUrl: '/assets/js/admin/views/single-drawing.html'})
+            .when('/corbeille',{templateUrl: '/assets/js/admin/views/garbage.html'})
+            .otherwise({redirectTo: '/mes-wampums'});
     }]);
 
     app.run(function(editableOptions,roles) {
         editableOptions.theme = 'bs3';
         roles.setUserRoles(rolesConfig.user_roles);
+        roles.setUserId(rolesConfig.user_id);
         roles.setRoleHierarchy(rolesConfig.role_hierarchy);
     });
 

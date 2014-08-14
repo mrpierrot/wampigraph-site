@@ -15,7 +15,7 @@ define(['angular'],function (angular) {
             if(!onLoad){
                 var index = $scope.drawings.length;
                 onLoad = true;
-                $http.get('/api/drawing/user/list/wampum/'+index).success(function(data){
+                $http.get('/admin/api/drawing/list/pattern/status/2/'+index).success(function(data){
                     onLoad = false;
                     for(var i= 0,c=data.length;i<c;i++){
                         $scope.drawings.push(data[i]);

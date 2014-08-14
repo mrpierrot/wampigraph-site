@@ -11,7 +11,7 @@ requirejs.config({
     baseUrl: '/assets/js/painter',
     paths: {
         jquery: '../../vendor/jquery/dist/jquery',
-        bootstrap: '../vendor/bootstrap/dist/js/bootstrap',
+        bootstrap: '../../vendor/bootstrap/dist/js/bootstrap',
         angular: '../../vendor/angular/angular',
         'angular-bootstrap': '../../vendor/angular-bootstrap/ui-bootstrap-tpls',
         'angular-route': '../../vendor/angular-route/angular-route',
