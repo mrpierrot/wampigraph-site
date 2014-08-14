@@ -9,6 +9,8 @@ requirejs_index(
         'UsersListController',
         'MyWampumsController',
         'MyPatternsController',
+        'WampumsByUserController',
+        'PatternsByUserController',
         'GarbageController',
         'SingleDrawingController',
         'ValidateWampumsController',

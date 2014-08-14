@@ -29,6 +29,10 @@
 .users-list .editable-checklist label {
   display: block;
 }
+.users-list .drawings a {
+  display: block;
+  font-size: 0.8em;
+}
 .drawings-list {
   margin: 15px;
   width: 100%;
