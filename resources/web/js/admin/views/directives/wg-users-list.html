@@ -1,18 +1,30 @@
-<table class="table">
+
+<table class="table users-list">
     <thead>
         <tr>
             <th>#</th>
+            <th></th>
             <th>Prénom</th>
             <th>Nom</th>
             <th>Email</th>
             <th>roles</th>
+            <th></th>
         </tr>
     </thead>
-    <tr ng-repeat="user in items" ng-class="{delete:user.status==8}">
+   <tr ng-repeat="user in items" ng-class="{delete:user.status==8}">
         <td>{{ user.id }}</td>
+        <td>
+            <a ng-href="/#/utilisateur/{{ user.id }}/wampums">Wampums</a>
+            <a ng-href="/#/utilisateur/{{ user.id }}/motifs">Motifs</a>
+        </td>
         <td editable-text="user.firstname" onbeforesave="updateFirstname(user,$data)" e-form="firstnameBtnForm">{{ user.firstname }}<span is-granted="'ROLE_MODERATOR'" class="btn-edit glyphicon glyphicon-pencil" ng-click="firstnameBtnForm.$show()" ng-hide="firstnameBtnForm.$visible"></span></td>
         <td editable-text="user.lastname" onbeforesave="updateLastname(user,$data)" e-form="lastnameBtnForm">{{ user.lastname }}<span is-granted="'ROLE_MODERATOR'" class="btn-edit glyphicon glyphicon-pencil" ng-click="lastnameBtnForm.$show()" ng-hide="lastnameBtnForm.$visible"></span></td>
         <td editable-email="user.email" onbeforesave="updateEmail(user,$data)" e-form="emailBtnForm">{{ user.email }}<span is-granted="'ROLE_MODERATOR'" class="btn-edit glyphicon glyphicon-pencil" ng-click="emailBtnForm.$show()" ng-hide="emailBtnForm.$visible"></span></td>
-        <td editable-checklist="user.roles" e-ng-options="r.value as r.label for r in roles" onbeforesave="updateRoles(user,$data)" e-form="rolesBtnForm">{{ user.roles }}<span is-granted="'ROLE_MODERATOR'" class="btn-edit glyphicon glyphicon-pencil" ng-click="rolesBtnForm.$show()" ng-hide="rolesBtnForm.$visible"></span></td>
-    </tr>
+        <td editable-checklist="user.roles" e-ng-options="r.value as r.label for r in roles" onbeforesave="updateRoles(user,$data)" e-form="rolesBtnForm">{{ showRoles(user) }}<span is-granted="'ROLE_MODERATOR'" class="btn-edit glyphicon glyphicon-pencil" ng-click="rolesBtnForm.$show()" ng-hide="rolesBtnForm.$visible"></span></td>
+        <td>
+            <button ng-if="user.status!=8" tooltip="Supprimer l'utilisateur"  tooltip-placement="left" class="btn btn-default glyphicon glyphicon-trash" is-granted="'ROLE_ADMIN'" ng-click="delete(user)"></button>
+            <button ng-if="user.status==8" tooltip="Restaurer l'utilisateur"  tooltip-placement="left" class="btn btn-default glyphicon glyphicon-repeat" is-granted="'ROLE_ADMIN'" ng-click="restore(user)"></button>
+
+        </td>
+   </tr>
 </table>

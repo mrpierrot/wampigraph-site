@@ -10,6 +10,7 @@ requirejs.config({
         'angular-bootstrap': '../../vendor/angular-bootstrap/ui-bootstrap-tpls',
         'angular-route': '../../vendor/angular-route/angular-route',
         'angular-xeditable': '../../vendor/angular-xeditable/dist/js/xeditable',
+        'checklist-model': '../../vendor/checklist-model/checklist-model',
         'angular-roles': '../casusludi/angular-roles/angular-roles',
         'components-bootstrap': '../../vendor/components-bootstrap/js/bootstrap',
         requirejs: '../../vendor/requirejs/require',
@@ -39,6 +40,12 @@ requirejs.config({
             exports: 'angular'
         },
         'angular-route': {
+            deps: [
+                'angular'
+            ],
+            exports: 'angular'
+        },
+        'checklist-model': {
             deps: [
                 'angular'
             ],

@@ -2,7 +2,7 @@
  * Created by Pierrot on 13/08/14.
  */
 define(function () {
-    return function(roles,$filter,$http){
+    return function(roles,$filter,$http,$timeout){
         return {
             restrict: 'E',
             templateUrl: '/assets/js/admin/views/directives/wg-users-list.html',
@@ -14,7 +14,8 @@ define(function () {
                     {label:'Admin',value:'ROLE_ADMIN'},
                     {label:'Modérateur',value:'ROLE_MODERATOR'},
                     {label:'Péon',value:'ROLE_USER'}
-                ]
+                ];
+
 
                 /*$http.get(
                         '/admin/api/roles'
@@ -24,15 +25,16 @@ define(function () {
 
                     });*/
 
-                $scope.statuses = [
-                    {value:1,label:'Actif'},
-                    {value:2,label:'Banni'},
-                    {value:8,label:'Supprimé'}
-                ]
 
-                $scope.showStatus = function(user) {
-                    var selected = $filter('filter')($scope.statuses, {value: user.status});
-                    return (user.status && selected.length) ? selected[0].label : 'Inconnu';
+
+                $scope.showRoles = function(user) {
+                    var selected = [];
+                    angular.forEach($scope.roles, function(s) {
+                        if (user.roles.indexOf(s.value) >= 0) {
+                            selected.push(s.label);
+                        }
+                    });
+                    return selected.length ? selected.join(', ') : $scope.roles[2].label;
                 };
 
                 var _updateField = function(user,fieldname,value){
@@ -55,17 +57,17 @@ define(function () {
 
 
                 $scope.updateRoles = function(user,roles){
-                    console.log('roles:',roles);
-                   /* return $http.post(
-                        '/api/user/update-roles',
+
+                    return $http.post(
+                        '/admin/api/user/update-roles',
                         $.param({
                             id:user.id,
-                            value:roles
+                            roles:roles
                         }),
                         {
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                         }
-                    );*/
+                    )
                     return true;
                 }
 
@@ -81,7 +83,7 @@ define(function () {
 
                 $scope.restore = function(user){
                     return $http.get(
-                            '/api/user/restore/'+user.id
+                            '/admin/api/user/restore/'+user.id
                         ).success(function(data){
                             user.status = 1;
                         }).error(function(){
@@ -93,12 +95,13 @@ define(function () {
                 $attrs.$observe('items',function(value){
                     var items = JSON.parse(value);
                     for(var i= 0,c=items.length;i<c;i++){
-                         items[i].status = parseInt(items[i].status);
-                         //items[i].update_date = Date.parse(items[i].update_date);
+                        items[i].status = parseInt(items[i].status);
                     }
 
                     $scope.items = items;
                 })
+
+
 
             }
         }

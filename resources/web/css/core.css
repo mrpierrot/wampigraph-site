@@ -26,6 +26,9 @@
   font-size: 1em;
   line-height: 1em;
 }
+.users-list .editable-checklist label {
+  display: block;
+}
 .drawings-list {
   margin: 15px;
   width: 100%;

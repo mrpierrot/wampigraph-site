@@ -12,10 +12,11 @@ define([
     'angular-xeditable',
     'angular-bootstrap',
     'ngInfiniteScroll',
-    'angular-roles'
+    'angular-roles',
+    'checklist-model'
 ],function (angular,ngRoute,controllers,directives,services) {
 
-    var app = angular.module('AdminApp', ['ngRoute','ui.bootstrap','xeditable','angular-roles','infinite-scroll']),rolesConfig;
+    var app = angular.module('AdminApp', ['ngRoute','ui.bootstrap','xeditable','checklist-model','angular-roles','infinite-scroll']),rolesConfig;
 
     app.init = function () {
         $.get('/api/auth/config',function(data){

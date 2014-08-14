@@ -46,16 +46,19 @@ class User {
         if ($app['security']->isGranted('ROLE_ADMIN')) {
             $data = $request->request->all();
             $userId = (int)$data['id'];
-            $userRoles = json_decode($data['roles']);
+            $userRoles = @$data['roles'];
             $roles = array_keys($app['security.role_hierarchy']);
             $newRoles = array();
-            foreach($userRoles as $role){
-                if(in_array($role,$roles)){
-                    array_push($newRoles,$role);
+            if($userRoles) {
+                foreach($userRoles as $role){
+                    if(in_array($role,$roles)){
+                        array_push($newRoles,$role);
+                    }
                 }
             }
-            if(empty($newRoles))array_push($newRoles,'ROLE_USER');
-            $app['db']->update('users',array('roles'=>implode(',',$newRoles)),array('id'=>$userId));
+
+            if(empty($newRoles)) array_push($newRoles,'ROLE_USER');
+            //$app['db']->update('users',array('roles'=>implode(',',$newRoles)),array('id'=>$userId));
             return $app->json($newRoles,200);
 
         }
@@ -69,7 +72,7 @@ class User {
     public function loadList($index,Request $request, Application $app){
         if(!$index)$index=0;
         if ($app['security']->isGranted('ROLE_MODERATOR')) {
-            $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles FROM users AS u  ORDER BY u.lastname DESC LIMIT $index,20";
+            $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles,u.status FROM users AS u  ORDER BY u.lastname DESC LIMIT $index,20";
         }else{
             $sql = "SELECT u.id,u.firstname,u.lastname FROM users AS u ORDER BY u.lastname DESC LIMIT $index,20 AND status=1";
         }
@@ -104,12 +107,12 @@ class User {
     }
 
     public function delete($id,Request $request, Application $app){
-        $app['db']->update('user',array('status'=>self::STATUS_DELETE),array('id'=>$id));
+        $app['db']->update('users',array('status'=>self::STATUS_DELETE),array('id'=>$id));
         return $app->json(true,200);
     }
 
     public function restore($id,Request $request, Application $app){
-        $app['db']->update('user',array('status'=>self::STATUS_VALIDATE),array('id'=>$id));
+        $app['db']->update('users',array('status'=>self::STATUS_VALIDATE),array('id'=>$id));
         return $app->json(true,200);
     }
 
