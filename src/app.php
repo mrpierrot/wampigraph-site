@@ -49,7 +49,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
             'form' => array('login_path' => '/login', 'check_path' => '/login-check'),
             'logout' => array('logout_path' => '/logout'),
             'users' =>  $app->share(function () use ($app) {
-                    return new CasusLudi\Providers\UserProvider($app['db']);
+                    return new \CasusLudi\Providers\UserProvider($app['db']);
              })
         )
     ),
