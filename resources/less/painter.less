@@ -13,6 +13,16 @@
   color: #dddddd;
 }
 
+.alert-container{
+  position: absolute;
+  z-index: 10000;
+  width: 100vw;
+  .alert{
+    width: 400px;
+    margin: 10px auto 0 auto;
+  }
+}
+
 .core{
   width: 100vw!important;
   height: @wg-w-height;
@@ -27,15 +37,7 @@
   a{
     color: @wg-fg-color;
   }
-  .alert-container{
-    position: absolute;
-    z-index: 10000;
-    width: 100vw;
-    .alert{
-      width: 400px;
-      margin: 10px auto 0 auto;
-    }
-  }
+
 
   .painter{
     height: 100%;

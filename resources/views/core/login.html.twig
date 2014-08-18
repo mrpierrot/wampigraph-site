@@ -10,7 +10,7 @@
     <form class="form-signin" role="form" action="{{ path('login-check') }}" method="post">
         <h2 class="form-signin-heading">Veuillez vous connecter</h2>
         {{ error }}
-        <input type="text"  name="_username" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email"  name="_username" class="form-control" placeholder="Email address" required autofocus>
         <input type="password"  name="_password" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">J'y vais</button>
     </form>

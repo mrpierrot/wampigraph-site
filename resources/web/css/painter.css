@@ -7,6 +7,15 @@
 .text-muted {
   color: #dddddd;
 }
+.alert-container {
+  position: absolute;
+  z-index: 10000;
+  width: 100vw;
+}
+.alert-container .alert {
+  width: 400px;
+  margin: 10px auto 0 auto;
+}
 .core {
   width: 100vw!important;
   height: calc(100vh - 51px);
@@ -21,15 +30,6 @@
 }
 .core a {
   color: #357ebd;
-}
-.core .alert-container {
-  position: absolute;
-  z-index: 10000;
-  width: 100vw;
-}
-.core .alert-container .alert {
-  width: 400px;
-  margin: 10px auto 0 auto;
 }
 .core .painter {
   height: 100%;

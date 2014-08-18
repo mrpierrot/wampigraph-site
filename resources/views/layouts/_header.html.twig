@@ -17,16 +17,16 @@
                 <li class="{{ wg_route_is_active('my-wampums') }}"><a href="/#/mes-wampums">Mes wampums</a></li>
                 <li class="{{ wg_route_is_active('my-patterns') }}"><a href="/#/mes-motifs">Mes motifs</a></li>
                 <li class="{{ wg_route_is_active('painter') }}"><a href="{{ path('painter') }}">Créer un wampum</a></li>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MODERATOR') %}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/#/wampums/validation">Valider les wampums</a></li>
                             <li><a href="/#/patterns/validation">Valider les motifs</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Voir tout les wampums</a></li>
+                           <!-- <li><a href="#">Voir tout les wampums</a></li>
                             <li><a href="#">Voir tout les motifs</a></li>
-                            <li class="divider"></li>
+                            <li class="divider"></li>-->
                             <li><a href="/#/utilisateurs">Les utilisateurs</a></li>
                             <li class="divider"></li>
                             <li><a href="/#/corbeille">La corbeille</a></li>

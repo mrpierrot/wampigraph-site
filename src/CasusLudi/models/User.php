@@ -15,7 +15,6 @@ class User implements AdvancedUserInterface{
     private $firstname;
     private $lastname;
     private $email;
-    private $username;
     private $password;
     private $enabled;
     private $accountNonExpired;
@@ -23,14 +22,13 @@ class User implements AdvancedUserInterface{
     private $accountNonLocked;
     private $roles;
 
-    public function __construct($id,$firstname,$lastname,$email,$username, $password, array $roles = array(), $enabled = true, $userNonExpired = true, $credentialsNonExpired = true, $userNonLocked = true)
+    public function __construct($id,$firstname,$lastname,$email, $password, array $roles = array(), $enabled = true, $userNonExpired = true, $credentialsNonExpired = true, $userNonLocked = true)
     {
 
         $this->id = $id;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
-        $this->username = $username;
         $this->password = $password;
         $this->enabled = $enabled;
         $this->accountNonExpired = $userNonExpired;
@@ -83,7 +81,7 @@ class User implements AdvancedUserInterface{
      */
     public function getUsername()
     {
-        return $this->username;
+        return $this->email;
     }
 
     /**

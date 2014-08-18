@@ -58,7 +58,7 @@ class User {
             }
 
             if(empty($newRoles)) array_push($newRoles,'ROLE_USER');
-            //$app['db']->update('users',array('roles'=>implode(',',$newRoles)),array('id'=>$userId));
+            $app['db']->update('users',array('roles'=>implode(',',$newRoles)),array('id'=>$userId));
             return $app->json($newRoles,200);
 
         }

@@ -12,6 +12,7 @@ requirejs.config({
         'angular-xeditable': '../../vendor/angular-xeditable/dist/js/xeditable',
         'checklist-model': '../../vendor/checklist-model/checklist-model',
         'angular-roles': '../casusludi/angular-roles/angular-roles',
+        'casusludi-alerts': '../casusludi/casusludi-alerts/casusludi-alerts',
         'components-bootstrap': '../../vendor/components-bootstrap/js/bootstrap',
         requirejs: '../../vendor/requirejs/require',
         'requirejs-domready': '../../vendor/requirejs-domready/domReady',
@@ -52,6 +53,12 @@ requirejs.config({
             exports: 'angular'
         },
         'angular-roles': {
+            deps: [
+                'angular'
+            ],
+            exports: 'angular'
+        },
+        'casusludi-alerts': {
             deps: [
                 'angular'
             ],
