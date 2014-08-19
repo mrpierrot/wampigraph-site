@@ -33,7 +33,7 @@ class Core  implements ControllerProviderInterface{
         $controllers->match('/login-check','CasusLudi\\Controllers\\Auth::loginCheck','GET')->bind('login-check');
         $controllers->match('/logout','CasusLudi\\Controllers\\Auth::logout','GET')->bind('logout');
 
-        $controllers->match('','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
+        $controllers->match('/app/','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
 
         // default user api
         $controllers->match('/api/auth/config','CasusLudi\\Controllers\\Auth::getConfig','GET');
@@ -68,7 +68,7 @@ class Core  implements ControllerProviderInterface{
         $controllers->match('/admin/api/roles','CasusLudi\\Controllers\\User::getRoles','POST');
 
         // Editeur API
-        $controllers->match('/editeur/','CasusLudi\\Controllers\\Painter::app','GET')->bind('painter');
+        $controllers->match('/','CasusLudi\\Controllers\\Painter::app','GET')->bind('painter');
         $controllers->match('/painter/api/save','CasusLudi\\Controllers\\Painter::saveDrawing','POST')->bind('painter-save-drawing');
         $controllers->match('/painter/api/get/{id}','CasusLudi\\Controllers\\Painter::getDrawing','GET')->assert('id', '\d+')->bind('painter-get-drawing');
         $controllers->match('/painter/api/lib/{type}/{index}','CasusLudi\\Controllers\\Painter::loadLibrary','GET')

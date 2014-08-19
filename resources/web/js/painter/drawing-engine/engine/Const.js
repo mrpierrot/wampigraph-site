@@ -10,7 +10,7 @@ define(function () {
             cols:10,
             rows:5
         },
-        PEARL_WIDTH:20,
-        PEARL_HEIGHT:50
+        PEARL_WIDTH:25,
+        PEARL_HEIGHT:35
     };
 });
