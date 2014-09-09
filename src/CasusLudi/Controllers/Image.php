@@ -36,7 +36,8 @@ class Image {
             $raw = $data->raw;
 
             $gd = imagecreatetruecolor($xRate*$cols, $yRate*$rows);
-            $colorA = imagecolorallocate($gd,101,119,255);
+            //$colorA = imagecolorallocate($gd,101,119,255);
+            $colorA = imagecolorallocate($gd,27,1,155);
             $colorB = imagecolorallocate($gd,255,255,255);
 
             for($i=0,$c=strlen($raw);$i<$c;$i++){

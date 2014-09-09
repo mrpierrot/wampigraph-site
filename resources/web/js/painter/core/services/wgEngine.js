@@ -16,10 +16,11 @@ define(function () {
 
         wgMediator.$on('drawingEngine:ready',function(event,engine){
 
-
+                wgMediator.$emit('drawingEngine:dataChanged',engine.getData());
 
                 engine.on('historyChanged',function(){
                     wgMediator.$emit('drawingEngine:historyChanged',engine.canUndo(),engine.canRedo());
+                    wgMediator.$emit('drawingEngine:dataChanged',engine.getData());
                 });
 
                 wgMediator.$on('patternLib:selection',function(event,pattern){

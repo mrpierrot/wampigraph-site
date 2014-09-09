@@ -122,11 +122,10 @@ define([
 
             // On trace une ligne droite entre la position de la souris actuel et la derniere position connu
             // Pour celà, on utilise l'algorithme de Bresenham ( http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm )
-            var x0 = this._lastCol,
-                y0 = this._lastRow,
+            var x0 = this._lastCol || col,
+                y0 = this._lastRow || row,
                 x1 = col,
                 y1 = row;
-
             if(x0 != null && y0!=null){
                 var dx = Math.abs(x1-x0),
                     dy = Math.abs(y1-y0),
@@ -136,11 +135,11 @@ define([
                 do{
                     // on tourne la perle courante
 
-                    this._togglePearl(x0,y0,(mouseX-this._lastX > 0)?'right':'left');
-
                     var e2 = 2*err;
                     if (e2 >-dy){ err -= dy; x0  += sx; }
                     if (e2 < dx){ err += dx; y0  += sy; }
+
+                    this._togglePearl(x0,y0,(mouseX-this._lastX > 0)?'right':'left');
 
 
                 }while(!((x0==x1) && (y0==y1)));
@@ -242,6 +241,7 @@ define([
     }
 
     p._togglePearl = function Engine__togglePearl(col,row,direction){
+        console.log("toggle",col,row);
         if (col < 0) return;
         if (col >= this._cols) return;
         if (row < 0) return;
@@ -437,19 +437,18 @@ define([
     }
 
     p.load = function Engine_load(data){
-        console.log("pearls : ",this._pearls.length);
         this._cols = data.cols;
         this._rows = data.rows;
         this._canvasWidth = this._cols*Const.PEARL_WIDTH;
         this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
         this.reset();
-        console.log("pearls : ",this._pearls.length);
         for(var i= 0,c=this._pearls.length;i<c;i++){
             this._pearls[i].toggled(data.raw[i]==="1");
 
         }
         this._history = [this.getData()];
         this.updateViewport();
+        this.dispatchEvent("historyChanged");
     }
 
 

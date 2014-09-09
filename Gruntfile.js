@@ -127,6 +127,11 @@ module.exports = function (grunt) {
             }
         },
         copy:{
+            images:{
+                files: [
+                    {expand: true, cwd:'<%= appDir %>/', src: ['images/**'], dest: '<%= builtDir %>'}
+                ]
+            },
             css:{
                 files: [
                     {expand: true, cwd:'<%= appDir %>/', src: ['css/**'], dest: '<%= builtDir %>'}

@@ -21,6 +21,7 @@ define(['angular'],function (angular) {
                             wgMediator.infos[attr] = data[attr];
                         }
                         wgMediator.$emit('core:load:complete',wgMediator.infos);
+
                     }catch(e){
                         console.log(e);
                         wgMediator.$emit('alerts:add','danger',"Ce wampum n'existe pas ou il contient des erreurs");

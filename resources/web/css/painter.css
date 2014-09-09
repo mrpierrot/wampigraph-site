@@ -37,12 +37,14 @@
 .core .painter .drawing-engine {
   box-sizing: border-box;
   display: inline-block;
+}
+.core .painter .drawing-engine canvas {
   background: #282828;
 }
 .core .painter .drawing-engine .h-slide {
   display: block;
   height: 20px;
-  background: #dddddd;
+  background: #f1f1f1;
   margin-top: -5px;
 }
 .core .painter .drawing-engine .h-slide .slide {
@@ -55,8 +57,12 @@
   height: 20px;
   top: 0;
   margin: 0 0 0 -40px;
-  background: #828282;
-  border: none;
+  background: #bcbcbc;
+  border: 1px solid #a8a8a8;
+  border-radius: 0px;
+}
+.core .painter .drawing-engine .h-slide .ui-slider-handle:hover {
+  background-color: #a9a9aa;
 }
 .core .painter .drawing-engine .h-slide .ui-state-focus {
   border: none;
@@ -67,7 +73,7 @@
 .core .painter .drawing-engine .v-slide {
   display: inline-block;
   width: 20px;
-  background: #dddddd;
+  background: #f1f1f1;
 }
 .core .painter .drawing-engine .v-slide .slide {
   background: none;
@@ -80,8 +86,12 @@
   height: 40px;
   left: 0;
   margin: -40px 0 0 0;
-  background: #828282;
-  border: none;
+  background: #bcbcbc;
+  border: 1px solid #a8a8a8;
+  border-radius: 0px;
+}
+.core .painter .drawing-engine .v-slide .ui-slider-handle:hover {
+  background-color: #a9a9aa;
 }
 .core .painter .drawing-engine .v-slide .ui-state-focus {
   border: none;
@@ -102,7 +112,7 @@
   margin: 10px auto 10px auto;
   width: 78px;
 }
-.core .painter .panels {
+.core .painter .col-right {
   vertical-align: top;
   display: inline-block;
   width: 240px;
@@ -111,16 +121,27 @@
   padding: 5px;
   box-sizing: content-box;
 }
-.core .painter .panels .panel-body {
+.core .painter .col-right .wg-overview {
+  display: block;
+  padding: 2px;
+  border-radius: 2px;
+  border: 2px solid #357ebd;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #FFFFFF;
+}
+.core .painter .col-right .panel-body {
   padding: 0px;
 }
-.core .painter .panels .panel-body .accordion-content {
+.core .painter .col-right .panel-body .accordion-content {
   height: 600px;
-  height: calc(100vh - 290px);
+  height: calc(100vh - 360px);
   padding: 15px 0px 15px 0px;
   /*overflow: auto;*/
 }
-.core .painter .panels .edit {
+.core .painter .col-right .edit {
   padding: 6px;
   text-align: center;
   margin-left: 15px;
@@ -131,39 +152,39 @@
   box-sizing: border-box;
   display: inline-block;
 }
-.core .painter .panels .edit .icon-pencil {
+.core .painter .col-right .edit .icon-pencil {
   font-size: 1em;
 }
-.core .painter .panels .edit:hover {
+.core .painter .col-right .edit:hover {
   text-decoration: none;
   background-color: #357ebd;
   color: #ffffff;
 }
-.core .painter .panels .edit:hover .icon-pencil {
+.core .painter .col-right .edit:hover .icon-pencil {
   text-decoration: none;
 }
-.core .painter .panels .search-form {
+.core .painter .col-right .search-form {
   padding-left: 15px;
   padding-right: 15px;
   margin-bottom: 10px;
 }
-.core .painter .panels .search-form input {
+.core .painter .col-right .search-form input {
   width: 176px;
 }
-.core .painter .panels .search-form button {
+.core .painter .col-right .search-form button {
   font-size: 14px;
   padding: 6px;
 }
-.core .painter .panels * + .scrollable-content {
+.core .painter .col-right * + .scrollable-content {
   border-top: 1px solid #dddddd;
   padding-top: 10px;
 }
-.core .painter .panels .scrollable-content {
+.core .painter .col-right .scrollable-content {
   overflow-y: scroll;
   padding-left: 15px;
   padding-right: 15px;
 }
-.core .painter .panels .scrollable-content .assets-list .btn-primary {
+.core .painter .col-right .scrollable-content .assets-list .btn-primary {
   /*display: block;*/
   height: 62px;
   border-radius: 2px;
@@ -172,37 +193,38 @@
   margin: 1px;
   border: 2px solid #357ebd;
 }
-.core .painter .panels .scrollable-content .assets-list .btn-primary.active {
+.core .painter .col-right .scrollable-content .assets-list .btn-primary.active {
   border: 2px solid #4cae4c;
 }
-.core .painter .panels .scrollable-content .assets-list .btn-primary:focus {
+.core .painter .col-right .scrollable-content .assets-list .btn-primary:focus {
   border-color: none!important;
   box-shadow: none!important;
   -webkit-box-shadow: none!important;
   outline: 0!important;
 }
-.core .painter .panels .scrollable-content .assets-list.wampums-list {
+.core .painter .col-right .scrollable-content .assets-list.wampums-list {
   width: 170px;
   margin: auto;
   list-style: none;
   padding: 0;
 }
-.core .painter .panels .patterns-list .scrollable-content {
-  height: calc(100vh - 350px);
+.core .painter .col-right .patterns-list .scrollable-content {
+  height: calc(100vh - 419px);
 }
-.core .painter .panels .patterns-list .scrollable-content.have-selection {
-  height: calc(100vh - 403px);
+.core .painter .col-right .patterns-list .scrollable-content.have-selection {
+  height: calc(100vh - 464px);
 }
-.core .painter .panels .wampums-list .scrollable-content {
-  height: calc(100vh - 350px);
+.core .painter .col-right .wampums-list .scrollable-content {
+  height: calc(100vh - 419px);
 }
 .core .painter .footer {
   width: 100vw;
-  height: 32px;
-  background: #f5f5f5;
+  height: 28px;
+  border-top: 1px solid #a9a9aa;
+  margin-top: 4px;
   text-align: center;
   color: #357ebd;
-  line-height: 32px;
+  line-height: 28px;
 }
 .core .painter .footer a {
   color: #357ebd;

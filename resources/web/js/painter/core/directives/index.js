@@ -8,6 +8,7 @@ requirejs_index([
     'wgDrawingEngine',
     'wgAccordion',
     'wgPatternCreatePanel',
+    'wgOverview',
     'wgWampumInfosPanel',
     'wgInfiniteScroll',
     'wgAlerts',

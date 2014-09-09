@@ -5,7 +5,6 @@ define(function () {
     return function(wgMediator){
         return {
             restrict: 'E',
-            transclude: true,
             templateUrl: '/assets/js/painter/core/views/directives/wg-accordion.html',
             link:function($scope,$element,$attrs){
 

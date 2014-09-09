@@ -44,11 +44,14 @@
     .drawing-engine{
       box-sizing: border-box;
       display: inline-block;
-      background: #282828;
+
+      canvas{
+        background: #282828;
+      }
       .h-slide{
         display: block;
         height: 20px;
-        background: @wg-bg-color;
+        background: #f1f1f1;
         margin-top: -5px;
         .slide{
           background: none;
@@ -60,8 +63,14 @@
           height: 20px;
           top:0;
           margin: 0 0 0 -40px;
-          background: #828282;
-          border: none;
+          background: #bcbcbc;
+          border: 1px solid #a8a8a8;
+          border-radius: 0px;
+          &:hover{
+            background-color: #a9a9aa;
+          }
+
+
         }
         .ui-state-focus{
           border: none;
@@ -74,7 +83,7 @@
       .v-slide{
         display: inline-block;
         width: 20px;
-        background: @wg-bg-color;
+        background: #f1f1f1;
         .slide{
           background: none;
           border: none;
@@ -86,8 +95,12 @@
           height: 40px;
           left:0;
           margin: -40px 0 0 0;
-          background: #828282;
-          border: none;
+          background: #bcbcbc;
+          border: 1px solid #a8a8a8;
+          border-radius: 0px;
+          &:hover{
+            background-color: #a9a9aa;
+          }
         }
         .ui-state-focus{
           border: none;
@@ -112,7 +125,7 @@
         width: 78px;
       }
     }
-    .panels{
+    .col-right{
       vertical-align: top;
       display: inline-block;
       width: 240px;
@@ -120,11 +133,23 @@
       background: @wg-bg-color;
       padding: 5px;
       box-sizing: content-box;
+      .wg-overview{
+        display: block;
+        padding: 2px;
+
+        border-radius: 2px;
+        border: 2px solid #357ebd;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: #FFFFFF;
+      }
       .panel-body{
         padding: 0px;
         .accordion-content{
           height: 600px;
-          height: ~"calc(100vh - 290px)";
+          height: ~"calc(100vh - 360px)";
           padding: 15px 0px 15px 0px;
           /*overflow: auto;*/
         }
@@ -210,29 +235,31 @@
 
       .patterns-list{
         .scrollable-content{
-          height: ~"calc(100vh - 350px)";
+          height: ~"calc(100vh - 419px)";
 
 
           &.have-selection{
-            height: ~"calc(100vh - 403px)";
+            height: ~"calc(100vh - 464px)";
           }
         }
       }
 
       .wampums-list{
         .scrollable-content{
-          height: ~"calc(100vh - 350px)";
+          height: ~"calc(100vh - 419px)";
         }
       }
     }
 
     .footer{
       width: 100vw;
-      height: 32px;
-      background: @wg-bg-color-2;
+      height: 28px;
+      border-top: 1px solid #a9a9aa;
+
+      margin-top: 4px;
       text-align: center;
       color: @wg-fg-color;
-      line-height: 32px;
+      line-height: 28px;
       a{
         color: @wg-fg-color;
       }
