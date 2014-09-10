@@ -27,7 +27,9 @@ requirejs.config({
         'angular-bootstrap-slider': '../../vendor/angular-bootstrap-slider/slider',
         'seiyria-bootstrap-slider': '../../vendor/seiyria-bootstrap-slider/js/bootstrap-slider',
         modernizr: '../../vendor/modernizr/modernizr',
-        'angular-xeditable': '../../vendor/angular-xeditable/dist/js/xeditable'
+        'angular-xeditable': '../../vendor/angular-xeditable/dist/js/xeditable',
+        'checklist-model': '../../vendor/checklist-model/checklist-model',
+        ngInfiniteScroll: '../../vendor/ngInfiniteScroll/build/ng-infinite-scroll'
     },
     shim: {
         easel: {
