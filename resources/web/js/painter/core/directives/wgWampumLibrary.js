@@ -8,19 +8,34 @@ define(function () {
             replace: true,
             templateUrl: '/assets/js/painter/core/views/directives/wg-wampum-library.html',
             link:function($scope,$element,$attrs){
-                 var index =0;
+
                 $scope.assets = [];
+                $scope.req = {};
                 $scope.loadWampums = function(){
-                    index = $scope.assets.length;
-                    $http.get('/painter/api/lib/wampum/'+index).success(function(data){
-                        console.log(data);
-                        for(var i= 0,c=data.length;i<c;i++){
-                            $scope.assets.push(data[i]);
+                    _update();
+                }
+
+                $scope.update = function(){
+                    console.log("update : ", $scope.req);
+                    $scope.assets = [];
+                    _update();
+                }
+
+                var _update = function(){
+                    var index = $scope.assets.length;
+                    $http.post(
+                        '/painter/api/lib/wampum/'+index,
+                        $.param($scope.req),
+                        {
+                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                         }
+                    ).success(function(data){
+                            for(var i= 0,c=data.length;i<c;i++){
+                                $scope.assets.push(data[i]);
+                            }
+                        }).error(function(){
 
-                    }).error(function(){
-
-                    });
+                        });
                 }
             }
         }

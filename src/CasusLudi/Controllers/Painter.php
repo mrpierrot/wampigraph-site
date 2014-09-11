@@ -94,9 +94,15 @@ class Painter {
 
     public function loadLibrary($type,$index,Request $request, Application $app){
         if(!$index)$index=0;
+        $data = $request->request->all();
+        $query = array_key_exists('query',$data)?'%'+strtoupper(filter_var($data['query'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))+'%':null;
+        $mineOnly = array_key_exists('mineOnly',$data)?$data['mineOnly']=="true":false;
+        $userFilter = $mineOnly?"( user_id=:id AND status<8 )":"( ( user_id=:id AND status<8 ) OR status=3 )";
+        $queryFilter = $query?" AND ( UPPER(title) LIKE :query OR UPPER(description) LIKE :query )":"";
 
-        $sql = "SELECT id,title,description,raw FROM wampums WHERE ( ( user_id=? AND status<8 ) OR status=3 ) and type=? LIMIT $index,20";
-        $result = $app['db']->fetchAll($sql,array($app['user']->getId(),$type));
+        $sql = "SELECT id,title,description,raw FROM wampums WHERE $userFilter AND type=:type $queryFilter LIMIT $index,20";
+        //$sql = "SELECT id,title,description,raw FROM wampums WHERE ( user_id=1 AND status<8 ) AND type='wampum' AND ( UPPER(title) LIKE '%$query%' OR UPPER(description) LIKE '%$query%' ) LIMIT 0,20";
+        $result = $app['db']->fetchAll($sql,array('id'=>$app['user']->getId(),'type'=>$type,'query'=>$query));
         return $app->json($result,200);
     }
 

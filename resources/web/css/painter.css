@@ -168,7 +168,7 @@
   padding-right: 15px;
   margin-bottom: 10px;
 }
-.core .painter .col-right .search-form input[type=email] {
+.core .painter .col-right .search-form input[type=text] {
   width: 176px;
 }
 .core .painter .col-right .search-form .checkbox {
@@ -186,6 +186,10 @@
   overflow-y: scroll;
   padding-left: 15px;
   padding-right: 15px;
+}
+.core .painter .col-right .scrollable-content .assets-list li {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #dddddd;
 }
 .core .painter .col-right .scrollable-content .assets-list .btn-primary {
   /*display: block;*/

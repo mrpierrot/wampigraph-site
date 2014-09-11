@@ -71,7 +71,7 @@ class Core  implements ControllerProviderInterface{
         $controllers->match('/','CasusLudi\\Controllers\\Painter::app','GET')->bind('painter');
         $controllers->match('/painter/api/save','CasusLudi\\Controllers\\Painter::saveDrawing','POST')->bind('painter-save-drawing');
         $controllers->match('/painter/api/get/{id}','CasusLudi\\Controllers\\Painter::getDrawing','GET')->assert('id', '\d+')->bind('painter-get-drawing');
-        $controllers->match('/painter/api/lib/{type}/{index}','CasusLudi\\Controllers\\Painter::loadLibrary','GET')
+        $controllers->match('/painter/api/lib/{type}/{index}','CasusLudi\\Controllers\\Painter::loadLibrary','GET|POST')
             ->value('index', 0)
             ->assert('type', 'wampum|pattern')
             ->assert('index', '\d+')

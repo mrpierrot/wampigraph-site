@@ -9,8 +9,9 @@ define(function () {
             templateUrl: '/assets/js/painter/core/views/directives/wg-pattern-library.html',
             scope:{},
             link:function($scope,$element,$attrs){
-                 var index =0;
-                 $scope.assets = [];
+
+                $scope.assets = [];
+                $scope.req = {};
                 $scope.model = {
                     selection:null
                 };
@@ -23,22 +24,33 @@ define(function () {
 
                 var onLoad = false;
                 $scope.loadPatterns = function(){
-                    console.log('loadPatterns');
                     if(!onLoad){
-                        index = $scope.assets.length;
-                        onLoad = true;
-                        $http.get('/painter/api/lib/pattern/'+index).success(function(data){
+                        _update();
+                    }
+                }
+
+                $scope.update = function(){
+                    console.log("update : ", $scope.req);
+                    $scope.assets = [];
+                    _update();
+                }
+
+                var _update = function(){
+                    var index = $scope.assets.length;
+                    $http.post(
+                        '/painter/api/lib/pattern/'+index,
+                        $.param($scope.req),
+                        {
+                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                        }
+                    ).success(function(data){
                             onLoad = false;
-                            console.log(data);
                             for(var i= 0,c=data.length;i<c;i++){
                                 $scope.assets.push(data[i]);
                             }
-
-                        }).error(function(){
-                            onLoad = false;
-                        });
-                    }
-
+                    }).error(function(){
+                        onLoad = false;
+                    });
                 }
 
             }
