@@ -31,6 +31,13 @@ class Painter {
         return $app->json($result,200);
     }
 
+    public function newDrawing(Request $request, Application $app){
+
+
+        $app['session']->set('current_drawing',null);
+        return $app->json('ok',200);
+    }
+
     public function saveDrawing(Request $request, Application $app){
 
 
@@ -63,7 +70,7 @@ class Painter {
             // on verifie le mode d'enregistrement du dessin
             $edit_mode = array_key_exists('id',$data) && filter_var($data['id'],FILTER_VALIDATE_INT) && $drawing;
 
-            // on place le status du dessin comme valide ( @todo changer ça plus tard )
+            // on place le status du dessin comme en brouillon
             $data['status'] = 1;
 
             // Si on est en mode edition et que l'utilisateur courant est le proprietaire du dessin original

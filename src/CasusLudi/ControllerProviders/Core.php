@@ -70,6 +70,7 @@ class Core  implements ControllerProviderInterface{
         // Editeur API
         $controllers->match('/','CasusLudi\\Controllers\\Painter::app','GET')->bind('painter');
         $controllers->match('/painter/api/save','CasusLudi\\Controllers\\Painter::saveDrawing','POST')->bind('painter-save-drawing');
+        $controllers->match('/painter/api/new','CasusLudi\\Controllers\\Painter::newDrawing','POST')->bind('painter-new-drawing');
         $controllers->match('/painter/api/get/{id}','CasusLudi\\Controllers\\Painter::getDrawing','GET')->assert('id', '\d+')->bind('painter-get-drawing');
         $controllers->match('/painter/api/lib/{type}/{index}','CasusLudi\\Controllers\\Painter::loadLibrary','GET|POST')
             ->value('index', 0)

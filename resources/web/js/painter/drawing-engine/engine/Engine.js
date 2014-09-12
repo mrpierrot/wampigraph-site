@@ -15,16 +15,21 @@ define([
         this._initialize(stage,width,height,cols,rows);
     };
 
+    var DEFAULT_COLS = 80,
+        DEFAULT_ROW = 18;
+
     var p = clazz.prototype = new createjs.EventDispatcher();
 
     p.rendering = null,
     p._cols,
+    p._rows,
+    p._defaultCols,
+    p._defaultRows,
     p._width,
     p._height,
     p._viewport,
     p._xRate,
     p._yRate,
-    p._rows,
     p._lastCol,
     p._lastRow,
     p._lastX,
@@ -47,8 +52,8 @@ define([
 
         this._width = width;
         this._height = height;
-        this._cols = cols || 80;
-        this._rows = rows || 18;
+        this._cols = this._defaultCols =  cols || DEFAULT_COLS;
+        this._rows = this._defaultRows = rows || DEFAULT_ROW;
 
         this._viewport = {x:0,y:0,width:this._width,height:this._height};
         this._xRate = 0;
@@ -72,7 +77,7 @@ define([
         this._patternApplicator = new PatternApplicator();
         this.rendering.addChild(this._patternApplicator.rendering);
 
-        this.reset();
+        this._reset();
 
         this.rendering.on('pressmove',this._pressMoveHandler,this);
         this.rendering.on('pressup',this._pressUpHandler,this);
@@ -138,7 +143,6 @@ define([
                     var e2 = 2*err;
                     if (e2 >-dy){ err -= dy; x0  += sx; }
                     if (e2 < dx){ err += dx; y0  += sy; }
-
                     this._togglePearl(x0,y0,(mouseX-this._lastX > 0)?'right':'left');
 
 
@@ -241,7 +245,6 @@ define([
     }
 
     p._togglePearl = function Engine__togglePearl(col,row,direction){
-        console.log("toggle",col,row);
         if (col < 0) return;
         if (col >= this._cols) return;
         if (row < 0) return;
@@ -409,10 +412,16 @@ define([
 
     p.reset = function Engine_reset(){
 
+        this._cols = this._defaultCols;
+        this._rows = this._defaultRows;
+        this._canvasWidth = this._cols*Const.PEARL_WIDTH;
+        this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
+
+        this._reset();
+    }
+
+    p._reset = function(){
         this._pearls = [];
-
-
-
 
         for(var y=0;y<this._rows;y++){
             for(var x=0;x<this._cols;x++){
@@ -437,17 +446,18 @@ define([
     }
 
     p.load = function Engine_load(data){
+
         this._cols = data.cols;
         this._rows = data.rows;
         this._canvasWidth = this._cols*Const.PEARL_WIDTH;
         this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
-        this.reset();
+        this._reset();
+
         for(var i= 0,c=this._pearls.length;i<c;i++){
             this._pearls[i].toggled(data.raw[i]==="1");
 
         }
         this._history = [this.getData()];
-        this.updateViewport();
         this.dispatchEvent("historyChanged");
     }
 

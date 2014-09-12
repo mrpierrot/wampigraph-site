@@ -2,7 +2,12 @@
  * Created by Pierrot on 01/08/14.
  */
 define(function () {
-    return function(wgMediator,wgResizeModal,wgNewWampumModal,$http,$location){
+    return function(wgMediator,wgResizeModal,wgDescriptionModal,wgNewWampumModal,$http,$location){
+
+        var forbiddenTitles = [
+            "NOUVEAU MOTIF",
+            "NOUVEAU WAMPUM"
+        ];
 
         wgMediator.$on('core:load:complete',function(event,infos){
             console.log("core:load:complete",infos);
@@ -61,8 +66,24 @@ define(function () {
 
                 wgMediator.$on('wgToolbar:save',function(){
                     wgMediator.$emit('core:save:init');
+
+                    //console.log(wgMediator.infos);
+                    var title = wgMediator.infos.title;
+                    if(forbiddenTitles.indexOf(title.toUpperCase())>=0){
+                        var modalInstance = wgDescriptionModal(wgMediator.infos,forbiddenTitles);
+                        modalInstance.result.then(function (data) {
+                            _save();
+                        }, function () {
+                            wgMediator.$emit('core:save:complete');
+                        });
+                    }else{
+                        _save();
+                    }
+
+                });
+
+                var _save = function(){
                     wgMediator.infos.raw = JSON.stringify(engine.getData());
-                    console.log(wgMediator.infos);
                     $http.post(
                         '/painter/api/save',
                         $.param(wgMediator.infos),
@@ -70,24 +91,22 @@ define(function () {
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                         }
                     ).success(function(data){
-                            if(wgMediator.infos.id && wgMediator.infos.id!=data.id){
-                                wgMediator.$emit('alerts:add','success',"Vous avez créer un nouveau wampum à partir d'un autre");
-                            }
-                            wgMediator.infos.id = data.id;
-                            $location.path('/'+data.id);
-                            wgMediator.$emit('core:save:complete');
-                        }).error(function(){
-                            wgMediator.$emit('core:save:error');
-                            wgMediator.$emit('alerts:add','danger','Un erreur est survenu lors de la sauvegarde du wampum');
-                        });
-                });
+                        if(wgMediator.infos.id && wgMediator.infos.id!=data.id){
+                            wgMediator.$emit('alerts:add','success',"Vous avez créé un nouveau wampum à partir d'un autre");
+                        }
+                        wgMediator.infos.id = data.id;
+                        $location.path('/'+data.id);
+                        wgMediator.$emit('core:save:complete');
+                    }).error(function(){
+                        wgMediator.$emit('core:save:error');
+                        wgMediator.$emit('alerts:add','danger','Un erreur est survenu lors de la sauvegarde du wampum');
+                    });
+                }
 
-                wgMediator.$on('pattern:create',function(event,infos){
-                    wgMediator.$emit('pattern:save:init');
+                var _patternCreate = function(infos){
                     infos.raw = JSON.stringify(engine.getPattern());
                     infos.type = 'pattern';
                     infos.original_id = wgMediator.infos.id || null;
-
                     $http.post(
                         '/painter/api/save',
                         $.param(infos),
@@ -105,21 +124,44 @@ define(function () {
                             wgMediator.$emit('pattern:save:error');
                             wgMediator.$emit('alerts:add','danger','Un erreur est survenu lors de la sauvegarde du motif');
                         });
+                }
+
+                wgMediator.$on('pattern:create',function(event,infos){
+                    wgMediator.$emit('pattern:save:init');
+                    var title = infos.title;
+                    if(forbiddenTitles.indexOf(title.toUpperCase())>=0
+                        || title.length < 5){
+                        var modalInstance = wgDescriptionModal(infos,forbiddenTitles);
+                        modalInstance.result.then(function (data) {
+                            _patternCreate(infos);
+                        }, function () {
+                            wgMediator.$emit('pattern:save:complete');
+                        });
+                    }else{
+                        _patternCreate(infos);
+                    }
                 });
 
                 wgMediator.$on('wgToolbar:new',function(){
 
-
                     var modalInstance = wgNewWampumModal();
                     modalInstance.result.then(function (data) {
-                        engine.reset();
-                        wgMediator.infos.original_id = null;
-                        wgMediator.infos.id = null;
-                        wgMediator.infos.type = 'wampum';
-                        wgMediator.infos.title = "Nouveau Wampum";
-                        wgMediator.infos.description = "";
-                        wgMediator.infos.raw = null;
-                        wgMediator.$emit('core:toolChanged','brush');
+                    $http.get(
+                        '/painter/api/new'
+                    ).success(function(data){
+                            engine.reset();
+                            wgMediator.infos.original_id = null;
+                            wgMediator.infos.id = null;
+                            wgMediator.infos.type = 'wampum';
+                            wgMediator.infos.title = "Nouveau Wampum";
+                            wgMediator.infos.description = "";
+                            wgMediator.infos.raw = null;
+                            wgMediator.$emit('core:toolChanged','brush');
+                            $location.path('/');
+                        }).error(function(){
+                            wgMediator.$emit('core:save:error');
+                            wgMediator.$emit('alerts:add','danger','Impossible de créer un nouveau wampum');
+                        });
                     }, function () {
 
                     });
