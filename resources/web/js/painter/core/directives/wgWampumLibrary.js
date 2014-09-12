@@ -16,7 +16,6 @@ define(function () {
                 }
 
                 $scope.update = function(){
-                    console.log("update : ", $scope.req);
                     $scope.assets = [];
                     _update();
                 }

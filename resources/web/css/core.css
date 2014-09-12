@@ -1,3 +1,18 @@
+.search-form {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 10px;
+}
+.search-form input[type=text] {
+  width: 176px;
+}
+.search-form .checkbox {
+  margin-top: 8px;
+}
+.search-form button {
+  font-size: 14px;
+  padding: 6px;
+}
 .alert-container {
   top: 51px;
   position: absolute;

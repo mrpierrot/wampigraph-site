@@ -71,12 +71,16 @@ class User {
 
     public function loadList($index,Request $request, Application $app){
         if(!$index)$index=0;
+        $data = $request->request->all();
+        $query = array_key_exists('query',$data)?'%'.strtoupper(filter_var($data['query'],FILTER_SANITIZE_FULL_SPECIAL_CHARS)).'%':null;
+
+        $queryFilter = $query?" WHERE ( UPPER(firstname) LIKE :query OR UPPER(lastname) LIKE :query OR UPPER(email) LIKE :query )":"";
         if ($app['security']->isGranted('ROLE_MODERATOR')) {
-            $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles,u.status FROM users AS u  ORDER BY u.lastname DESC LIMIT $index,20";
+            $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles,u.status FROM users AS u $queryFilter  ORDER BY u.lastname DESC LIMIT $index,20";
         }else{
-            $sql = "SELECT u.id,u.firstname,u.lastname FROM users AS u ORDER BY u.lastname DESC LIMIT $index,20 AND status=1";
+            $sql = "SELECT u.id,u.firstname,u.lastname FROM users AS u $queryFilter ORDER BY u.lastname  DESC LIMIT $index,20 AND status=1";
         }
-        $result = $app['db']->fetchAll($sql,array());
+        $result = $app['db']->fetchAll($sql,array('query'=>$query));
         foreach($result as &$r){
             $r['roles'] = explode(',',$r['roles']);
         }

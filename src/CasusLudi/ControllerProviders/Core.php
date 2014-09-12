@@ -38,7 +38,7 @@ class Core  implements ControllerProviderInterface{
         // default user api
         $controllers->match('/api/auth/config','CasusLudi\\Controllers\\Auth::getConfig','GET');
         $controllers->match('/api/user/{id}','CasusLudi\\Controllers\\User::loadById','get')->assert('id', '\d+');
-        $controllers->match('/api/user/list/{index}','CasusLudi\\Controllers\\User::loadList','get')->value('index', 0)->assert('index', '\d+');
+        $controllers->match('/api/user/list/{index}','CasusLudi\\Controllers\\User::loadList','GET|POST')->value('index', 0)->assert('index', '\d+');
         $controllers->match('/api/drawing/{id}','CasusLudi\\Controllers\\Drawing::loadById','get')->assert('id', '\d+');
         $controllers->match('/api/drawing/update-field','CasusLudi\\Controllers\\Drawing::updateField','POST');
         $controllers->match('/api/drawing/suggest/{id}','CasusLudi\\Controllers\\Drawing::suggest','GET')->assert('id', '\d+');

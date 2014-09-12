@@ -102,7 +102,7 @@ class Painter {
     public function loadLibrary($type,$index,Request $request, Application $app){
         if(!$index)$index=0;
         $data = $request->request->all();
-        $query = array_key_exists('query',$data)?'%'+strtoupper(filter_var($data['query'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))+'%':null;
+        $query = array_key_exists('query',$data)?'%'.strtoupper(filter_var($data['query'],FILTER_SANITIZE_FULL_SPECIAL_CHARS)).'%':null;
         $mineOnly = array_key_exists('mineOnly',$data)?$data['mineOnly']=="true":false;
         $userFilter = $mineOnly?"( user_id=:id AND status<8 )":"( ( user_id=:id AND status<8 ) OR status=3 )";
         $queryFilter = $query?" AND ( UPPER(title) LIKE :query OR UPPER(description) LIKE :query )":"";
