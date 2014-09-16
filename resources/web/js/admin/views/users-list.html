@@ -1,3 +1,10 @@
 <div ng-controller="UsersListController" infinite-scroll="addMoreItems()">
+    <form class="form-inline search-form" role="form" novalidate>
+        <div class="form-group">
+            <label class="sr-only" for="searchInput">Rechercher</label>
+            <input type="text" class="form-control" id="searchInput" ng-model="req.query" placeholder="Rechercher">
+        </div>
+        <button type="submit" class="btn btn-default icon-search" ng-click="search()"></button>
+    </form>
     <wg-users-list items="{{ users }}"></wg-users-list>
 </div>

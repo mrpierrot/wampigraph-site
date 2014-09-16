@@ -1,3 +1,33 @@
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  12.5% {
+    transform: translateX(-6px) rotateY(-5deg);
+  }
+  37.5% {
+    transform: translateX(5px) rotateY(4deg);
+  }
+  62.5% {
+    transform: translateX(-3px) rotateY(-2deg);
+  }
+  87.5% {
+    transform: translateX(2px) rotateY(1deg);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.shake {
+  animation: shake 400ms ease-in-out;
+}
+.input-error {
+  color: #d8000c;
+  padding: 6px 12px;
+}
+.error {
+  border: 1px solid #d8000c;
+}
 .nav,
 .pagination,
 .carousel,
@@ -168,7 +198,7 @@
   padding-right: 15px;
   margin-bottom: 10px;
 }
-.core .painter .col-right .search-form input[type=email] {
+.core .painter .col-right .search-form input[type=text] {
   width: 176px;
 }
 .core .painter .col-right .search-form .checkbox {
@@ -186,6 +216,10 @@
   overflow-y: scroll;
   padding-left: 15px;
   padding-right: 15px;
+}
+.core .painter .col-right .scrollable-content .assets-list li {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #dddddd;
 }
 .core .painter .col-right .scrollable-content .assets-list .btn-primary {
   /*display: block;*/

@@ -4,6 +4,28 @@
 @wg-fg-color: #357ebd;
 @wg-bg-color: #dddddd;
 @wg-bg-color-2: #f5f5f5;
+@wg-error-color: #D8000C;
+
+@keyframes shake {
+  0% {transform: translateX(0);}
+  12.5% {transform: translateX(-6px) rotateY(-5deg)}
+  37.5% {transform: translateX(5px) rotateY(4deg)}
+  62.5% {transform: translateX(-3px) rotateY(-2deg)}
+  87.5% {transform: translateX(2px) rotateY(1deg)}
+  100% {transform: translateX(0)}
+}
+
+.shake {
+  animation: shake 400ms ease-in-out;
+}
+
+.input-error{
+  color: @wg-error-color;
+  padding: 6px 12px;
+}
+.error{
+  border: 1px solid @wg-error-color;
+}
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer;
@@ -186,7 +208,7 @@
         padding-left: 15px;
         padding-right: 15px;
         margin-bottom: 10px;
-        input[type=email] {
+        input[type=text] {
           width: 176px;
         }
         .checkbox{
@@ -209,7 +231,10 @@
         padding-right: 15px;
 
         .assets-list{
-
+          li{
+            padding-bottom: 8px;
+            border-bottom: 1px solid @wg-bg-color;
+          }
           .btn-primary{
             /*display: block;*/
             height: 62px;
