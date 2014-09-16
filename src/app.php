@@ -45,8 +45,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
             'pattern' => '^/login$',
         ),
         'external' => array(
-            'pattern' => '^/external$',
-            'anonymous' => true
+            'pattern' => '^/external/.*$'
         ),
         'secured' => array(
             'pattern' => '^.*$',
