@@ -35,6 +35,9 @@ class Core  implements ControllerProviderInterface{
 
         $controllers->match('/app/','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
 
+        //
+        $controllers->match('/external/api/drawing/list-all-wampums','CasusLudi\\Controllers\\Drawing::loadAllWampums','GET');
+
         // default user api
         $controllers->match('/api/auth/config','CasusLudi\\Controllers\\Auth::getConfig','GET');
         $controllers->match('/api/user/{id}','CasusLudi\\Controllers\\User::loadById','get')->assert('id', '\d+');

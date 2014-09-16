@@ -173,5 +173,14 @@ class Drawing {
         return $app->json($result,200);
     }
 
+    public function loadAllWampums(Request $request, Application $app){
+
+        $sql = "SELECT w.id,w.raw,w.title,w.user_id,u.firstname,u.lastname FROM wampums AS w INNER JOIN users AS u ON u.id = w.user_id AND u.status<8 WHERE w.status=3  AND w.type='wampum' ORDER BY w.update_date DESC";
+        $result = $app['db']->fetchAll($sql,array());
+
+
+        return $app->json($result,200);
+    }
+
 
 } 

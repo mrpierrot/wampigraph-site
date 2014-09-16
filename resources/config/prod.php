@@ -27,9 +27,10 @@ $app['swiftmailer.options'] = array(
 );
 
 $app['security.role_hierarchy'] = array(
-    'ROLE_ADMIN' => array('ROLE_USER','ROLE_MODERATOR'),
+    'ROLE_ADMIN' => array('ROLE_EXTERNAL','ROLE_USER','ROLE_MODERATOR'),
     'ROLE_MODERATOR' => array('ROLE_USER'),
-    'ROLE_USER' => array()
+    'ROLE_USER' => array('ROLE_EXTERNAL'),
+    'ROLE_EXTERNAL' => array()
 );
 
 /*

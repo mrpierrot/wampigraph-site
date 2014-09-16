@@ -44,6 +44,10 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
         'login' => array(
             'pattern' => '^/login$',
         ),
+        'external' => array(
+            'pattern' => '^/external$',
+            'anonymous' => true
+        ),
         'secured' => array(
             'pattern' => '^.*$',
             'form' => array('login_path' => '/login', 'check_path' => '/login-check'),
@@ -56,6 +60,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
     'security.role_hierarchy' => $app['security.role_hierarchy'],
     'security.access_rules' => array(
         array('^/admin', 'ROLE_MODERATOR'),
+        array('^/external', 'ROLE_EXTERNAL'),
         array('^.*$', 'ROLE_USER'),
     )
 ));
