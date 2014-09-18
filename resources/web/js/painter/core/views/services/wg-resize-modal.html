@@ -3,30 +3,45 @@
         <h3 class="modal-title">Retailler</h3>
     </div>
     <div class="modal-body">
-        <form name="resize-form">
-            <label>
-                Lignes: <input type="number" name="input" ng-model="dimensions.rows"
-                           min="0" max="99" required>
-                    <span class="error" ng-show="myForm.input.$error.required">Required!</span>
-                    <span class="error" ng-show="myForm.input.$error.number">Not valid number!</span>
-            </label>
-            <label>
-                Colonnes: <input type="number" name="input" ng-model="dimensions.cols"
-                               min="0" max="99" required>
-                <span class="error" ng-show="myForm.input.$error.required">Required!</span>
-                <span class="error" ng-show="myForm.input.$error.number">Not valid number!</span>
-            </label>
-            <div class="btn-group align-box">
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'top',hAlign:'left'}" uncheckable>TL</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'top',hAlign:'center'}" uncheckable>TC</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'top',hAlign:'right'}" uncheckable>TR</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'center',hAlign:'left'}" uncheckable>CL</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'center',hAlign:'center'}" uncheckable>CC</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'center',hAlign:'right'}" uncheckable>CR</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'left'}" uncheckable>BL</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'center'}" uncheckable>BC</label>
-                <label class="btn btn-success" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'right'}" uncheckable>BR</label>
+        <form name="resize-form" role="form" class="form-horizontal">
+            <div class="form-group">
+                <label for="inputRows" class="col-sm-5 control-label">Lignes :</label>
+                <div class="col-sm-5">
+                <input id="inputRows" class="form-control" type="number" name="input" ng-model="dimensions.rows"
+                               min="2" max="18" required>
+                        <span class="error" ng-show="myForm.input.$error.required">Requis!</span>
+                        <span class="error" ng-show="myForm.input.$error.number">Valeur incorrecte!</span>
+                </div>
+
             </div>
+            <div class="form-group">
+                <label for="inputCols" class="col-sm-5 control-label">Colonnes :</label>
+                <div class="col-sm-5">
+                    <input id="inputCols" class="form-control" type="number" name="input" ng-model="dimensions.cols"
+                                     min="2" max="77" required>
+
+                    <span class="error" ng-show="myForm.input.$error.required">Requis!</span>
+                    <span class="error" ng-show="myForm.input.$error.number">Valeur incorrecte!</span>
+                </div>
+            </div>
+
+            <table class="align-box">
+                <tr>
+                    <td><label class="btn btn-default icon-arrow-up-left" ng-model="align" btn-radio="{vAlign:'top',hAlign:'left'}" uncheckable></label></td>
+                    <td><label class="btn btn-default icon-arrow-up" ng-model="align" btn-radio="{vAlign:'top',hAlign:'center'}" uncheckable></label></td>
+                    <td><label class="btn btn-default icon-arrow-up-right" ng-model="align" btn-radio="{vAlign:'top',hAlign:'right'}" uncheckable></label></td>
+                </tr>
+                <tr>
+                    <td><label class="btn btn-default icon-arrow-left" ng-model="align" btn-radio="{vAlign:'center',hAlign:'left'}" uncheckable></label></td>
+                    <td><label class="btn btn-default icon-stop" ng-model="align" btn-radio="{vAlign:'center',hAlign:'center'}" uncheckable></label></td>
+                    <td><label class="btn btn-default icon-arrow-right" ng-model="align" btn-radio="{vAlign:'center',hAlign:'right'}" uncheckable></label></td>
+                </tr>
+                <tr>
+                    <td><label class="btn btn-default icon-arrow-down-left" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'left'}" uncheckable></label></td>
+                    <td><label class="btn btn-default icon-arrow-down" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'center'}" uncheckable></label></td>
+                    <td><label class="btn btn-default icon-arrow-down-right" ng-model="align" btn-radio="{vAlign:'bottom',hAlign:'right'}" uncheckable></label></td>
+                </tr>
+            </table>
 
 
         </form>

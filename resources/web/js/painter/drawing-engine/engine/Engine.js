@@ -15,7 +15,7 @@ define([
         this._initialize(stage,width,height,cols,rows);
     };
 
-    var DEFAULT_COLS = 80,
+    var DEFAULT_COLS = 77,
         DEFAULT_ROW = 18;
 
     var p = clazz.prototype = new createjs.EventDispatcher();

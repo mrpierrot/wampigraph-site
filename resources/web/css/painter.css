@@ -194,8 +194,8 @@
   text-decoration: none;
 }
 .core .painter .col-right .search-form {
-  padding-left: 15px;
-  padding-right: 15px;
+  /*padding-left: 15px;
+        padding-right: 15px;*/
   margin-bottom: 10px;
 }
 .core .painter .col-right .search-form input[type=text] {
@@ -267,12 +267,5 @@
   color: #357ebd;
 }
 .resize-modal .align-box {
-  width: 102px;
   margin: auto;
-}
-.resize-modal .align-box label {
-  width: 34px;
-  height: 34px;
-  padding: 6px 6px;
-  border-radius: 0;
 }
