@@ -27,6 +27,8 @@ define(function () {
                     $element.width(canvas.width);
                     $element.height(canvas.height);
 
+
+
                     for(var i= 0,c=raw.length;i<c;i++){
                         var x = i%cols;
                         var y = ~~(i/cols);

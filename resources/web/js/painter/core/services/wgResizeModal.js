@@ -4,14 +4,14 @@
 define(function () {
 
     var ResizeModalInstanceCtrl = function ($scope, $modalInstance, dimensions) {
-        console.log(dimensions);
 
         $scope.dimensions = dimensions;
-        $scope.align = {vAlign:'top',hAlign:'left'};
-
+        $scope.data = {
+            align:{vAlign:'top',hAlign:'left'}
+        };
 
         $scope.ok = function () {
-            $modalInstance.close({dim:dimensions,align:$scope.align});
+            $modalInstance.close({dim:dimensions,align:$scope.data.align});
         };
 
         $scope.cancel = function () {

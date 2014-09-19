@@ -305,18 +305,8 @@ define([
 
     }
 
-    p._setSize = function Engine__setSize(cols,rows){
-        console.log(cols,rows);
-        var oldRows = this._rows,
-            oldCols = this._cols;
+    p._changeColsLeft = function(diffCols,oldCols){
 
-        this._rows = rows;
-        this._cols = cols;
-        this._canvasWidth = this._cols*Const.PEARL_WIDTH;
-        this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
-
-
-        var diffCols = this._cols-oldCols;
         if(diffCols < 0 ){
             var gap = 0;
             for(var y=0;y<this._rows;y++){
@@ -331,30 +321,118 @@ define([
                 var args = [start,0];
                 for( var i= 0;i<diffCols;i++){
                     var pearl = new Pearl(Const.PEARL_WIDTH,Const.PEARL_HEIGHT);
-                    var index = start +i;
-                    pearl.setPosition((index%this._cols)*Const.PEARL_WIDTH,(~~(index/this._cols))*Const.PEARL_HEIGHT);
                     args.push(pearl);
                 }
                 this._pearls.splice.apply(this._pearls,args);
                 gap += diffCols;
             }
         }
+        for( var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearls[i].setPosition((i%this._cols)*Const.PEARL_WIDTH,(~~(i/this._cols))*Const.PEARL_HEIGHT);
+        }
+    }
 
-        var diffRows = this._rows-oldRows;
+    p._changeColsRight = function(diffCols,oldCols){
+
+        if(diffCols < 0 ){
+            for(var y=0;y<this._rows;y++){
+                this._pearls.splice(this._cols*y,-diffCols);
+            }
+        }else if(diffCols > 0){
+            var gap = 0;
+            for(var y=0;y<this._rows;y++){
+                var args = [this._cols*y+gap,0];
+                for( var i= 0;i<diffCols;i++){
+                    var pearl = new Pearl(Const.PEARL_WIDTH,Const.PEARL_HEIGHT);
+                    args.push(pearl);
+                }
+                this._pearls.splice.apply(this._pearls,args);
+                //gap += diffCols;
+            }
+        }
+        for( var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearls[i].setPosition((i%this._cols)*Const.PEARL_WIDTH,(~~(i/this._cols))*Const.PEARL_HEIGHT);
+        }
+    }
+
+    p._changeRowsTop = function(diffRows){
+
 
         if(diffRows < 0){
             var start = this._rows*this._cols;
             this._pearls.splice(start,this._pearls.length);
 
         }else if(diffRows > 0){
-            var start = oldRows*this._cols;
             for( var i= 0,c=diffRows*this._cols;i<c;i++){
                 var pearl = new Pearl(Const.PEARL_WIDTH,Const.PEARL_HEIGHT);
-                var index = start +i;
-                pearl.setPosition((index%this._cols)*Const.PEARL_WIDTH,(~~(index/this._cols))*Const.PEARL_HEIGHT);
                 this._pearls.push(pearl);
             }
         }
+        for( var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearls[i].setPosition((i%this._cols)*Const.PEARL_WIDTH,(~~(i/this._cols))*Const.PEARL_HEIGHT);
+        }
+
+    }
+
+    p._changeRowsBottom= function(diffRows){
+
+        if(diffRows < 0){
+            this._pearls.splice(0,-diffRows*this._cols);
+        }else if(diffRows > 0){
+            for( var i= 0,c=diffRows*this._cols;i<c;i++) {
+                var pearl = new Pearl(Const.PEARL_WIDTH, Const.PEARL_HEIGHT);
+                this._pearls.splice(0,0,pearl);
+            }
+        }
+        for( var i= 0,c=this._pearls.length;i<c;i++){
+            this._pearls[i].setPosition((i%this._cols)*Const.PEARL_WIDTH,(~~(i/this._cols))*Const.PEARL_HEIGHT);
+        }
+
+    }
+
+    p._setSize = function Engine__setSize(cols,rows,vAlign,hAlign){
+
+        vAlign = vAlign || "top";
+        hAlign = hAlign || "left";
+        console.log(cols,rows,vAlign,hAlign);
+
+        var oldRows = this._rows,
+            oldCols = this._cols;
+
+        this._rows = rows;
+        this._cols = cols;
+        this._canvasWidth = this._cols*Const.PEARL_WIDTH;
+        this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
+
+
+        var diffCols = this._cols-oldCols;
+        switch(hAlign){
+            case "left": this._changeColsLeft(diffCols,oldCols);break;
+            case "right": this._changeColsRight(diffCols,oldCols);break;
+            case "center":
+                this._changeColsLeft(Math.floor(diffCols*0.5),oldCols);
+                this._changeColsRight(Math.ceil(diffCols*0.5),oldCols);
+
+                break;
+        }
+
+        var diffRows = this._rows-oldRows;
+        switch(vAlign){
+            case "top": this._changeRowsTop(diffRows);break;
+            case "bottom": this._changeRowsBottom(diffRows);break;
+            case "center":
+                this._changeRowsBottom(Math.ceil(diffRows*0.5));
+                this._changeRowsTop(Math.floor(diffRows*0.5));
+                break;
+        }
+        /*console.log(this._rows*this._cols," ?= ",this._pearls.length);
+
+        var str = "";
+        for(var i= 0,c=this._pearls.length;i<c;i++){
+            str += '['+this._pearls[i].rendering.x+','+this._pearls[i].rendering.y+']';
+            if(i%this._cols==this._cols-1)str+="\n";
+        }
+        console.log(str);*/
 
 
         this._updateDisplay();
@@ -438,6 +516,15 @@ define([
 
     p._loadState = function Engine_load(index){
         var data = this._history[index];
+
+        /*
+        var str = "";
+        for(var i= 0,c=data.raw.length;i<c;i++){
+            str += data.raw[i];
+            if(i%data.cols==data.cols-1)str+="\n";
+        }
+        console.log(str);*/
+
         this._setSize(data.cols,data.rows);
         for(var i= 0,c=this._pearls.length;i<c;i++){
             this._pearls[i].toggled(data.raw[i]==="1");
@@ -464,8 +551,7 @@ define([
 
 
     p.setSize = function Engine_setSize(cols,rows,vAlign,hAlign){
-        console.log(cols,rows,vAlign,hAlign);
-        this._setSize(cols,rows);
+        this._setSize(cols,rows,vAlign,hAlign);
         this._saveState();
 
     }
