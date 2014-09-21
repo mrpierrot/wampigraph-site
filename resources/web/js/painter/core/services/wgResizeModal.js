@@ -3,11 +3,13 @@
  */
 define(function () {
 
-    var ResizeModalInstanceCtrl = function ($scope, $modalInstance, dimensions) {
+    var ResizeModalInstanceCtrl = function ($scope, $modalInstance, dimensions,direction) {
 
+        $scope.direction = direction || 'all';
         $scope.dimensions = dimensions;
+
         $scope.data = {
-            align:{vAlign:'top',hAlign:'left'}
+            align:{vAlign:direction=='all'?'top':'center',hAlign:'left'}
         };
 
         $scope.ok = function () {
@@ -20,7 +22,7 @@ define(function () {
     };
 
     return function($modal){
-        return function(dimensions){
+        return function(dimensions,direction){
             return $modal.open({
                 templateUrl: '/assets/js/painter/core/views/services/wg-resize-modal.html',
                 controller: ResizeModalInstanceCtrl,
@@ -28,6 +30,9 @@ define(function () {
                 resolve: {
                     dimensions:function(){
                         return dimensions;
+                    },
+                    direction:function(){
+                        return direction
                     }
                 }
             })

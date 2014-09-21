@@ -48,6 +48,7 @@ define([
             .when('/infos/:id',{templateUrl: '/assets/js/admin/views/single-drawing.html'})
             .when('/corbeille',{templateUrl: '/assets/js/admin/views/garbage.html'})
             .when('/utilisateurs',{templateUrl: '/assets/js/admin/views/users-list.html'})
+            .when('/utilisateur/:userId',{templateUrl: '/assets/js/admin/views/user.html'})
             .when('/utilisateur/:userId/wampums',{templateUrl: '/assets/js/admin/views/wampums-by-user.html'})
             .when('/utilisateur/:userId/motifs',{templateUrl: '/assets/js/admin/views/patterns-by-user.html'})
             .otherwise({redirectTo: '/mes-wampums'});

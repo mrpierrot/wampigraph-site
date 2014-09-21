@@ -25,7 +25,7 @@ class Painter {
 
     public  function  getDrawing($id, Request $request, Application $app){
 
-        $sql = "SELECT id,original_id,title,description,user_id,raw FROM wampums WHERE id = ?";
+        $sql = "SELECT id,original_id,type,title,description,user_id,raw FROM wampums WHERE id = ?";
         $result = $app['db']->fetchAssoc($sql,array($id));
         $app['session']->set('current_drawing',$result);
         return $app->json($result,200);

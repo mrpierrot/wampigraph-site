@@ -17,16 +17,6 @@ define(function () {
                 ];
 
 
-                /*$http.get(
-                        '/admin/api/roles'
-                    ).success(function(data){
-                        $scope.roles = data;
-                    }).error(function(){
-
-                    });*/
-
-
-
                 $scope.showRoles = function(user) {
                     var selected = [];
                     angular.forEach($scope.roles, function(s) {

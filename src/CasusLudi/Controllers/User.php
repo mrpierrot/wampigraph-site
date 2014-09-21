@@ -78,7 +78,7 @@ class User {
         if ($app['security']->isGranted('ROLE_MODERATOR')) {
             $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles,u.status FROM users AS u $queryFilter  ORDER BY u.lastname DESC LIMIT $index,20";
         }else{
-            $sql = "SELECT u.id,u.firstname,u.lastname FROM users AS u $queryFilter ORDER BY u.lastname  DESC LIMIT $index,20 AND status=1";
+            $sql = "SELECT u.id,u.firstname,u.lastname,u.roles,u.status FROM users AS u $queryFilter ORDER BY u.lastname  DESC LIMIT $index,20 AND status=1";
         }
         $result = $app['db']->fetchAll($sql,array('query'=>$query));
         foreach($result as &$r){
@@ -88,15 +88,13 @@ class User {
         return $app->json($result,200);
     }
 
-    public function search($query,$index,$id,Request $request, Application $app){
 
-    }
 
     public function loadById($id,Request $request, Application $app){
         if ($app['security']->isGranted('ROLE_MODERATOR')) {
-            $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles FROM users AS u WHERE u.id=?";
+            $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles,u.status FROM users AS u WHERE u.id=?";
         }else{
-            $sql = "SELECT u.id,u.firstname,u.lastname FROM users AS u WHERE u.id=? AND status=1";
+            $sql = "SELECT u.id,u.firstname,u.lastname,u.roles,u.status FROM users AS u WHERE u.id=? AND status=1";
         }
         $result = $app['db']->fetchAssoc($sql,array((int)$id));
         return $app->json($result,200);

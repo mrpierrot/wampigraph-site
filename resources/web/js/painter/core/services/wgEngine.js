@@ -56,7 +56,7 @@ define(function () {
                 wgMediator.$on('wgToolbar:resize',function(){
                     console.log('wgToolbar:resize');
                     engine.clearTools();
-                    var modalInstance = wgResizeModal(engine.getDimensions());
+                    var modalInstance = wgResizeModal(engine.getDimensions(),wgMediator.infos.type=='wampum'?'horizontal':'all');
                     modalInstance.result.then(function (data) {
                         engine.setSize(data.dim.cols,data.dim.rows,data.align.vAlign,data.align.hAlign);
                     }, function () {

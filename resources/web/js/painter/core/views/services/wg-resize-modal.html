@@ -4,7 +4,7 @@
     </div>
     <div class="modal-body">
         <form name="resize-form" role="form" class="form-horizontal">
-            <div class="form-group">
+            <div class="form-group" ng-if="direction == 'all'">
                 <label for="inputRows" class="col-sm-5 control-label">Lignes :</label>
                 <div class="col-sm-5">
                 <input id="inputRows" class="form-control" type="number" name="input" ng-model="dimensions.rows"
@@ -24,9 +24,8 @@
                     <span class="error" ng-show="myForm.input.$error.number">Valeur incorrecte!</span>
                 </div>
             </div>
-
             <table class="align-box">
-                <tr>
+                <tr ng-if="direction == 'all'">
                     <td><label class="btn btn-default icon-arrow-up-left" ng-model="data.align" btn-radio="{vAlign:'top',hAlign:'left'}" ></label></td>
                     <td><label class="btn btn-default icon-arrow-up" ng-model="data.align" btn-radio="{vAlign:'top',hAlign:'center'}" ></label></td>
                     <td><label class="btn btn-default icon-arrow-up-right" ng-model="data.align" btn-radio="{vAlign:'top',hAlign:'right'}" ></label></td>
@@ -36,7 +35,7 @@
                     <td><label class="btn btn-default icon-stop" ng-model="data.align" btn-radio="{vAlign:'center',hAlign:'center'}" ></label></td>
                     <td><label class="btn btn-default icon-arrow-right" ng-model="data.align" btn-radio="{vAlign:'center',hAlign:'right'}" ></label></td>
                 </tr>
-                <tr>
+                <tr ng-if="direction == 'all'">
                     <td><label class="btn btn-default icon-arrow-down-left" ng-model="data.align" btn-radio="{vAlign:'bottom',hAlign:'left'}" ></label></td>
                     <td><label class="btn btn-default icon-arrow-down" ng-model="data.align" btn-radio="{vAlign:'bottom',hAlign:'center'}" ></label></td>
                     <td><label class="btn btn-default icon-arrow-down-right" ng-model="data.align" btn-radio="{vAlign:'bottom',hAlign:'right'}" ></label></td>
