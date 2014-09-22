@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 
     // main conf
     var appDir = 'resources/web';
-    var builtDir = 'web/assets';
+    var builtDir = 'htdocs/assets';
 
     // less conf
     var lessPaths = [

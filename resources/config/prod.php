@@ -9,10 +9,10 @@
 
 $app['db.options'] = array(
     'driver'   => 'pdo_mysql',
-    'host'     => '127.0.0.1',
+    'unix_socket'     => '/srv/run/mysqld/mysqld.sock',
     'dbname'   => 'wampigraph',
     'user'     => 'root',
-    'password' => 'root',
+    'password' => '',
     'charset'  => 'utf8'
 );
 

@@ -6,4 +6,4 @@ bower_components
 node_modules
 resources/web/vendor/*
 !resources/web/vendor/requirejs-index
-web/assets/
+htdocs/assets/
