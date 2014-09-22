@@ -85,6 +85,7 @@ class Painter {
                 unset($data['original_id']);
                 // en ajoutant l'id du createur
                 $data['user_id'] =  $user_id;
+                $data['create_date'] = date('Y-m-d H:i:s');
                 // si c'est une copie, on recupere l'id du dessin original
                 if($drawing)$data['original_id']=$drawing['id'];
                 // on sauve en base
