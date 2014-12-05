@@ -14,7 +14,8 @@ $app['db.options'] = array(
     'host'     => '127.0.0.1',
     'dbname'   => 'wampigraph',
     'user'     => 'root',
-    'password' => ''
+    'password' => 'root',
+    'charset'  => 'utf8'
 );
 
 

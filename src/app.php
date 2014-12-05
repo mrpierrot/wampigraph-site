@@ -44,6 +44,9 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
         'login' => array(
             'pattern' => '^/login$',
         ),
+        'user-activation' => array(
+            'pattern' => '^/user-activation.*$',
+        ),
         'external' => array(
             'pattern' => '^/external/.*$'
         ),
@@ -75,5 +78,5 @@ $app->register(new TranslationServiceProvider(), array(
     'locale'=>'fr'
 ));
 
-
+$app->mount('/',new CasusLudi\ControllerProviders\Core());
 

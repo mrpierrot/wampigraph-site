@@ -1,0 +1,18 @@
+{% extends 'layouts/global.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/login.css">
+{% endblock %}
+
+{% block content %}
+
+    {% if status=="sent" %}
+        <p>Un email vient de t'être envoyé avec ton mot de passe</p>
+    {% elseif status=="alreadyActivated" %}
+        <p>Ton compte est déjà activé.</p>
+    {% else %}
+        <p>Tu ne possèdes pas de compte sur Wampigraph</p>
+    {% endif %}
+{% endblock %}
+

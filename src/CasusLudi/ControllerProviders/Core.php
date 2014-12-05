@@ -33,6 +33,9 @@ class Core  implements ControllerProviderInterface{
         $controllers->match('/login-check','CasusLudi\\Controllers\\Auth::loginCheck','GET')->bind('login-check');
         $controllers->match('/logout','CasusLudi\\Controllers\\Auth::logout','GET')->bind('logout');
 
+        $controllers->match('/user-activation-check','CasusLudi\\Controllers\\Auth::userActivationCheck','GET')->bind('user-activation-check');
+        $controllers->match('/user-activation-status','CasusLudi\\Controllers\\Auth::userActivationStatus','GET')->bind('user-activation-status');
+
         $controllers->match('/app/','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
 
         //

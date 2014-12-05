@@ -17,9 +17,9 @@
         "symfony/validator": "~2.3",
         "symfony/monolog-bridge": "~2.3",
         "symfony/twig-bridge": "~2.3",
-        "doctrine/dbal": ">=2.2.0,<2.4.0-dev",
+        "doctrine/dbal": "~2.4",
         "sybio/image-workshop": "2.0.4",
-        "swiftmailer/swiftmailer": "5.*",
+        "swiftmailer/swiftmailer": "~5.3",
         "cilex/console-service-provider": "1.0.0"
     },
     "autoload": {
