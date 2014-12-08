@@ -6,6 +6,8 @@
 
 requirejs_index(
     [
-        'wgMediator'
+        'wgMediator',
+        'wgCreateUserModal',
+        'wgResetPasswordModal'
     ]
 )

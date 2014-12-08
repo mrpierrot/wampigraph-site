@@ -12,15 +12,27 @@
         {{ error }}
         <input type="email"  name="_username" class="form-control" placeholder="Email address" required autofocus>
         <input type="password"  name="_password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="displayPassword"> Affichez le mot de passe.
+            </label>
+        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">J'y vais</button>
     </form>
 
     <form class="form-activate" role="form" action="{{ path('user-activation-check') }}" method="post">
         <h2 class="form-signin-heading">Activez votre compte</h2>
         {{ error }}
-        <input type="email"  name="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Activer</button>
     </form>
+
+{% endblock %}
+
+{% block js %}
+
+    <script src="/assets/vendor/jquery/dist/jquery.js"></script>
+    <script src="/assets/js/login/commons.js"></script>
 
 {% endblock %}
 

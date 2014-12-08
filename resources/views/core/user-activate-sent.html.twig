@@ -6,13 +6,16 @@
 {% endblock %}
 
 {% block content %}
-
+    <div class="user-activation">
     {% if status=="sent" %}
-        <p>Un email vient de t'être envoyé avec ton mot de passe</p>
-    {% elseif status=="alreadyActivated" %}
-        <p>Ton compte est déjà activé.</p>
+        <p class="bg-success">Un email vient de t'être envoyé avec ton mot de passe</p>
+    {% elseif status=="already-activated" %}
+        <p class="bg-danger">Ton compte est déjà activé.</p>
     {% else %}
-        <p>Tu ne possèdes pas de compte sur Wampigraph</p>
+        <p class="bg-danger">Tu ne possèdes pas de compte sur Wampigraph</p>
     {% endif %}
+        <a type="button" href="/" class="btn btn-primary">Revenir</a>
+    </div>
+
 {% endblock %}
 

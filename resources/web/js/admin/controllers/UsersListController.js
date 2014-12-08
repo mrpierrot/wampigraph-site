@@ -7,7 +7,7 @@
 define(['angular'],function (angular) {
 
 
-    return function ($scope,$http) {
+    return function ($scope,$http,wgCreateUserModal) {
         $scope.users = [];
         $scope.req = {};
 
@@ -21,6 +21,17 @@ define(['angular'],function (angular) {
             $scope.users = [];
             _updateList();
         }
+
+        $scope.createUser = function(){
+            wgCreateUserModal().result.then(function(){
+
+            });
+        }
+
+        $scope.importUsers = function(){
+
+        }
+
 
         var _updateList = function(){
             if(!onLoad){

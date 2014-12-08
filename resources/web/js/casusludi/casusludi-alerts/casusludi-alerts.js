@@ -3,7 +3,7 @@
  */
 angular.module('casusludi-alerts',[]).
     factory('alerts',function(){
-console.log('alerts:create');
+        console.log('alerts:create');
         var _listeners = [];
         return{
             add:function(type,msg){

@@ -8,8 +8,10 @@
 
 namespace CasusLudi\Controllers;
 
+use CasusLudi\Auth\PassPhraseFR;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class User {
 
@@ -100,13 +102,14 @@ class User {
         return $app->json($result,200);
     }
 
-    public function updatePassword(Request $request, Application $app){
+    public function loadByMe(Request $request, Application $app){
+        $id = $app['user']->getId();
+        $sql = "SELECT u.id,u.firstname,u.lastname,u.email,u.roles,u.status FROM users AS u WHERE u.id=?";
 
+        $result = $app['db']->fetchAssoc($sql,array((int)$id));
+        return $app->json($result,200);
     }
 
-    public function resetPassword(Request $request, Application $app){
-
-    }
 
     public function delete($id,Request $request, Application $app){
         $app['db']->update('users',array('status'=>self::STATUS_DELETE),array('id'=>$id));
@@ -115,6 +118,43 @@ class User {
 
     public function restore($id,Request $request, Application $app){
         $app['db']->update('users',array('status'=>self::STATUS_VALIDATE),array('id'=>$id));
+        return $app->json(true,200);
+    }
+
+    public function resetPassword($id,Request $request, Application $app){
+        if (!$app['security']->isGranted('ROLE_ADMIN')
+            && $id!=$app['user']->getId()) {
+            return $app->json(false,200);
+        }
+        $sql = "SELECT id,email FROM users WHERE id = ?";
+        $result = $app['db']->fetchAssoc($sql,array($id));
+
+        if($result){
+            $password = PassPhraseFR::generate(4);
+
+            $encoder = new MessageDigestPasswordEncoder();
+            $encoded = $encoder->encodePassword($password,'');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('[Wampigraph] compte activé')
+                ->setFrom(array($app['swiftmailer.options']['username']=>'Wampigraph'))
+                ->setTo(array($result['email']))
+                ->setBody($app['twig']->render('email/user-activation.txt.twig', array(
+                    'password'         => $password,
+                    'email' => $result['email'],
+                )))
+                ->addPart($app['twig']->render('email/user-activation.html.twig', array(
+                    'password' => $password,
+                    'email' => $result['email'],
+                )), 'text/html');
+
+            if($app['mailer']->send($message)){
+                $app['db']->update('users',array('password'=>$encoded),array('id'=>$result['id']));
+            };
+        }else{
+            return $app->json(false,200);
+        }
+
         return $app->json(true,200);
     }
 

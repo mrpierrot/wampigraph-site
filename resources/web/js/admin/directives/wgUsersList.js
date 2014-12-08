@@ -2,7 +2,7 @@
  * Created by Pierrot on 13/08/14.
  */
 define(function () {
-    return function(roles,$filter,$http,$timeout){
+    return function(roles,$filter,$http,$timeout,alerts,wgResetPasswordModal){
         return {
             restrict: 'E',
             templateUrl: '/assets/js/admin/views/directives/wg-users-list.html',
@@ -79,6 +79,23 @@ define(function () {
                         }).error(function(){
 
                         });
+                }
+
+                $scope.resetPassword = function(user){
+                    wgResetPasswordModal().result.then(function(data){
+                        $http.get(
+                            '/api/user/reset-password/'+user.id
+                        ).success(function(data){
+                            if(data){
+                                alerts.add('success','Le mot de passe vient d\'être envoyé par mail');
+                            }else{
+                                alerts.add('danger','Impossible de créer un nouveau mot de passe');
+                            }
+
+                        }).error(function(){
+
+                        });
+                    });
                 }
 
 

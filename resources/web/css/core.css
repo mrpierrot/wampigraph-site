@@ -1,3 +1,6 @@
+.modal-title {
+  text-align: center;
+}
 .search-form {
   /*padding-left: 15px;
   padding-right: 15px;*/
@@ -57,6 +60,29 @@
 .users-list .drawings a {
   display: block;
   font-size: 0.8em;
+}
+.admin-users-list .search-form {
+  display: inline-block;
+  padding-right: 100px;
+}
+.user-details {
+  width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #e7e7e7;
+  background-color: #f8f8f8;
+}
+.user-details table {
+  margin-bottom: 20px;
+  width: 600px;
+}
+.user-details table .label {
+  color: #000000;
+  font-size: 16px;
+}
+.user-details table .separate {
+  width: 50px;
 }
 .drawings-list {
   margin: 15px;

@@ -22,9 +22,9 @@
            <a ng-href="/app/#/utilisateur/{{ user.id }}/motifs">Motifs</a>
        </td>
        <td>
+           <button tooltip="Envoyer un nouveau mot de passe par email"  tooltip-placement="left" class="btn btn-default" is-granted="'ROLE_ADMIN'" ng-click="resetPassword(user)">Nouveau mot de passe</button>
             <button ng-if="user.status!=8" tooltip="Supprimer l'utilisateur"  tooltip-placement="left" class="btn btn-default glyphicon glyphicon-trash" is-granted="'ROLE_ADMIN'" ng-click="delete(user)"></button>
             <button ng-if="user.status==8" tooltip="Restaurer l'utilisateur"  tooltip-placement="left" class="btn btn-default glyphicon glyphicon-repeat" is-granted="'ROLE_ADMIN'" ng-click="restore(user)"></button>
-
         </td>
    </tr>
 </table>

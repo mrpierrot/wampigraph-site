@@ -44,8 +44,8 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
         'login' => array(
             'pattern' => '^/login$',
         ),
-        'user-activation' => array(
-            'pattern' => '^/user-activation.*$',
+        'user' => array(
+            'pattern' => '^/user/.*$',
         ),
         'external' => array(
             'pattern' => '^/external/.*$'
@@ -79,4 +79,9 @@ $app->register(new TranslationServiceProvider(), array(
 ));
 
 $app->mount('/',new CasusLudi\ControllerProviders\Core());
+$app->mount('/api',new CasusLudi\ControllerProviders\Api());
+$app->mount('/admin/api',new CasusLudi\ControllerProviders\AdminApi());
+$app->mount('/external/api',new CasusLudi\ControllerProviders\ExternalApi());
+$app->mount('/painter/api',new CasusLudi\ControllerProviders\PainterApi());
+$app->mount('/user',new CasusLudi\ControllerProviders\User());
 

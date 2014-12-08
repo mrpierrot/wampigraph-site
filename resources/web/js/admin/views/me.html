@@ -1,0 +1,32 @@
+<div class="user-details" ng-controller="MeController">
+
+    <table>
+        <tr>
+            <td class="label">Id</td>
+            <td class="separate">:</td>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <td class="label">Prénom</td>
+            <td class="separate">:</td>
+            <td>{{ user.firstname }}</td>
+        </tr>
+        <tr>
+            <td class="label">Nom</td>
+            <td class="separate">:</td>
+            <td>{{ user.lastname }}</td>
+        </tr>
+        <tr>
+            <td class="label">Email</td>
+            <td class="separate">:</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td class="label">Roles</td>
+            <td class="separate">:</td>
+            <td>{{ showRoles(user) }}</td>
+        </tr>
+    </table>
+    <button tooltip="Envoyer un nouveau mot de passe par email"  tooltip-placement="left" class="btn btn-default" ng-click="resetPassword(user)">Nouveau mot de passe</button>
+
+</div>

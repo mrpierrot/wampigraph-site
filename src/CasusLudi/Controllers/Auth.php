@@ -8,6 +8,7 @@
 
 namespace CasusLudi\Controllers;
 
+use CasusLudi\Auth\PassPhraseFR;
 use Silex\Application;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,14 +34,14 @@ class Auth {
         $data = $request->request->all();
         $email = $data['email'];
         $errors = $app['validator']->validateValue($email, new Assert\Email());
+        $status = 'no-account';
+        if (count($errors) == 0) {
 
-        if (count($errors) > 0) {
-
-        } else {
-            $sql = "SELECT activated FROM users WHERE email = ?";
+            $sql = "SELECT id,activated FROM users WHERE email = ?";
             $result = $app['db']->fetchAssoc($sql,array($email));
+
             if(!$result['activated']){
-                $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#!?$%') , 0 , 10 );
+                $password = PassPhraseFR::generate(4);//substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#!?$%') , 0 , 10 );
 
                 $encoder = new MessageDigestPasswordEncoder();
                 $encoded = $encoder->encodePassword($password,'');
@@ -61,23 +62,28 @@ class Auth {
                     )), 'text/html');
 
                 if($app['mailer']->send($message)){
-                    $app['db']->update('users',array('password'=>$password,'activated'=>1));
+                    $status = 'sent';
+                    $app['db']->update('users',array('password'=>$encoded,'activated'=>1),array('id'=>$result['id']));
                 };
+            }else{
+                $status = 'already-activated';
             }
 
         }
 
-        return 'lol';
+        //return $password;
 
-        //return $app->redirect($app->path('user-activation-status'));
+        return $app->redirect($app->path('user-activation-status',array('status'=>$status)));
     }
 
-    public function userActivationStatus(Request $request, Application $app){
+    public function userActivationStatus($status,Request $request, Application $app){
 
         return $app['twig']->render('core/user-activate-sent.html.twig',array(
-            'status'  =>  'sent'
+            'status'  =>  $status
         ));
     }
+
+
 
     public function logout(Request $request, Application $app){
 
