@@ -10,8 +10,10 @@ namespace CasusLudi\Controllers;
 
 use CasusLudi\Auth\PassPhraseFR;
 use Silex\Application;
+use SimpleUser\TokenGenerator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class User {
 
@@ -43,6 +45,63 @@ class User {
 
         return $app->json(array("error"=>"invalid request"),500);
     }
+
+
+    public function register(Request $request, Application $app){
+        if ($app['security']->isGranted('ROLE_ADMIN')) {
+            $data = $request->request->all();
+
+            $constraint = new Assert\Collection(array(
+                'firstname' => new Assert\Length(array('min' => 2)),
+                'lastname' => new Assert\Length(array('min' => 1)),
+                'email' => array(new Assert\NotBlank(),new Assert\Email()),
+                'password' => array(new Assert\NotBlank(),new Assert\Length(array('min' => 8)))
+            ));
+
+            $errors = $app['validator']->validateValue($data, $constraint);
+            if (count($errors) > 0) {
+                $json_errors = array();
+                foreach ($errors as $error) {
+                    $name = substr($error->getPropertyPath(),1,strlen($error->getPropertyPath())-2);
+                    $json_errors[$name] = $error->getMessage();
+                }
+                return $app->json(array("errors"=>$json_errors),200);
+            }else{
+                $token = (new TokenGenerator())->generateToken();
+                $app['db']->insert('users',array(
+                    'firstname' => @$data['firstname'],
+                    'lastname' => @$data['lastname'],
+                    'email' => @$data['email'],
+                    'password' => @$data['password'],
+                    'confirmationToken' => $token/*,
+                    'timePasswordResetRequested' => ''*/
+                ));
+                $id = $app['db']->lastInsertId();
+                $confirmationLink = $app['url_generator']->generate('user-register-validation', array('id' => $id,'token'=>$token));
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('[Wampigraph] confirmation de votre email')
+                    ->setFrom(array($app['swiftmailer.options']['username']=>'Wampigraph'))
+                    ->setTo(array(@$data['email']))
+                    ->setBody($app['twig']->render('email/user-register-validation.txt.twig', array(
+                        'link'  => $confirmationLink,
+
+                    )))
+                    ->addPart($app['twig']->render('email/user-register-validation.html.twig', array(
+                        'link'  => $confirmationLink,
+                    )), 'text/html');
+
+                if($app['mailer']->send($message)){
+                    $app['db']->update('users',array('password'=>$encoded),array('id'=>$result['id']));
+                };
+            }
+
+            return $app->json(array("message"=>"user:register:ok"),200);
+
+        }
+        return $app->json(array("error"=>"Unauthorized action"),500);
+    }
+
+
 
     public function updateRoles(Request $request, Application $app){
         if ($app['security']->isGranted('ROLE_ADMIN')) {

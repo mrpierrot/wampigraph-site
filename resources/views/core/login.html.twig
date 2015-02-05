@@ -1,4 +1,4 @@
-{% extends 'layouts/global.html.twig' %}
+{% extends 'layouts/minimal.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,7 +8,6 @@
 {% block content %}
 
     <form class="form-signin" role="form" action="{{ path('login-check') }}" method="post">
-        <h2 class="form-signin-heading">Veuillez vous connecter</h2>
         {{ error }}
         <input type="email"  name="_username" class="form-control" placeholder="Email address" required autofocus>
         <input type="password"  name="_password" class="form-control" placeholder="Password" required>
@@ -17,16 +16,12 @@
                 <input type="checkbox" name="displayPassword"> Affichez le mot de passe.
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">J'y vais</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Me connecter</button>
     </form>
+    <p class="heading">OU</p>
+    <a class="btn-register btn btn-lg btn-primary btn-block" href="{{ path('register') }}" >Me créer un compte</a>
 
-    <form class="form-activate" role="form" action="{{ path('user-activation-check') }}" method="post">
-        <h2 class="form-signin-heading">Activez votre compte</h2>
-        {{ error }}
-        <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Activer</button>
-    </form>
-
+    <a class="btn-reset-password" href="{{ path('reset-password') }}">Oups, mon mot de passe....</a>
 {% endblock %}
 
 {% block js %}

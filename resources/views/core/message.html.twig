@@ -1,0 +1,19 @@
+{% extends 'layouts/minimal.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/login.css">
+{% endblock %}
+
+{% block content %}
+
+   <p class="message">{{ message|raw }}</p>
+
+{% endblock %}
+
+{% block js %}
+
+    <script src="/assets/vendor/jquery/dist/jquery.js"></script>
+    <script src="/assets/js/login/commons.js"></script>
+
+{% endblock %}

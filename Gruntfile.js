@@ -22,6 +22,7 @@ module.exports = function (grunt) {
         '<%= appDir %>/css/core.css': 'resources/less/core.less',
         '<%= appDir %>/css/imports.css': 'resources/less/imports.less',
         '<%= appDir %>/css/login.css': 'resources/less/login.less',
+        '<%= appDir %>/css/minimal.css': 'resources/less/minimal.less',
         '<%= appDir %>/css/painter.css': 'resources/less/painter.less'
     };
 

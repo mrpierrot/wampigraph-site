@@ -31,8 +31,9 @@ class User  implements ControllerProviderInterface{
         // routes de gestion du login
 
 
-        $controllers->match('/activation-check','CasusLudi\\Controllers\\Auth::userActivationCheck','GET')->bind('user-activation-check');
-        $controllers->match('/activation-status/{status}','CasusLudi\\Controllers\\Auth::userActivationStatus','GET')->bind('user-activation-status');
+       // $controllers->match('/activation-check','CasusLudi\\Controllers\\Auth::userActivationCheck','GET')->bind('user-activation-check');
+        //$controllers->match('/activation-status/{status}','CasusLudi\\Controllers\\Auth::userActivationStatus','GET')->bind('user-activation-status');
+
 
 
         return $controllers;

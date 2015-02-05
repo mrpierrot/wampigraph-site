@@ -47,6 +47,7 @@ define([
             .when('/patterns/validation',{templateUrl: '/assets/js/admin/views/validate-patterns.html'})
             .when('/infos/:id',{templateUrl: '/assets/js/admin/views/single-drawing.html'})
             .when('/corbeille',{templateUrl: '/assets/js/admin/views/garbage.html'})
+            .when('/utilisateur/enregistrer',{templateUrl: '/assets/js/admin/views/user-register.html'})
             .when('/utilisateurs',{templateUrl: '/assets/js/admin/views/users-list.html'})
             .when('/utilisateur/:userId',{templateUrl: '/assets/js/admin/views/user.html'})
             .when('/moi',{templateUrl: '/assets/js/admin/views/me.html'})

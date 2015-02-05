@@ -1,0 +1,29 @@
+{% extends 'layouts/minimal.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/login.css">
+{% endblock %}
+
+{% block content %}
+
+    {% if errors is not empty %}
+        <ul class="errors">
+        {% for error in errors %}
+            <li>{{ error|raw }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="" method="post">
+        {{ form_widget(form) }}
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Créer mon compte</button>
+    </form>
+{% endblock %}
+
+{% block js %}
+
+    <script src="/assets/vendor/jquery/dist/jquery.js"></script>
+    <script src="/assets/js/login/commons.js"></script>
+
+{% endblock %}

@@ -8,6 +8,7 @@ body {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+  text-align: left;
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -48,4 +49,20 @@ body {
 }
 .user-activation p {
   padding: 15px;
+}
+.heading {
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+}
+.btn-register {
+  width: 300px;
+  display: block;
+  margin: auto;
+}
+.btn-reset-password {
+  width: 300px;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
 }

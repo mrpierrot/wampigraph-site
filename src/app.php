@@ -44,6 +44,12 @@ $app->register(new Silex\Provider\SecurityServiceProvider(),array(
         'login' => array(
             'pattern' => '^/login$',
         ),
+        'register' => array(
+            'pattern' => '^/register.*$',
+        ),
+        'reset' => array(
+            'pattern' => '^/reset-password.*$',
+        ),
         'user' => array(
             'pattern' => '^/user/.*$',
         ),

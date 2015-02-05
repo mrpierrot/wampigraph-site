@@ -36,6 +36,7 @@ class Api  implements ControllerProviderInterface{
         $controllers->match('/user/me','CasusLudi\\Controllers\\User::loadByMe','get');
         $controllers->match('/user/{id}','CasusLudi\\Controllers\\User::loadById','get')->assert('id', '\d+');
         $controllers->match('/user/list/{index}','CasusLudi\\Controllers\\User::loadList','GET|POST')->value('index', 0)->assert('index', '\d+');
+        $controllers->match('/user/register','CasusLudi\\Controllers\\User::register','POST');
         $controllers->match('/drawing/{id}','CasusLudi\\Controllers\\Drawing::loadById','get')->assert('id', '\d+');
         $controllers->match('/drawing/update-field','CasusLudi\\Controllers\\Drawing::updateField','POST');
         $controllers->match('/drawing/suggest/{id}','CasusLudi\\Controllers\\Drawing::suggest','GET')->assert('id', '\d+');

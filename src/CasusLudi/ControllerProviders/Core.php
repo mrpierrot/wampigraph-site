@@ -31,7 +31,12 @@ class Core  implements ControllerProviderInterface{
         $controllers->match('/login','CasusLudi\\Controllers\\Auth::login','GET')->bind('login');
         $controllers->match('/login-check','CasusLudi\\Controllers\\Auth::loginCheck','GET')->bind('login-check');
         $controllers->match('/logout','CasusLudi\\Controllers\\Auth::logout','GET')->bind('logout');
-
+        $controllers->match('/register','CasusLudi\\Controllers\\Auth::register','GET')->bind('register');
+        $controllers->match('/register-ok','CasusLudi\\Controllers\\Auth::registerOK','GET')->bind('register-ok');
+        $controllers->match('/register-validation/{id}/{token}','CasusLudi\\Controllers\\Auth::registerValidation','GET')->bind('register-validation');
+        $controllers->match('/reset-password','CasusLudi\\Controllers\\Auth::resetPassword','GET')->bind('reset-password');
+        $controllers->match('/reset-password-ok','CasusLudi\\Controllers\\Auth::resetPasswordOK','GET')->bind('reset-password-ok');
+        $controllers->match('/reset-password-validation/{id}/{token}','CasusLudi\\Controllers\\Auth::resetPasswordValidation','GET')->bind('reset-password-validation');
         $controllers->match('/app/','CasusLudi\\Controllers\\Core::home','GET')->bind('home');
 
 
