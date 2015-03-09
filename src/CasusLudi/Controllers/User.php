@@ -217,5 +217,52 @@ class User {
         return $app->json(true,200);
     }
 
+    public function changeMyPassword(Request $request, Application $app){
+        $errors = array();
+        $data = $request->request->all();
+        $id = $app['user']->getId();
+
+       /* if (!$app['security']->isGranted('ROLE_ADMIN')
+            && $id!=$app['user']->getId()) {
+            return $app->json(false,200);
+        }*/
+
+        $sql = "SELECT id,email FROM users WHERE id = ?";
+        $result = $app['db']->fetchAssoc($sql,array($id));
+
+        if(!$result)array_push($errors,'Utilisateur inconnu.');
+        if(!array_key_exists('password',$data))array_push($errors,'Le mot de passe ne doit pas être vide.');
+        else if(strlen($data['password'])<8)array_push($errors,'Le mot de passe doit faire au moins 8 caractères');
+
+        if(empty($errors)){
+
+            $password = $data['password'];
+
+            $encoder = new MessageDigestPasswordEncoder();
+            $encoded = $encoder->encodePassword($password,'');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('[Wampigraph] Ton nouveau mot de passe')
+                ->setFrom(array($app['swiftmailer.options']['username']=>'Wampigraph'))
+                ->setTo(array($result['email']))
+                ->setBody($app['twig']->render('email/user-change-my-password.txt.twig', array(
+                    'password'         => $password,
+                    'email' => $result['email'],
+                )))
+                ->addPart($app['twig']->render('email/user-change-my-password.html.twig', array(
+                    'password' => $password,
+                    'email' => $result['email'],
+                )), 'text/html');
+
+            if($app['mailer']->send($message)){
+                $app['db']->update('users',array('password'=>$encoded),array('id'=>$result['id']));
+            };
+        }else{
+            return $app->json(array('success'=>false,'errors'=>$errors),200);
+        }
+
+        return $app->json(array('success'=>true),200);
+    }
+
 
 } 

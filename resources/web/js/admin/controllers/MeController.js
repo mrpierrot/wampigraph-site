@@ -7,8 +7,9 @@
 define(['angular'],function (angular) {
 
 
-    return function ($scope,$http,$routeParams,wgResetPasswordModal) {
+    return function ($scope,$http,$routeParams,wgResetPasswordModal,wgChangePasswordModal,alerts) {
         $scope.user = {};
+        $scope.req = {};
 
         $scope.roles = [
             {label:'Admin',value:'ROLE_ADMIN'},
@@ -52,6 +53,29 @@ define(['angular'],function (angular) {
                 }).error(function(){
 
                 });
+            });
+        }
+
+        $scope.changePassword = function(user){
+            wgChangePasswordModal().result.then(function(data){
+                $http.post(
+                    '/api/user/change-my-password',
+                    $.param($scope.req),
+                    {
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    }
+                ).success(function(data){
+                        if(data.success){
+                            alerts.add('success','Le mot de passe vient d\'être modifié');
+                        }else if(data.errors){
+                            alerts.add('danger',data.errors.join('<br>'));
+                        }else{
+                            alerts.add('danger','Une erreur interne est survenue.');
+                        }
+
+                    }).error(function(){
+
+                    });
             });
         }
     };

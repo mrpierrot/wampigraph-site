@@ -33,6 +33,7 @@ class Api  implements ControllerProviderInterface{
         $controllers->match('/auth/config','CasusLudi\\Controllers\\Auth::getConfig','GET');
 
         $controllers->match('/user/reset-password/{id}','CasusLudi\\Controllers\\User::resetPassword','GET')->bind('user-reset-password')->assert('id', '\d+');
+        $controllers->match('/user/change-my-password','CasusLudi\\Controllers\\User::changeMyPassword','POST')->bind('user-change-my-password');
         $controllers->match('/user/me','CasusLudi\\Controllers\\User::loadByMe','get');
         $controllers->match('/user/{id}','CasusLudi\\Controllers\\User::loadById','get')->assert('id', '\d+');
         $controllers->match('/user/list/{index}','CasusLudi\\Controllers\\User::loadList','GET|POST')->value('index', 0)->assert('index', '\d+');

@@ -16,7 +16,9 @@ define([
     };
 
     var DEFAULT_COLS = 77,
-        DEFAULT_ROW = 18;
+        DEFAULT_ROWS = 18;
+    var MAX_COLS = 144,
+        MAX_ROWS = 18;
 
     var p = clazz.prototype = new createjs.EventDispatcher();
 
@@ -53,7 +55,7 @@ define([
         this._width = width;
         this._height = height;
         this._cols = this._defaultCols =  cols || DEFAULT_COLS;
-        this._rows = this._defaultRows = rows || DEFAULT_ROW;
+        this._rows = this._defaultRows = rows || DEFAULT_ROWS;
 
         this._viewport = {x:0,y:0,width:this._width,height:this._height};
         this._xRate = 0;
@@ -399,8 +401,8 @@ define([
         var oldRows = this._rows,
             oldCols = this._cols;
 
-        this._rows = rows;
-        this._cols = cols;
+        this._rows = rows>MAX_ROWS?MAX_ROWS:rows;
+        this._cols = cols>MAX_COLS?MAX_COLS:cols;
         this._canvasWidth = this._cols*Const.PEARL_WIDTH;
         this._canvasHeight = this._rows*Const.PEARL_HEIGHT;
 
