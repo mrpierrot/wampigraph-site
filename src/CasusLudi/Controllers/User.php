@@ -67,32 +67,44 @@ class User {
                 }
                 return $app->json(array("errors"=>$json_errors),200);
             }else{
-                $token = (new TokenGenerator())->generateToken();
-                $app['db']->insert('users',array(
-                    'firstname' => @$data['firstname'],
-                    'lastname' => @$data['lastname'],
-                    'email' => @$data['email'],
-                    'password' => @$data['password'],
-                    'confirmationToken' => $token/*,
+
+                $sql = "SELECT id FROM users WHERE email = ?";
+                $result = $app['db']->fetchAssoc($sql,array(@$data['email']));
+                if($result) {
+                    $json_errors = array('error'=>'Un compte avec cette adresse mel existe déjà!');
+
+                    return $app->json(array("errors"=>$json_errors),200);
+                }else{
+                    $token = (new TokenGenerator())->generateToken();
+                    $encoder = new MessageDigestPasswordEncoder();
+                    $encoded = $encoder->encodePassword(@$data['password'],'');
+                    $app['db']->insert('users',array(
+                        'firstname' => @$data['firstname'],
+                        'lastname' => @$data['lastname'],
+                        'email' => @$data['email'],
+                        'password' => $encoded,
+                        'confirmationToken' => $token/*,
                     'timePasswordResetRequested' => ''*/
-                ));
-                $id = $app['db']->lastInsertId();
-                $confirmationLink = $app['url_generator']->generate('user-register-validation', array('id' => $id,'token'=>$token));
-                $message = \Swift_Message::newInstance()
-                    ->setSubject('[Wampigraph] confirmation de votre email')
-                    ->setFrom(array($app['swiftmailer.options']['username']=>'Wampigraph'))
-                    ->setTo(array(@$data['email']))
-                    ->setBody($app['twig']->render('email/user-register-validation.txt.twig', array(
-                        'link'  => $confirmationLink,
+                    ));
+                    $id = $app['db']->lastInsertId();
+                    $confirmationLink = $app['url_generator']->generate('user-register-validation', array('id' => $id,'token'=>$token));
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject('[Wampigraph] confirmation de votre email')
+                        ->setFrom(array($app['swiftmailer.options']['username']=>'Wampigraph'))
+                        ->setTo(array(@$data['email']))
+                        ->setBody($app['twig']->render('email/user-register-validation.txt.twig', array(
+                            'link'  => $confirmationLink,
 
-                    )))
-                    ->addPart($app['twig']->render('email/user-register-validation.html.twig', array(
-                        'link'  => $confirmationLink,
-                    )), 'text/html');
+                        )))
+                        ->addPart($app['twig']->render('email/user-register-validation.html.twig', array(
+                            'link'  => $confirmationLink,
+                        )), 'text/html');
 
-                if($app['mailer']->send($message)){
-                    $app['db']->update('users',array('password'=>$encoded),array('id'=>$result['id']));
-                };
+                    if($app['mailer']->send($message)){
+                        $app['db']->update('users',array('password'=>$encoded),array('id'=>$id));
+                    };
+                }
+
             }
 
             return $app->json(array("message"=>"user:register:ok"),200);

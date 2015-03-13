@@ -69,11 +69,13 @@ class Auth {
             if($result==null) {
 
                 $token = (new TokenGenerator())->generateToken();
+                $encoder = new MessageDigestPasswordEncoder();
+                $encoded = $encoder->encodePassword(@$data['password'],'');
                 $app['db']->insert('users', array(
                     'firstname' => @$data['firstname'],
                     'lastname' => @$data['lastname'],
                     'email' => @$data['email'],
-                    'password' => @$data['password'],
+                    'password' => $encoded,
                     'confirmationToken' => $token,
                     'timePasswordResetRequested' => time()
                 ));
