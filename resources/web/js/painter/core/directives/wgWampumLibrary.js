@@ -19,22 +19,27 @@ define(function () {
                     $scope.assets = [];
                     _update();
                 }
-
+                var loading = false;
                 var _update = function(){
-                    var index = $scope.assets.length;
-                    $http.post(
-                        '/painter/api/lib/wampum/'+index,
-                        $.param($scope.req),
-                        {
-                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                        }
-                    ).success(function(data){
-                            for(var i= 0,c=data.length;i<c;i++){
-                                $scope.assets.push(data[i]);
+                    if(!loading) {
+                        loading = true;  
+                        var index = $scope.assets.length;
+                        console.log('load /painter/api/lib/wampum/'+ index);
+                        $http.post(
+                            '/painter/api/lib/wampum/' + index,
+                            $.param($scope.req),
+                            {
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                             }
-                        }).error(function(){
-
-                        });
+                        ).success(function (data) {
+                                for (var i = 0, c = data.length; i < c; i++) {
+                                    $scope.assets.push(data[i]);
+                                }
+                                loading = false;
+                            }).error(function () {
+                                loading = false;
+                            });
+                    }
                 }
             }
         }

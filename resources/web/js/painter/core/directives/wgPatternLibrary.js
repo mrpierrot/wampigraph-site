@@ -22,11 +22,9 @@ define(function () {
                     wgMediator.$emit('patternLib:selection',value);
                 });
 
-                var onLoad = false;
+
                 $scope.loadPatterns = function(){
-                    if(!onLoad){
                         _update();
-                    }
                 }
 
                 $scope.update = function(){
@@ -35,22 +33,27 @@ define(function () {
                     _update();
                 }
 
+                var loading = false;
                 var _update = function(){
-                    var index = $scope.assets.length;
-                    $http.post(
-                        '/painter/api/lib/pattern/'+index,
-                        $.param($scope.req),
-                        {
-                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                        }
-                    ).success(function(data){
-                            onLoad = false;
-                            for(var i= 0,c=data.length;i<c;i++){
-                                $scope.assets.push(data[i]);
+                    if(!loading) {
+                        loading = true;
+                        var index = $scope.assets.length;
+                        $http.post(
+                            '/painter/api/lib/pattern/' + index,
+                            $.param($scope.req),
+                            {
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                             }
-                    }).error(function(){
-                        onLoad = false;
-                    });
+                        ).success(function (data) {
+
+                                for (var i = 0, c = data.length; i < c; i++) {
+                                    $scope.assets.push(data[i]);
+                                }
+                                loading = false;
+                            }).error(function () {
+                                loading = false;
+                            });
+                    }
                 }
 
             }
