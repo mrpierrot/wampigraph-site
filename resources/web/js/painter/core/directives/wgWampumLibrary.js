@@ -22,9 +22,8 @@ define(function () {
                 var loading = false;
                 var _update = function(){
                     if(!loading) {
-                        loading = true;  
+                        loading = true;
                         var index = $scope.assets.length;
-                        console.log('load /painter/api/lib/wampum/'+ index);
                         $http.post(
                             '/painter/api/lib/wampum/' + index,
                             $.param($scope.req),
