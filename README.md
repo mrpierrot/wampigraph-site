@@ -1,11 +1,13 @@
 # Introduction
 
-WampiGraph est le pendant numerique de l'oeuvre ----- du college -----
+WampiGraph est le pendant numerique de l'oeuvre Wampicôn du collège Jean Moulin d’Aubervilliers
 
 WampiGraph est une application composé de deux modules :
 
 * Un site de creation et de moderation des Wampums
-* Une application "bureau" permettant la visualisation de la "riviere" de Wampums
+* Une application "bureau" permettant la visualisation de la "rivière" de Wampums
+
+Nous parlerons ici du site. Pour la rivière, voir [Wampigraph App](https://github.com/mrpierrot/wampigraph-app)
 
 # Avant-Propos Technique
 
