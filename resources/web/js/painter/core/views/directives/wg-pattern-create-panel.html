@@ -1,0 +1,13 @@
+<div class="scrollable-content">
+    <form role="form" id="patternCreateForm" ng-class="{'disabled':saveButtonWait}">
+        <div class="form-group">
+            <label for="patternCreateFormTitle">Titre</label>
+            <input type="input" class="form-control" id="patternCreateFormTitle" placeholder="Mon motif" ng-model="infos.title">
+        </div>
+        <div class="form-group">
+            <label for="patternCreateFormDescription">Description</label>
+            <textarea class="form-control" rows="3" id="patternCreateFormDescription" ng-model="infos.description"></textarea>
+        </div>
+    </form>
+    <label class="btn btn-success" ng-class="{'icon-checkmark':!saveButtonWait,'icon-busy':saveButtonWait,'disabled':saveButtonWait}" ng-click="savePattern()" ></label>
+</div>

@@ -1,0 +1,8 @@
+<div id="{{ popupId|default('test-popup') }}" class="white-popup" style="{% block modalWidth%}{% endblock %}">
+	{% block title %}
+		<span class="title">{% block titleText %}{% endblock %}</span>
+		<div class="clearfix"></div>
+ 	{% endblock %}
+	{% block content %}
+	{% endblock %}
+</div>

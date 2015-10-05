@@ -1,0 +1,9 @@
+.idea
+vendor/*
+!vendor/silex-braincrafted-bootstrap
+
+bower_components
+node_modules
+resources/web/vendor/*
+!resources/web/vendor/requirejs-index
+htdocs/assets/

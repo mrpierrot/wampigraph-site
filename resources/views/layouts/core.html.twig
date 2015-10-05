@@ -1,0 +1,21 @@
+{% extends 'layouts/global.html.twig' %}
+
+{% block headjs %}
+    {{ parent() }}
+   <script data-main="/assets/js/config" src="/assets/vendor/requirejs/require.js"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/core.css">
+{% endblock %}
+
+{% block container_classes %}core{% endblock %}
+
+{% block header %}
+    {% include 'layouts/_header.html.twig' %}
+
+
+{% endblock %}
+{% block content %}{% endblock %}
+

@@ -1,0 +1,168 @@
+.navbar-brand {
+  padding: 10px 15px;
+}
+.modal-title {
+  text-align: center;
+}
+.search-form {
+  /*padding-left: 15px;
+  padding-right: 15px;*/
+  margin: 10px;
+}
+.search-form input[type=text] {
+  width: 176px;
+}
+.search-form .checkbox {
+  margin-top: 8px;
+}
+.search-form button {
+  font-size: 14px;
+  padding: 6px;
+}
+.alert-container {
+  top: 51px;
+  position: absolute;
+  z-index: 10000;
+  width: 100vw;
+}
+.alert-container .alert {
+  width: 400px;
+  margin: 10px auto 0 auto;
+}
+.core {
+  padding-top: 51px;
+}
+.wg-header .icon-cool {
+  font-size: 1em;
+}
+.empty-text {
+  font-style: italic;
+}
+.not-granted {
+  display: none;
+}
+.btn-edit {
+  color: #777777;
+  cursor: hand;
+  font-size: 0.8em;
+  padding: 6px 10px;
+}
+.quote:before {
+  content: "“";
+  font-size: 1em;
+  line-height: 1em;
+}
+.quote:after {
+  content: "”";
+  font-size: 1em;
+  line-height: 1em;
+}
+.users-list .editable-checklist label {
+  display: block;
+}
+.users-list .drawings a {
+  display: block;
+  font-size: 0.8em;
+}
+.admin-users-list .search-form {
+  display: inline-block;
+  padding-right: 100px;
+}
+.user-details {
+  width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #e7e7e7;
+  background-color: #f8f8f8;
+}
+.user-details table {
+  margin-bottom: 20px;
+  width: 600px;
+}
+.user-details table .label {
+  color: #000000;
+  font-size: 16px;
+}
+.user-details table .separate {
+  width: 50px;
+}
+.drawings-list {
+  margin: 15px;
+  width: 100%;
+}
+.drawings-list .drawing-item {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 10px;
+  table-layout: fixed;
+}
+.drawings-list .drawing-item.delete .thumbnail img {
+  filter: grayscale(80%);
+  -webkit-filter: grayscale(80%);
+  -moz-filter: grayscale(80%);
+  -o-filter: grayscale(80%);
+  -ms-filter: grayscale(80%);
+}
+.drawings-list .drawing-item.delete > * {
+  color: #dcdcdc !important;
+}
+.drawings-list .drawing-item.delete .description {
+  color: #dcdcdc !important;
+}
+.drawings-list .drawing-item.delete .btn-edit {
+  color: #dcdcdc !important;
+}
+.drawings-list .drawing-item .thumbnail {
+  display: table-cell;
+  width: 400px;
+  height: 134px;
+}
+.drawings-list .drawing-item .thumbnail img {
+  display: block;
+}
+.drawings-list .drawing-item .type {
+  font-style: italic;
+  font-size: 0.66em;
+  text-transform: capitalize;
+}
+.drawings-list .drawing-item .origine {
+  font-size: 0.66em;
+  font-style: italic;
+}
+.drawings-list .drawing-item .origine a {
+  font-size: 0.88em;
+  font-style: italic;
+}
+.drawings-list .drawing-item .infos {
+  vertical-align: top;
+  display: table-cell;
+  margin-left: 15px;
+  width: 60%;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+.drawings-list .drawing-item .infos .author {
+  font-style: italic;
+  text-align: right;
+}
+.drawings-list .drawing-item .infos .author:before {
+  content: "~ ";
+}
+.drawings-list .drawing-item .infos .status {
+  text-align: right;
+}
+.drawings-list .drawing-item .infos .date {
+  font-style: italic;
+  text-align: right;
+  font-size: 0.66em;
+}
+.drawings-list .drawing-item .admin {
+  vertical-align: top;
+  display: table-cell;
+}
+.drawings-list .drawing-item .admin button {
+  margin-bottom: 10px;
+}

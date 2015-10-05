@@ -1,0 +1,14 @@
+{% extends 'layouts/core.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block container_classes %}core{% endblock %}
+{% block container_attrs %}ng-view{% endblock %}
+
+{% block headjs %}
+
+   <script src="/assets/vendor/requirejs-index/index.js"></script>
+   <script data-main="/assets/js/admin/config" src="/assets/vendor/requirejs/require.js"></script>
+{% endblock %}

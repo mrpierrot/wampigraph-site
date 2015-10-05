@@ -1,0 +1,30 @@
+<div>
+    <div class="btn-group-vertical">
+        <label class="btn btn-default icon-file"  tooltip="Nouveau le wampum" tooltip-placement="right"  ng-click="toolBar_new()" ></label>
+    </div>
+    <div class="btn-group-vertical">
+        <label class="btn btn-default icon-pencil" tooltip="Pinceau"  tooltip-placement="right" ng-model="model.tool" btn-radio="'brush'" uncheckable></label>
+        <label class="btn btn-default icon-scissors" tooltip="Créer un motif"  tooltip-placement="right" ng-model="model.tool" btn-radio="'patternCreator'" uncheckable></label>
+        <label class="btn btn-default icon-paint-format" tooltip="Appliquer un motif"  tooltip-placement="right" ng-model="model.tool" btn-radio="'patternApplicator'" uncheckable></label>
+    </div>
+    <div class="btn-group-vertical">
+        <label class="btn btn-default icon-undo" tooltip="Aller en arrière"  tooltip-placement="right" ng-click="toolsBar_undo()" ng-disabled="!canUndo"></label>
+        <label class="btn btn-default icon-redo" tooltip="Aller en avant"  tooltip-placement="right" ng-click="toolsBar_redo()" ng-disabled="!canRedo"></label>
+    </div>
+
+    <div class="btn-group-vertical">
+        <label class="btn btn-default" tooltip="Remplir en blanc"  tooltip-placement="right"  ng-click="toolsBar_fillNotToggled()" >Blanc</label>
+        <label class="btn btn-default" tooltip="Remplir en bleu"  tooltip-placement="right"  ng-click="toolsBar_fillToggled()" >Violet</label>
+    </div>
+
+    <div class="btn-group-vertical">
+        <label class="btn btn-default icon-crop" tooltip="Retailler le wampum" tooltip-placement="right"  ng-click="toolBar_resize()" ></label>
+    </div>
+
+    <div class="btn-group-vertical">
+        <label class="btn btn-default icon-disk" ng-class="{'icon-disk':!saveButtonWait,'icon-busy':saveButtonWait,'disabled':saveButtonWait}" tooltip="Sauver le wampum" tooltip-placement="right"  ng-click="toolBar_save()" ></label>
+
+    </div>
+
+</div>
+

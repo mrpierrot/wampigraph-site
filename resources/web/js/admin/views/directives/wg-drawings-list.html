@@ -1,0 +1,24 @@
+<div ng-repeat="drawing in items" class="drawing-item" ng-class="{delete:drawing.status==8}">
+    <a target="_blank" href="/#/{{ drawing.id }}" class="thumbnail">
+        <img ng-src="/thumbnail/{{ drawing.id }}/5x7" />
+    </a>
+    <div class="infos">
+
+        <h4 editable-text="drawing.title" onbeforesave="updateTitle(drawing,$data)" e-form="titleBtnForm"><span class="type">{{ getType(drawing) }} #{{ drawing.id}}</span> <span class="quote">{{ drawing.title || 'Sans titre'}}</span><span class="btn-edit glyphicon glyphicon-pencil" ng-click="titleBtnForm.$show()" ng-hide="titleBtnForm.$visible"></span> <span class="origine" ng-if="drawing.original_id>0">( <a  ng-href="/app/#/infos/{{drawing.original_id}}">Voir l'origine </a> )</span></h4>
+        <p class="description" onbeforesave="updateDescription(drawing,$data)" editable-textarea="drawing.description" e-form="descBtnForm" ng-class="{'empty-text':!drawing.description}">{{ drawing.description || 'Pas description' }}<span class="btn-edit glyphicon glyphicon-pencil" ng-click="descBtnForm.$show()" ng-hide="descBtnForm.$visible"></span></p>
+        <p class="author"><a href="/app/#/utilisateur/{{ drawing.user_id }}">{{ drawing.firstname }} {{ drawing.lastname }}</a></p>
+        <p class="date">Mis à jour le {{ drawing.update_date | date:'dd-MM-yyyy à HH:mm:ss' }}</p>
+        <p class="status" >État :
+            <a is-granted="'ROLE_MODERATOR'" href="#" onbeforesave="updateStatus(drawing,$data)"  editable-select="drawing.status" e-ng-options="s.value as s.label for s in statuses">
+                {{ showStatus(drawing) }}
+            </a>
+            <span not-granted-default="'ROLE_MODERATOR'">{{ showStatus(drawing) }}</span>
+        </p>
+    </div>
+    <div class="admin">
+        <button ng-if="drawing.status!=8" tooltip="Supprimer le {{ getType(drawing) }}"  tooltip-placement="left" class="btn btn-default glyphicon glyphicon-trash" is-granted="{'role':'ROLE_MODERATOR','userId':drawing.user_id}" ng-click="delete(drawing)"></button>
+        <button ng-if="drawing.status==8" tooltip="Restaurer le {{ getType(drawing) }}"  tooltip-placement="left" class="btn btn-default glyphicon glyphicon-repeat" is-granted="{'role':'ROLE_MODERATOR','userId':drawing.user_id}" ng-click="restore(drawing)"></button>
+        <button ng-if="drawing.status==2" tooltip="Valider le {{ getType(drawing) }}"  tooltip-placement="left" class="btn btn-success glyphicon glyphicon-ok" is-granted="'ROLE_MODERATOR'" ng-click="validate(drawing)"></button>
+        <button ng-if="drawing.status==1" tooltip="Proposer le {{ getType(drawing) }}"  tooltip-placement="left" class="btn btn-warning glyphicon glyphicon-share-alt" is-granted="{'role':'ROLE_MODERATOR','userId':drawing.user_id}" ng-click="suggest(drawing)"></button>
+    </div>
+</div>
