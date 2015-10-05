@@ -191,7 +191,7 @@ Et vous placer à la racine du projet, donc **C:/WampiGraph**
 
 #### Via un .zip
 
-    [Télécharger le zip sur Github](https://github.com/mrpierrot/wampigraph-site/archive/master.zip)
+[Télécharger le zip sur Github](https://github.com/mrpierrot/wampigraph-site/archive/master.zip)
 
 ### Recuperation des packages
 
