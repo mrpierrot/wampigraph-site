@@ -17,10 +17,17 @@ $app['db.options'] = array(
 );
 
 $app['swiftmailer.options'] = array(
+<<<<<<< HEAD
     'host' => 'smtp.gmail.com',
     'port'=> '465',
     'username' => 'cqpx.garbage@gmail.com',
     'password' => 'cqpxpouet',
+=======
+    'host' => '',
+    'port'=> '465',
+    'username' => '',
+    'password' => '',
+>>>>>>> ff15c6b0becae8eb6af7ad85f5d81f67b1c3bbe3
     'encryption' => 'ssl',
     'auth_mode' => null
 

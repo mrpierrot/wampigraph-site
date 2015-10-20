@@ -1,11 +1,13 @@
 # Introduction
 
-WampiGraph est le pendant numerique de l'oeuvre ----- du college -----
+WampiGraph est le pendant numerique de l'oeuvre Wampicôn du collège Jean Moulin d’Aubervilliers
 
 WampiGraph est une application composé de deux modules :
 
 * Un site de creation et de moderation des Wampums
-* Une application "bureau" permettant la visualisation de la "riviere" de Wampums
+* Une application "bureau" permettant la visualisation de la "rivière" de Wampums
+
+Nous parlerons ici du site. Pour la rivière, voir [Wampigraph App](https://github.com/mrpierrot/wampigraph-app)
 
 # Avant-Propos Technique
 
@@ -183,15 +185,15 @@ Pour la suite de l'installation, vous devez ouvrir un terminal ( sous Windows : 
 
 Et vous placer à la racine du projet, donc **C:/WampiGraph**
 
-### Recuperation des sources ( si ce n'est déjà fait )
+### Recuperation des sources 
 
 #### Via Git
 
-@TODO
+    git clone https://github.com/mrpierrot/wampigraph-site.git
 
 #### Via un .zip
 
-@TODO
+[Télécharger le zip sur Github](https://github.com/mrpierrot/wampigraph-site/archive/master.zip)
 
 ### Recuperation des packages
 
@@ -219,9 +221,44 @@ Si vous avez un terminal ouvert à la racine de votre projet (**C:/WampiGraph**)
 
 Cette commande va recuperer les elements necessaires au bon fonctionnement de Grunt
 
-### Creation du site avec Apache
+#### Installation de la base de donnée. 
 
-@TODO
+Importez la base de donnée suivante : 
+
+    /resources/db/wampigraph.sql
+
+### Configuration 
+
+La configuration du site en production est disponible ici :
+
+    /resources/config/prod.php
+
+La configuration du site en developpement est disponible ici :
+
+    /resources/config/dev.php
+
+/!\ Il faut modifier la conf de la base de donnée MySQL (au moins pour la production, qui est vierge)
+
+    $app['db.options'] = array(
+        'driver'   => 'pdo_mysql',
+        'unix_socket'     => '/srv/run/mysqld/mysqld.sock',
+        'dbname'   => 'wampigraph',
+        'user'     => 'root',
+        'password' => '',
+        'charset'  => 'utf8'
+    );
+
+Et mail : 
+
+    $app['swiftmailer.options'] = array(
+        'host' => '',
+        'port'=> '465',
+        'username' => '',
+        'password' => '',
+        'encryption' => 'ssl',
+        'auth_mode' => null
+
+    );
 
 ### IMPORTANT : Travailler avec Grunt
 
@@ -233,7 +270,7 @@ Avant de modifier le code de WampiGraph, veuillez saisir la commande suivante da
 Que fait cette commande? Et ça lance, un petit programme qui surveille les fichiers de "resources/web" pour mettre à jour au besoin "web/assets"
 Mais nous verront plus bas que sont ces chemins
 
-## Organisation du code
+
 
 
 
