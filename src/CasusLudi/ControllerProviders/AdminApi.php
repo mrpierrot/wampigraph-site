@@ -36,6 +36,7 @@ class AdminApi  implements ControllerProviderInterface{
         $controllers->match('/drawing/update-status/{id}/{status}','CasusLudi\\Controllers\\Drawing::updateStatus','GET')->assert('id', '\d+')->assert('status', '\d+');
         $controllers->match('/drawing/list/{type}/status/{status}/{index}','CasusLudi\\Controllers\\Drawing::loadListByStatus','GET')->assert('type', 'wampum|pattern')->assert('index', '\d+')->assert('status', '\d+');
         $controllers->match('/drawing/list/status/{status}/{index}','CasusLudi\\Controllers\\Drawing::loadListByStatus','GET')->assert('type', 'wampum|pattern')->assert('index', '\d+')->assert('status', '\d+')->value('type',null);
+        $controllers->match('/drawing/list/{type}/all/{index}','CasusLudi\\Controllers\\Drawing::loadValidList','GET')->assert('type', 'wampum|pattern')->assert('index', '\d+')->value('type',null);
         $controllers->match('/user/update-field','CasusLudi\\Controllers\\User::updateField','POST');
         $controllers->match('/user/update-roles','CasusLudi\\Controllers\\User::updateRoles','POST');
         $controllers->match('/user/restore/{id}','CasusLudi\\Controllers\\User::restore','GET')->assert('id', '\d+');

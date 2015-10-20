@@ -160,6 +160,21 @@ class Drawing {
         return $app->json($result,200);
     }
 
+
+    public function loadValidList($type,$index,Request $request, Application $app){
+        if(!$index)$index=0;
+        if($app['security']->isGranted('ROLE_MODERATOR')){
+            $status = self::STATUS_DELETE;
+            $sql = "SELECT w.id,w.original_id,w.title,w.description,w.status,w.type,w.user_id,w.update_date,w.create_date,u.firstname,u.lastname FROM wampums AS w INNER JOIN users AS u ON u.id = w.user_id AND u.status<8 WHERE w.type=? AND w.status<$status ORDER BY w.update_date DESC LIMIT $index,20";
+            $result = $app['db']->fetchAll($sql,array($type));
+        }else{
+            $result = array();
+        }
+
+
+        return $app->json($result,200);
+    }
+
     public function loadListByStatus($status,$type,$index,Request $request, Application $app){
         if(!$index)$index=0;
         if($type){

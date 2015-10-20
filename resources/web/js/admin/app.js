@@ -45,6 +45,8 @@ define([
             .when('/mes-motifs',{templateUrl: '/assets/js/admin/views/my-patterns.html'})
             .when('/wampums/validation',{templateUrl: '/assets/js/admin/views/validate-wampums.html'})
             .when('/patterns/validation',{templateUrl: '/assets/js/admin/views/validate-patterns.html'})
+            .when('/wampums/tous',{templateUrl: '/assets/js/admin/views/all-wampums.html'})
+            .when('/patterns/tous',{templateUrl: '/assets/js/admin/views/all-patterns.html'})
             .when('/infos/:id',{templateUrl: '/assets/js/admin/views/single-drawing.html'})
             .when('/corbeille',{templateUrl: '/assets/js/admin/views/garbage.html'})
             .when('/utilisateur/enregistrer',{templateUrl: '/assets/js/admin/views/user-register.html'})
